@@ -1,4 +1,5 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { decrement, increment } from "@/src/store/slices/counterSlice";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -11,8 +12,8 @@ export default function Home() {
       <h1>Home</h1>
       <div>
         <h1>Counter: {count}</h1>
-        <button onClick={() => dispatch(increment())}>Increment</button>
-        <button onClick={() => dispatch(decrement())}>Decrement</button>
+        <Button onClick={() => dispatch(increment())}>Increment</Button>
+        <Button onClick={() => dispatch(decrement())}>Decrement</Button>
       </div>
     </div>
   );
