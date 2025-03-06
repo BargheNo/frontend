@@ -4,6 +4,7 @@ import { setUser, resetUser } from "@/src/store/slices/userSlice";
 import { Button } from "@/components/ui/button";
 import useClientCheck from "@/src/hooks/useClientCheck";
 import { vazir } from "@/lib/fonts";
+import { toast } from "sonner";
 
 export default function page() {
   const dispatch = useDispatch();
@@ -42,6 +43,20 @@ export default function page() {
       <button className="neo-btn" onClick={logout}>
         خروج
       </button>
+      <Button
+        variant="outline"
+        onClick={() =>
+          toast("Event has been created", {
+            description: "Sunday, December 03, 2023 at 9:00 AM",
+            action: {
+              label: "Undo",
+              onClick: () => console.log("Undo"),
+            },
+          })
+        }
+      >
+        Show Toast
+      </Button>
     </div>
   );
 }
