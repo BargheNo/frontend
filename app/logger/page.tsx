@@ -32,10 +32,14 @@ export default function page() {
       ) : (
         <p className="text-center">please login</p>
       )}
-      <Button variant={"default"} onClick={login}>
+      <button className="neo-btn" onClick={login}>
         login
-      </Button>
-      <Button className="bg-vivid-blue" variant={"default"} onClick={logout}>
+      </button>
+      <Button
+        className="bg-vivid-blue neo-btn"
+        variant={"outline"}
+        onClick={logout}
+      >
         logout
       </Button>
     </div>
