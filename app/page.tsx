@@ -13,7 +13,9 @@ export default function Home() {
       <div>
         <h1>Counter: {count}</h1>
         <Button onClick={() => dispatch(increment())}>Increment</Button>
-        <Button onClick={() => dispatch(decrement())}>Decrement</Button>
+        <Button variant={"neo"} onClick={() => dispatch(decrement())}>
+          Decrement
+        </Button>
       </div>
     </div>
   );
