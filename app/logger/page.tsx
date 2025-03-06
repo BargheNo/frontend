@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setUser, resetUser } from "@/src/store/slices/userSlice";
 import { Button } from "@/components/ui/button";
 import useClientCheck from "@/src/hooks/useClientCheck";
+import { vazir } from "@/lib/fonts";
 
 export default function page() {
   const dispatch = useDispatch();
@@ -32,16 +33,15 @@ export default function page() {
       ) : (
         <p className="text-center">please login</p>
       )}
-      <button className="neo-btn" onClick={login}>
-        login
-      </button>
-      <Button
-        className="bg-vivid-blue neo-btn"
-        variant={"outline"}
-        onClick={logout}
+      <button
+        className={["neo-btn", vazir.className].join(" ")}
+        onClick={login}
       >
-        logout
-      </Button>
+        خروج
+      </button>
+      <button className="neo-btn" onClick={logout}>
+        خروج
+      </button>
     </div>
   );
 }
