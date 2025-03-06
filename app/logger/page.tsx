@@ -1,5 +1,4 @@
 "use client";
-import React, { Suspense } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setUser, resetUser } from "@/src/store/slices/userSlice";
 import { Button } from "@/components/ui/button";
