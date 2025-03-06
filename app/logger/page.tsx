@@ -35,7 +35,7 @@ export default function page() {
       <Button variant={"default"} onClick={login}>
         login
       </Button>
-      <Button variant={"default"} onClick={logout}>
+      <Button className="bg-vivid-blue" variant={"default"} onClick={logout}>
         logout
       </Button>
     </div>
