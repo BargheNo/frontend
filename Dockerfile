@@ -1,7 +1,20 @@
+# Use official Node.js image
 FROM node:23-alpine
 
+# Set working directory
 WORKDIR /app
 
-COPY package*.json .
-COPY tsconfig.json .
-COPY next.config.json .
+# Copy package files first to leverage Docker caching
+COPY package.json package-lock.json ./ 
+
+# Install dependencies
+RUN npm install 
+
+# Copy the rest of the project files
+COPY . .
+
+# Build the Next.js application
+RUN npm run build
+
+# Start the Next.js app
+CMD ["npm", "run", "start"]

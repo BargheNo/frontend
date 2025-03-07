@@ -25,11 +25,11 @@ jobs:
       run: npm run build
 
     - name: Deploy to Server
-      uses: appleboy/ssh-action@v0.1.6
+      uses: appleboy/ssh-action@v0.1.8
       with:
         host: ${{ secrets.SERVER_IP }}
         username: ${{ secrets.SERVER_USER }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        password: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
           cd /front/nextjs-app
           git pull origin develop
