@@ -50,6 +50,9 @@ jobs:
         password: ${{ secrets.SERVER_PASSWORD }}
         script: |
           cd /root/front
+
+          ghcrfront
+
           docker compose pull
           docker compose down --remove-orphans
           docker compose up -d
