@@ -51,7 +51,8 @@ jobs:
         script: |
           cd /root/front
 
-          docker logout ghcr.io && docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.PAT }}
+          docker logout ghcr.io
+          docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.PAT }}
 
           docker compose pull
           docker compose down --remove-orphans
