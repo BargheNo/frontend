@@ -27,7 +27,7 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
           cd /front/nextjs-app
-          git pull origin main
+          git pull origin develop
           npm install
           npm run build
           pm2 restart nextjs-app
