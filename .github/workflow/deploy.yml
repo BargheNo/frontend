@@ -3,7 +3,12 @@ name: Deploy Next.js App
 on:
   push:
     branches:
-      - main
+      - devops/deploy-ci
+  pull_request:
+    branches:
+      - develop
+    types:
+      - closed
 
 jobs:
   deploy:
