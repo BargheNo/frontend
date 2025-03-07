@@ -1,9 +1,9 @@
-name: Deploy Next.js App
+name: CD
 
 on:
   push:
     branches:
-      - devops/deploy-ci
+      - devops/CICD
   pull_request:
     branches:
       - develop
