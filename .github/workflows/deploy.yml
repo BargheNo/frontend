@@ -34,7 +34,7 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: ghcr.io/${{ github.repository }}/frontend:latest
+        tags: ghcr.io/aminfiroozi/frontend:latest
 
     - name: Logout from Docker registry
       run: docker logout ghcr.io
