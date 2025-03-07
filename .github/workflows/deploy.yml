@@ -18,21 +18,23 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v3
 
-    - name: Install Dependencies
-      run: npm install
-
-    - name: Build Project
-      run: npm run build
-
-    - name: Deploy to Server
-      uses: appleboy/ssh-action@v0.1.8
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    
+    - name: Log in to GitHub Container Registry
+      uses: docker/login-action@v2
       with:
-        host: ${{ secrets.SERVER_IP }}
-        username: ${{ secrets.SERVER_USER }}
-        password: ${{ secrets.SSH_PRIVATE_KEY }}
-        script: |
-          cd /front/nextjs-app
-          git pull origin develop
-          npm install
-          npm run build
-          pm2 restart nextjs-app
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.PAT_TOKEN }}
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        file: ./Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository }}/frontend:latest
+
+    - name: Logout from Docker registry
+      run: docker logout ghcr.io
