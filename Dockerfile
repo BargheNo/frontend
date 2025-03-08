@@ -9,6 +9,9 @@ COPY package.json package-lock.json ./
 
 # Install dependencies
 RUN npm install 
+RUN npm i -D @testing-library/react
+RUN npm i -D jsdom
+RUN npm i -D @testing-library/jest-dom
 
 # Copy the rest of the project files
 COPY . .
