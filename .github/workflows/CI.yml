@@ -1,0 +1,28 @@
+name: CI
+
+on:
+    pull_request:
+        branches:
+            - develop
+        types:
+            - opened # Trigger CI when the PR is opened
+            - synchronize # Trigger CI when the PR is updated (e.g., new commits)
+
+jobs:
+    ci:
+        runs-on: ubuntu-latest
+        if: github.event.pull_request.state == 'open'
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v4
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: "22"
+
+            - name: Install dependencies
+              run: npm install
+
+            - name: Run tests
+              run: npm test
