@@ -41,8 +41,8 @@
 		"@sentry/nextjs": "^9.5.0",
 		"vitest": "^3.0.8",
 		"@vitest/ui": "^3.0.8",
-		"@testing-library/react": "^14.0.0",
+		"@testing-library/react": "^16.0.0",
 		"@testing-library/jest-dom": "^6.0.0",
-		"jsdom": "^22.0.0"
+		"jsdom": "^26.0.0"
 	}
 }
