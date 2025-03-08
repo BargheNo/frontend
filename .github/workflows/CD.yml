@@ -11,9 +11,9 @@ on:
       - closed
 
 jobs:
-  deploy:
+  cd:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
