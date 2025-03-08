@@ -45,3 +45,8 @@
 .wholePage{
     @apply flex justify-center items-center h-screen;
 }
+
+.leftIconButton{
+    @apply flex flex-row justify-center ;
+    gap: 7px;
+}
