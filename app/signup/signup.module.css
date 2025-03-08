@@ -1,0 +1,47 @@
+.topic{
+    font-weight:bolder;
+    font-size:30px;
+}
+
+.link{
+    color:#2979FF;
+    cursor:pointer;
+}
+
+.loginText{
+    @apply flex flex-row justify-end;
+    margin-top: 20px;
+    gap:4px;
+    font-size:16px;
+}
+
+.ruleText{
+    @apply flex flex-row justify-end;
+    margin-top:15px;
+    gap:4px;
+    font-size:16px;
+    margin-left:auto;
+    margin-right:30px;
+}
+
+.checkbox{
+    width:1.5rem;
+    height:1.5rem;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    outline:none;
+    border:solid #bbbb 1px;
+    border-radius:14px;
+    cursor:pointer;   
+}
+
+
+.card{
+    @apply w-1/3 h-4/5 flex flex-col justify-center items-center;
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.4);
+    background-color:#F1F4FC;
+    border-radius:15px; 
+}
+
+.wholePage{
+    @apply flex justify-center items-center h-screen;
+}
