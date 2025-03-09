@@ -5,7 +5,6 @@ import "./neoStyles.css";
 
 import { Providers } from "./providers";
 import { Toaster } from "@/components/ui/sonner";
-import Navbar from "@/components/Navbar/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +30,6 @@ export default function RootLayout({
     <html lang="en">
       <body className="">
         <Providers>
-          <Navbar />
           {children}
           <Toaster />
         </Providers>
