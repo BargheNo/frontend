@@ -1,0 +1,15 @@
+name: Manage Issues
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  label_new_issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Label new issues
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          labels: Todo
