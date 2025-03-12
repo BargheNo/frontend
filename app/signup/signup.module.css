@@ -40,12 +40,21 @@
 
 
 
-@media (max-width: 600px) {
+@media (max-width: 1200px) {
     .card {
       flex-direction: column;
       align-items: center;
-      width: 90%;
-    }}
+      width: 65%;
+    }
+}
+
+@media (max-width:950px){
+    .card {
+        flex-direction: column;
+        align-items: center;
+        width:90%;
+      }
+}
 
 .wholePage{
     @apply flex justify-center items-center h-screen;
