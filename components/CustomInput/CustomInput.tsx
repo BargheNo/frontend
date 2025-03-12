@@ -1,5 +1,5 @@
 import style from "./CustomInput.module.css";
-import { MoveLeft, Mail, Lock, User, Check, LucideIcon } from 'lucide-react';
+import { LucideIcon } from 'lucide-react';
 
 
 interface Props {

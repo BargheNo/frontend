@@ -6,10 +6,11 @@ import SignupButton from "@/components/SignupButton/SignupButton";
 import style from "./signup.module.css";
 import Background from '../../public/signup.jpg';
 import Image from "next/image";
-import { MoveLeft, Mail, Lock, User, Unlock, Icon } from 'lucide-react';
+import { MoveLeft, Mail, Lock, User, Unlock, Check } from 'lucide-react';
 
 function login() {
     const[name,setName]=useState("");
+    const[Lname,setLName]=useState("");
     const[phonenumber,setphonenumber]=useState("");
     const[password,setPassword]=useState("");
     const[confpassword,setConfpassword]=useState("");
@@ -23,15 +24,24 @@ function login() {
     <div className={style.wholePage}>
         <div className={style.card}>
            <h1 className={style.topic}>ثبت نام</h1>
-
-                <CustomInput icon={User}  type="text" value={name} onChange={setName}>نام</CustomInput>
+                <div className="flex flex-row gap-3 justify-center w-9/10">
+                <CustomInput icon={User}  type="text" value={Lname} onChange={setLName}>نام خانوادگی</CustomInput>
+                <CustomInput icon={User}  type="text" value={name} onChange={setName}>نام </CustomInput>
+                </div>
                 <CustomInput icon={Mail} type="number" value={phonenumber} onChange={setphonenumber}>شماره تلفن همراه</CustomInput>
                 <CustomInput onIconClick={()=>Sethidepass(prev=>!prev)} icon={hidepass?Lock:Unlock} type={hidepass?"password":"text"} value={password} onChange={setPassword}>رمز عبور</CustomInput>
                 <CustomInput onIconClick={()=>Sethideconfpass(prev=>!prev)} icon={hideconfpass?Lock:Unlock} type={hideconfpass?"password":"text"} value={confpassword} onChange={setConfpassword}>تایید رمز عبور</CustomInput>
             <div className={style.ruleText}>
-                <p >.را می پذیرم</p>
-                <p className={style.link}>قوانین و مقررات</p>
-                <input onClick={()=>Setcheck(prev=>!prev)} className={style.checkbox} type="checkbox" id="myCheckbox" />
+            
+            <label htmlFor="link-checkbox" className="flex gap-1">
+              .را می پذیرم
+              <a href="#" className={style.link}>قوانین و مقررات</a>
+            </label>
+            <div className="relative">
+              <input id="link-checkbox" type="checkbox" value="" className="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-[#2979FF] checked:border-blue-500"/>
+              <Check className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-2/3 text-white opacity-0 pointer-events-none peer-checked:opacity-100 w-4 h-4"/>
+            </div>
+                
             </div>
             <div style={{width:"90%"}}>
                 <SignupButton  Disable={!check}>

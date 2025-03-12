@@ -1,9 +1,11 @@
+
 .topic{
     font-weight:bolder;
     font-size:30px;
 }
 
 .link{
+    @apply hover:underline;
     color:#2979FF;
     cursor:pointer;
 }
@@ -21,18 +23,11 @@
     gap:4px;
     font-size:16px;
     margin-left:auto;
-    margin-right:30px;
+    margin-right:25px;
 }
 
-.checkbox{
-    width:1.5rem;
-    height:1.5rem;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    outline:none;
-    border:solid #bbbb 1px;
-    border-radius:14px;
-    cursor:pointer;   
-}
+
+
 
 
 .card{
@@ -40,7 +35,7 @@
     box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.4);
     background-color:#F1F4FC;
     border-radius:15px; 
-    padding: 1rem;
+    padding: 1.8rem;
 }
 
 
