@@ -28,11 +28,41 @@ jobs:
         password: ${{ secrets.PAT }}
 
     - name: Build and Push Docker image
+      id: docker_build
+      continue-on-error: true
       run: |
         docker compose build
         docker compose push
-    
+
+    - name: Handle Build Failure
+      if: ${{ steps.docker_build.outcome == 'failure' && github.event_name == 'pull_request' }}
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const { owner, repo, number } = context.issue;
+          
+          // Get the error message from previous step
+          const errorLog = process.env.DOCKER_ERROR || 'Docker build or push failed';
+          
+          // Add comment to PR
+          await github.rest.issues.createComment({
+            owner,
+            repo,
+            issue_number: number,
+            body: `❌ Build failed with error:\n\`\`\`\n${errorLog}\n\`\`\``
+          });
+          
+          // Close PR
+          await github.rest.pulls.update({
+            owner,
+            repo,
+            pull_number: number,
+            state: 'closed'
+          });
+
+    # Continue with remaining steps only if build was successful
     - name: Copy configuration files
+      if: steps.docker_build.outcome == 'success'
       uses: appleboy/scp-action@v0.1.0
       with:
         host: ${{ secrets.SERVER_HOST }}
@@ -42,6 +72,7 @@ jobs:
         target: "/root/front"
     
     - name: Deploy
+      if: steps.docker_build.outcome == 'success'
       uses: appleboy/ssh-action@v0.1.8
       with:
         host: ${{ secrets.SERVER_HOST }}
