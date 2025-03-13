@@ -9,6 +9,9 @@ on:
       - develop
     types:
       - opened
+      - reopened
+      - synchronize  # When new commits are pushed
+      - ready_for_review  # When draft PR is marked ready
 
 # Add permissions block
 permissions:
