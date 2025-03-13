@@ -32,13 +32,16 @@ jobs:
       uses: actions/github-script@v6
       with:
         script: |
-          const { owner, repo, number } = context.issue;
-          
+          const issue = context.issue;
+          const owner = issue.owner;
+          const repo = issue.repo;
+          const number = issue.number;
+
           await github.rest.pulls.requestReviewers({
             owner,
             repo,
             pull_number: number,
-            reviewers: ['AminFiroozi']  # Replace with your GitHub username
+            reviewers: ['AminFiroozi']
           });
 
     - name: Set up Docker Buildx
