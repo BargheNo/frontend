@@ -121,3 +121,9 @@ jobs:
           docker compose down --remove-orphans
           docker compose up -d
           docker image prune -f
+
+    - name: List all containers (including stopped ones)
+      run: docker ps -a
+
+    - name: View logs of the frontend container
+      run: docker logs frontend
