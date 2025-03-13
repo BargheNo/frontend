@@ -34,6 +34,8 @@ jobs:
         # Capture the build output in a variable
         ERROR_OUTPUT=$(docker compose build 2>&1)
         BUILD_EXIT_CODE=$?
+
+        echo "$ERROR_OUTPUT"
         
         # Store the error output for later use
         echo "BUILD_ERROR<<EOF" >> $GITHUB_ENV
@@ -42,7 +44,6 @@ jobs:
         
         # Store the build status
         echo "BUILD_EXIT_CODE=$BUILD_EXIT_CODE" >> $GITHUB_ENV
-        echo ERROR_OUTPUT
         # Exit with the original build exit code
         exit $BUILD_EXIT_CODE
 
@@ -108,6 +109,3 @@ jobs:
           docker compose down --remove-orphans
           docker compose up -d
           docker image prune -f
-
-    - name: View logs of the frontend container
-      run: docker logs frontend
