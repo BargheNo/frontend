@@ -1,0 +1,46 @@
+name: Main Branch Protection
+
+on:
+  pull_request:
+    branches:
+      - main  # Only trigger on PRs targeting main branch
+
+permissions:
+  pull-requests: write
+  issues: write
+  contents: read
+
+jobs:
+  check-source-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if PR is from develop
+        if: github.base_ref == 'main' && github.head_ref != 'develop'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { owner, repo, number } = context.issue;
+            
+            const errorMessage = `❌ Invalid Branch for Main!\n\n` +
+              `Only PRs from \`develop\` branch can be merged into \`main\`.\n` +
+              `Your PR is from \`${github.head_ref}\` to \`main\`.\n\n` +
+              `Please:\n` +
+              `1. Close this PR\n` +
+              `2. Merge your changes into \`develop\` first\n` +
+              `3. Then create a new PR from \`develop\` to \`main\``;
+            
+            // Add comment to PR
+            await github.rest.issues.createComment({
+              owner,
+              repo,
+              issue_number: number,
+              body: errorMessage
+            });
+            
+            // Close PR
+            await github.rest.pulls.update({
+              owner,
+              repo,
+              pull_number: number,
+              state: 'closed'
+            }); 
