@@ -18,7 +18,7 @@ const PanelCard = ({
 	};
 
 	// Format numbers with commas for better readability
-	const formatNumber = (num): string => {
+	const formatNumber = (num: number): string => {
 		return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	};
 

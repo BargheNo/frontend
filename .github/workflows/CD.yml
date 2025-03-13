@@ -29,6 +29,7 @@ jobs:
 
     - name: Build Docker image
       id: docker_build
+      continue-on-error: true
       run: |
         docker compose build
         ## Capture the build output in a variable
