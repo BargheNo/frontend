@@ -10,6 +10,13 @@ on:
     types:
       - opened
 
+# Add permissions block
+permissions:
+  pull-requests: write
+  issues: write
+  contents: read
+  packages: write
+
 jobs:
   cd:
     runs-on: ubuntu-latest
