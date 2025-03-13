@@ -61,9 +61,9 @@ jobs:
           
           const errorLog = process.env.BUILD_ERROR || 'Docker build or push failed';
           
-          // let errorMessage = '❌ Build failed!\n\n';
+          let errorMessage = '❌ Build failed!\n\n';
           
-          // errorMessage += `Error details:\n\`\`\`\n${errorLog}\n\`\`\``;
+          errorMessage += `Error details:\n\`\`\`\n${errorLog}\n\`\`\``;
           
           // Add comment to PR
           await github.rest.issues.createComment({
