@@ -1,9 +1,9 @@
 name: CD
 
 on:
-  push:
-    branches:
-      - ops/PR-validation
+  # push:
+  #   branches:
+  #     - ops/PR-validation
   pull_request:
     branches:
       - develop
@@ -63,7 +63,6 @@ jobs:
           // let errorMessage = '❌ Build failed!\n\n';
           
           // errorMessage += `Error details:\n\`\`\`\n${errorLog}\n\`\`\``;
-          
           
           // Add comment to PR
           await github.rest.issues.createComment({
