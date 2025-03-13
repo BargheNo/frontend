@@ -1,6 +1,9 @@
 # Use official Node.js image
 FROM node:23
 
+# Install libc6-compat for TailwindCSS
+RUN apk add --no-cache libc6-compat
+
 # Set working directory
 WORKDIR /app
 

@@ -43,7 +43,7 @@ jobs:
         #echo "EOF" >> $GITHUB_ENV
         
         # Store the build status
-        echo "BUILD_EXIT_CODE=$BUILD_EXIT_CODE" >> $GITHUB_ENV
+        #echo "BUILD_EXIT_CODE=$BUILD_EXIT_CODE" >> $GITHUB_ENV
         ## Exit with the original build exit code
         #exit $BUILD_EXIT_CODE
 
