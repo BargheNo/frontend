@@ -1,8 +1,8 @@
 # Use official Node.js image
 FROM node:23
 
-# Install libc6-compat for TailwindCSS
-RUN apk add --no-cache libc6-compat
+# Install required dependencies for TailwindCSS
+RUN apt-get update && apt-get install -y build-essential python3
 
 # Set working directory
 WORKDIR /app
