@@ -1,7 +1,8 @@
 import React from 'react';
 import { MoveLeft, Sun, Battery, Calendar, MapPin } from 'lucide-react';
+import { PanelCardProps } from '@/src/types/PanelCardTypes';
 
-const PanelCard = ({ panelName, technicalDetails, address }) => {
+const PanelCard = ({ panelName, technicalDetails, address }: PanelCardProps) => {
   // Determine status color based on efficiency
   const getStatusColor = () => {
     const efficiency = technicalDetails.efficiency;
@@ -11,12 +12,18 @@ const PanelCard = ({ panelName, technicalDetails, address }) => {
   };
 
   // Format numbers with commas for better readability
-  const formatNumber = (num) => {
+  const formatNumber = (num: number): string => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
   // Function to wrap icons with a rounded background
-  const IconWithBackground = ({ icon: Icon, color }) => (
+  const IconWithBackground = ({ 
+    icon: Icon, 
+    color 
+  }: { 
+    icon: React.ElementType; 
+    color: string 
+  }) => (
     <div className={`p-2 rounded-xl bg-[#eff0f1] shadow-[-4px_-4px_10px_rgba(255,255,255,1),2px_2px_5px_rgba(0,0,0,0.3)]`}>
       <Icon className="w-4 h-4" style={{ color }} />
     </div>

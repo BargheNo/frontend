@@ -1,15 +1,13 @@
 "use client"
 
 import PanelAside from '@/components/PanelAside/PanelAside';
+import { NavItem } from '@/src/types/PanelAsideTypes';
 // import '../styles/globals.css';
 import '@/styles/global.css';
 import { Gauge, Layers, FilePlus, History, BarChart, MessageSquare, Calculator } from "lucide-react";
 
 // const myFont = localFont({ src: '../..' })
   
-
-
-
 export default function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
 
     const navItems = [
@@ -24,7 +22,7 @@ export default function Layout({ children }: Readonly<{ children: React.ReactNod
 
 
   return (
-    <PanelAside navItems={navItems} >
+    <PanelAside navItems={navItems as NavItem[]} >
       {children}
     </PanelAside>
   );
