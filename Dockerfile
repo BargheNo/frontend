@@ -1,5 +1,8 @@
 # Use official Node.js image
-FROM node:23-alpine
+FROM node:23
+
+# Install required dependencies for TailwindCSS
+RUN apt-get update && apt-get install -y build-essential python3
 
 # Set working directory
 WORKDIR /app
@@ -8,6 +11,8 @@ WORKDIR /app
 COPY package.json package-lock.json ./ 
 
 # Install dependencies
+RUN npm uninstall tailwindcss
+RUN rm -rf node_modules package-lock.json
 RUN npm install
 
 # Copy the rest of the project files

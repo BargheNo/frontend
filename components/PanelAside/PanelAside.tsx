@@ -5,10 +5,11 @@ import { usePathname } from "next/navigation";
 
 import localFont from 'next/font/local'
 
-// const myFont = localFont({ src: '../../../public/fonts/Vazir.ttf' })
+import { PanelAsideProps, NavItem } from "@/src/types/PanelAsideTypes";
+
 const myFont = localFont({ src: '../../public/fonts/vazir/Vazir.ttf' })
 
-const PanelAside = ({children, navItems}) => {
+const PanelAside = ({ children, navItems }: PanelAsideProps) => {
   const pathname = usePathname();
   
   return (    
@@ -19,7 +20,7 @@ const PanelAside = ({children, navItems}) => {
         "
         >
         <nav className="space-y-2">
-            {navItems.map((item) => (
+            {navItems.map((item: NavItem) => (
             <Link key={item.path} href={item.path}>
                 <span
                 className={`flex gap-2 text-[#003a8b] p-2 mt-0.5 rounded-lg cursor-pointer ${
