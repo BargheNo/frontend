@@ -10,8 +10,8 @@ on:
     types:
       - opened
       - reopened
-      - synchronize  # When new commits are pushed
-      - ready_for_review  # When draft PR is marked ready
+      - synchronize
+      - ready_for_review
 
 # Add permissions block
 permissions:
@@ -49,12 +49,12 @@ jobs:
         echo "$ERROR_OUTPUT"
         
         # Store the error output for later use
-        echo "BUILD_ERROR<<EOF" >> $GITHUB_ENV
+        echo "error_output<<EOF" >> $GITHUB_ENV
         echo "$ERROR_OUTPUT" >> $GITHUB_ENV
         echo "EOF" >> $GITHUB_ENV
         
-        Store the build status
-        echo "BUILD_EXIT_CODE=$BUILD_EXIT_CODE" >> $GITHUB_ENV
+        # Store the build status
+        echo "build_exit_code=$BUILD_EXIT_CODE" >> $GITHUB_ENV
         # Exit with the original build exit code
         exit $BUILD_EXIT_CODE
 
@@ -69,7 +69,7 @@ jobs:
         script: |
           const { owner, repo, number } = context.issue;
           
-          const errorLog = process.env.BUILD_ERROR || 'Docker build or push failed';
+          const errorLog = process.env.error_output || 'Docker build or push failed';
           
           let errorMessage = '❌ Build failed!\n\n';
           
