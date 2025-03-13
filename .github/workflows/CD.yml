@@ -1,9 +1,9 @@
 name: CD
 
 on:
-  # push:
-  #   branches:
-  #     - ops/PR-validation
+  push:
+    branches:
+      - ops/setup-monitoring
   pull_request:
     branches:
       - develop

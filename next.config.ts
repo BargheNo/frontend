@@ -6,12 +6,6 @@ const nextConfig: NextConfig = {
 		// your project has ESLint errors.
 		ignoreDuringBuilds: true,
 	},
-	webpack: (config) => {
-		config.ignoreWarnings = [
-			{ module: /@opentelemetry\/instrumentation/ }
-		];
-		return config;
-	}
 };
 
 export default nextConfig;
