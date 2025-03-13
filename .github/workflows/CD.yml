@@ -3,12 +3,12 @@ name: CD
 on:
   push:
     branches:
-      - devops/CICD
+      - ops/PR-validation
   pull_request:
     branches:
       - develop
     types:
-      - closed
+      - opened
 
 jobs:
   cd:
