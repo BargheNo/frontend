@@ -1,7 +1,9 @@
 "use client";
-import { useState } from "react";
-import { MoveLeft, Lock, Smartphone } from "lucide-react";
-import "./login.css";
+import { useState} from "react";
+import { MoveLeft, Lock, Unlock, Smartphone
+ } from "lucide-react";
+import Link from "next/link";
+import styles from "./login.module.css";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -9,13 +11,14 @@ const Login = () => {
     password: "",
   });
 
+  const [showPassword, setShowPassword] = useState(false);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     if (name === "phone") {
-      
       if (value === "") {
-        setFormData({ ...formData, number: "98" }); 
+        setFormData({ ...formData, number: "98" });
       } else if (!value.startsWith("98")) {
         setFormData({ ...formData, number: `98${value}` });
       } else {
@@ -31,18 +34,16 @@ const Login = () => {
     console.log("Logging in...", formData);
   };
 
-  
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
-    <div
-      dir="rtl"
-      className="mainbg flex items-center justify-center min-h-screen bg-[#E8EBF2]"
-    >
+    <div dir="rtl" className={styles.mainbg}>
       <div className="w-full max-w-md p-6 space-y-4 shadow-2xl rounded-2xl bg-[#f1f4fc]">
         <h2 className="text-3xl text-black text-center">{"ورود"}</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-
           <div className="relative">
             <Smartphone
               className="absolute left-3 top-3 text-orange-400"
@@ -52,7 +53,7 @@ const Login = () => {
             <input
               type="tel"
               name="phone"
-              value={formData.number === "98" ? "" : formData.number} 
+              value={formData.number === "98" ? "" : formData.number}
               onChange={handleChange}
               placeholder="شماره همراه"
               className="text-black w-full px-3 py-2 rounded-lg focus:outline-none focus:ring focus:ring-blue-300 shadow-[inset_-4px_-4px_10px_rgba(255,255,255,0.5),inset_1px_1px_3px_rgba(0,0,0,0.2)]"
@@ -62,16 +63,23 @@ const Login = () => {
           </div>
 
           <div className="relative">
-            <Lock className="absolute left-3 top-3 text-orange-400" size={20} />
+          <button
+              type="button"
+              onClick={togglePasswordVisibility}
+              className="absolute left-3 top-3 text-orange-400 cursor-pointer"
+            >
+              {showPassword ? <Unlock size={20} /> : <Lock size={20} />}
+            </button>
 
             <input
-              type="password"
+              type={showPassword ? "text" : "password"} 
               name="password"
               value={formData.password}
               onChange={handleChange}
               placeholder="رمز عبور"
               className="text-black w-full px-3 py-2 rounded-lg focus:outline-none focus:ring focus:ring-blue-300 shadow-[inset_-4px_-4px_10px_rgba(255,255,255,0.5),inset_1px_1px_3px_rgba(0,0,0,0.2)]"
               required
+              dir="rtl"
             />
           </div>
 
@@ -88,7 +96,7 @@ const Login = () => {
 
         <p className="flex gap-5 justify-center text-center text-sm text-blue-600">
           <a href="">فراموشی رمز عبور</a>
-          <a href="">ثبت نام نکرده ام</a>
+          <Link href="/">ثبت نام نکرده ام</Link>
         </p>
       </div>
     </div>
