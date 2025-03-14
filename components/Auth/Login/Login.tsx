@@ -46,9 +46,11 @@ const Login = () => {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="relative">
             <Smartphone
-              className="absolute left-3 top-3 text-orange-400"
+              className="absolute left-3 top-2 text-orange-400"
               size={20}
             />
+            
+
 
             <input
               type="tel"
@@ -56,9 +58,17 @@ const Login = () => {
               value={formData.number === "98" ? "" : formData.number}
               onChange={handleChange}
               placeholder="شماره همراه"
-              className="text-black w-full px-3 py-2 rounded-lg focus:outline-none focus:ring focus:ring-blue-300 shadow-[inset_-4px_-4px_10px_rgba(255,255,255,0.5),inset_1px_1px_3px_rgba(0,0,0,0.2)]"
+              className="text-black w-4/5 px-3 py-2 rounded-lg focus:outline-none focus:ring focus:ring-blue-300 shadow-[inset_-4px_-4px_10px_rgba(255,255,255,0.5),inset_1px_1px_3px_rgba(0,0,0,0.2)]"
               required
               dir="rtl"
+            />
+            <input
+              type="tel"
+              name="phone"
+              placeholder="+98"
+              className="text-black align-middle w-1/5 pl-9 py-2 rounded-lg focus:outline-none focus:ring focus:ring-blue-300 shadow-[inset_-4px_-4px_10px_rgba(255,255,255,0.5),inset_1px_1px_3px_rgba(0,0,0,0.2)]"
+              dir="ltr"
+              readOnly
             />
           </div>
 
@@ -96,7 +106,7 @@ const Login = () => {
 
         <p className="flex gap-5 justify-center text-center text-sm text-blue-600">
           <a href="">فراموشی رمز عبور</a>
-          <Link href="/">ثبت نام نکرده ام</Link>
+          <Link href="/signup">ثبت نام نکرده ام</Link>
         </p>
       </div>
     </div>
