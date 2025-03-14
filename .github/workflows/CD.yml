@@ -95,19 +95,21 @@ jobs:
       uses: actions/github-script@v6
       with:
         script: |
-          const { owner, repo, number } = context.issue;
-          
-          let successMessage = '✅ Build succeeded!\n\n';
-          successMessage += 'This PR will close related issues when merged.\n';
-          successMessage += 'Closes #' + number;
-          
-          // Add comment to PR
-          await github.rest.issues.createComment({
-            owner,
-            repo,
-            issue_number: number,
-            body: successMessage
-          });
+          if (context.eventName === 'pull_request') {
+            const { owner, repo, number } = context.issue;
+            
+            let successMessage = '✅ Build succeeded!\n\n';
+            successMessage += 'This PR will close related issues when merged.\n';
+            successMessage += 'Closes #' + number;
+            
+            // Add comment to PR
+            await github.rest.issues.createComment({
+              owner,
+              repo,
+              issue_number: number,
+              body: successMessage
+            });
+          }
 
     - name: Handle Build Failure
       if: ${{ steps.docker_build.outcome == 'failure' && github.event_name == 'pull_request' }}
