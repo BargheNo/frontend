@@ -1,6 +1,6 @@
 // import Layout from "../../layout"
 
-import PanelCard from "@/components/PanelCard/PanelCard"
+import PanelCard from "@/components/Panel/PanelCard/PanelCard"
 
 const Settings = () => {
   return (

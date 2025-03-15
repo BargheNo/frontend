@@ -1,6 +1,6 @@
 "use client"
 
-import PanelAside from '@/components/PanelAside/PanelAside';
+import PanelAside from '@/components/Panel/PanelAside/PanelAside';
 import { NavItem } from '@/src/types/PanelAsideTypes';
 // import '../styles/globals.css';
 import '@/styles/global.css';

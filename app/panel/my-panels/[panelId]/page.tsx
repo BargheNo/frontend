@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import LiveChart from "@/components/Panel/LiveChart/LiveChart";
 
 interface PanelProps {
     params: {
@@ -12,7 +12,7 @@ const PanelId = ({ params }: PanelProps) => {
     return (
         <div>
             <h1>Panel ID: {panelId}</h1>
-            {/* You can fetch additional data based on panelId here */}
+			<LiveChart />
         </div>
     );
 };
