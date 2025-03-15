@@ -148,9 +148,30 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+  .rtl {
+    direction: rtl;
+  }
+  .vazir-bold {
+    font-family: "vazirBold";
+    font-weight: 700;
+  }
+  .vazir-medium {
+    font-family: "vazirMedium";
+    font-weight: 500;
+  }
+  .vazir {
+    font-family: "vazir";
+    font-weight: 400;
+  }
+  .vazir-light {
+    font-family: "vazirLight";
+    font-weight: 300;
+  }
+  .vazir-thin {
+    font-family: "vazirThin";
+    font-weight: 100;
+  }
 }
-
-
 
 @layer utilities {
 }
