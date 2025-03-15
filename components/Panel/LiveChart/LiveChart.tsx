@@ -3,7 +3,7 @@
 import React, { JSX } from "react";
 import ReactApexChart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
-import { vazir } from "@/lib/fonts";
+import useClientCheck from "@/src/hooks/useClientCheck";
 
 const XAXISRANGE: number = 60000;
 const lastDate: Date = new Date();
@@ -29,7 +29,7 @@ export default function LiveChart(): JSX.Element {
 			chart: {
 				id: "realtime",
 				height: 350,
-				type: "line" as "line",
+				type: "line",
 				animations: {
 					enabled: true,
 					dynamicAnimation: {
@@ -104,25 +104,27 @@ export default function LiveChart(): JSX.Element {
 	});
 
 	React.useEffect(() => {
-		const interval = window.setInterval(() => {
-			const newPoint = getNewSeries(lastDate, {
-				min: 10,
-				max: 90,
-			});
-			lastDate.setTime(newPoint.x); // Update lastDate to the new point's time
+		if (typeof window !== "undefined") { // Check if window is defined
+			const interval = window.setInterval(() => {
+				const newPoint = getNewSeries(lastDate, {
+					min: 10,
+					max: 90,
+				});
+				lastDate.setTime(newPoint.x);
 
-			setState((prevState) => ({
-				...prevState,
-				series: [
-					{
-						data: [...prevState.series[0].data, newPoint], // Add new data point
-					},
-				],
-			}));
-		}, 1000);
+				setState((prevState) => ({
+					...prevState,
+					series: [
+						{
+							data: [...prevState.series[0].data, newPoint], // Add new data point
+						},
+					],
+				}));
+			}, 1000);
 
-		// Cleanup interval on component unmount
-		return () => clearInterval(interval);
+			// Cleanup interval on component unmount
+			return () => clearInterval(interval);
+		}
 	}, []);
 
 	return (
