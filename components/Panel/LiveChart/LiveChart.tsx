@@ -4,7 +4,7 @@ import React, { JSX } from "react";
 import ReactApexChart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
 
-const XAXISRANGE: number = 100;
+const XAXISRANGE: number = 60000;
 const lastDate: Date = new Date();
 
 const getNewSeries = (lastDate: Date, range: { min: number; max: number }) => {
@@ -41,28 +41,53 @@ export default function LiveChart(): JSX.Element {
 					enabled: false,
 				},
 			},
-			dataLabels: {
-				enabled: false,
-			},
 			stroke: {
 				curve: "smooth",
+				width: 3,
+				colors: ['#FF4560'],
 			},
 			title: {
 				text: "Dynamic Updating Chart",
 				align: "left",
-			},
-			markers: {
-				size: 0,
+				style: {
+					fontSize: '16px',
+					color: '#333',
+				},
 			},
 			xaxis: {
 				type: "datetime",
 				range: XAXISRANGE,
+				title: {
+					text: 'Time',
+					style: {
+						color: '#333',
+					},
+				},
 			},
 			yaxis: {
 				max: 100,
+				title: {
+					text: 'Value',
+					style: {
+						color: '#333',
+					},
+				},
 			},
 			legend: {
 				show: false,
+			},
+			tooltip: {
+				enabled: true,
+				style: {
+					fontSize: '12px',
+					color: '#333',
+				},
+				x: {
+					format: 'dd MMM HH:mm',
+				},
+			},
+			grid: {
+				borderColor: '#e0e0e0',
 			},
 		},
 	});
