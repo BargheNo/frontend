@@ -4,10 +4,11 @@ import { MoveLeft, Lock, Unlock, Smartphone
  } from "lucide-react";
 import Link from "next/link";
 import styles from "./login.module.css";
+import { login } from "../../../src/services/apiHub";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    number: "98",
+    number: "",
     password: "",
   });
 
@@ -18,9 +19,9 @@ const Login = () => {
 
     if (name === "phone") {
       if (value === "") {
-        setFormData({ ...formData, number: "98" });
-      } else if (!value.startsWith("98")) {
-        setFormData({ ...formData, number: `98${value}` });
+        setFormData({ ...formData, number: "" });
+      } else if (!value.startsWith("")) {
+        setFormData({ ...formData, number: `${value}` });
       } else {
         setFormData({ ...formData, number: value });
       }
@@ -29,9 +30,17 @@ const Login = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Logging in...", formData);
+    try {
+      const response = await login(formData.number, formData.password);
+      console.log("Login successful:", response);
+      localStorage.setItem("accessToken", response.data.accessToken);
+      localStorage.setItem("refreshToken", response.data.refreshToken);
+      alert(response.message);
+    } catch (err) {
+      console.error("Login error:", err);
+    }
   };
 
   const togglePasswordVisibility = () => {
@@ -55,7 +64,7 @@ const Login = () => {
             <input
               type="tel"
               name="phone"
-              value={formData.number === "98" ? "" : formData.number}
+              value={formData.number === "" ? "" : formData.number}
               onChange={handleChange}
               placeholder="شماره همراه"
               className="text-black w-4/5 px-3 py-2 rounded-lg focus:outline-none focus:ring focus:ring-blue-300 shadow-[inset_-4px_-4px_10px_rgba(255,255,255,0.5),inset_1px_1px_3px_rgba(0,0,0,0.2)]"
