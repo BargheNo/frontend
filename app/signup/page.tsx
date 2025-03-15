@@ -6,7 +6,7 @@ import SignupButton from "@/components/SignupButton/SignupButton";
 import style from "./signup.module.css";
 import Background from '../../public/signup.jpg';
 import Image from "next/image";
-import { MoveLeft, Mail, Lock, User, Unlock, Check } from 'lucide-react';
+import { MoveLeft, Smartphone, Lock, User, Unlock, Check } from 'lucide-react';
 
 function login() {
     const[name,setName]=useState("");
@@ -25,10 +25,15 @@ function login() {
         <div className={style.card}>
            <h1 className={style.topic}>ثبت نام</h1>
                 <div className="flex flex-row gap-3 justify-center w-9/10 ">
-                <CustomInput icon={User}  type="text" value={Lname} onChange={setLName}>نام خانوادگی</CustomInput>
+                <CustomInput  icon={User}  type="text" value={Lname} onChange={setLName}>نام خانوادگی</CustomInput>
                 <CustomInput icon={User}  type="text" value={name} onChange={setName}>نام </CustomInput>
                 </div>
-                <CustomInput icon={Mail} type="number" value={phonenumber} onChange={setphonenumber}>شماره تلفن همراه</CustomInput>
+                <div className="flex flex-row justify-center w-9/10 ">
+                    <div className={style.code}>
+                    <CustomInput readonly={true} value="" icon={Smartphone} type="number" > +98 </CustomInput>
+                    </div>
+                    <CustomInput  type="number" value={phonenumber} onChange={setphonenumber}>شماره تلفن همراه</CustomInput>
+                </div>
                 <CustomInput onIconClick={()=>Sethidepass(prev=>!prev)} icon={hidepass?Lock:Unlock} type={hidepass?"password":"text"} value={password} onChange={setPassword}>رمز عبور</CustomInput>
                 <CustomInput onIconClick={()=>Sethideconfpass(prev=>!prev)} icon={hideconfpass?Lock:Unlock} type={hideconfpass?"password":"text"} value={confpassword} onChange={setConfpassword}>تایید رمز عبور</CustomInput>
             <div className={style.ruleText}>
@@ -50,9 +55,10 @@ function login() {
                         <p>ثبت نام</p> 
                     </div>
                 </SignupButton>
+                
             </div>
             <div className={style.loginText}>
-                <p className={style.link}>ورود به حساب</p>
+                <a className={style.link}>ورود به حساب</a>
                 <p>!قبلا حساب ساخته ام</p>
             </div>
 
