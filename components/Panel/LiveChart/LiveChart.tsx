@@ -47,7 +47,7 @@ export default function LiveChart(): JSX.Element {
 			stroke: {
 				curve: "smooth",
 				width: 3,
-				colors: ["#FF4560"],
+				colors: ["#FA682D"],
 			},
 			title: {
 				text: "میزان برق تولیدی",

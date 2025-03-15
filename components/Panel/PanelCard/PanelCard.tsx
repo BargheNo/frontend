@@ -44,7 +44,7 @@ const PanelCard = ({
 
 	return (
 		<div
-			className={`${1 ? className : ""} w-full ${
+			className={`${className} w-full ${
 				0 ? "h-64" : ""
 			} border-t-1 border-gray-300 first:border-t-0`}
 		>
