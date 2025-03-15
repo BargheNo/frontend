@@ -1,0 +1,16 @@
+.mainbg {
+    @apply flex items-center justify-center min-h-screen bg-[#E8EBF2];
+
+    background-image: url('../../../public/images/bg4.jpg');
+    background-size: cover;
+    background-position: center;
+    font-family: 'Vazir';
+}
+
+@font-face {
+    font-family: 'Vazir';
+    src: url('../../../public/fonts/vazir/Vazir.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}

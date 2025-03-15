@@ -2,7 +2,7 @@ import axios from "axios";
 
 // export const baseURL = "https://bombfundingbackend.liara.run";
 // export const baseURL = "http://104.168.46.4:8000";
-export const baseURL = "";
+export const baseURL = "http://185.110.189.68:3001/";
 
 const apiClient = axios.create({
   baseURL: baseURL,
@@ -111,5 +111,38 @@ export const deleteData = async ({ endPoint, headers }: getParams) => {
     return response.data;
   } catch (error) {
     throw error;
+  }
+};
+
+
+
+// function to handle login's request
+interface LoginResponse {
+  statusCode: number;
+  message: string;
+  data: {
+    accessToken: string;
+    refreshToken: string;
+    firstName: string;
+    lastName: string;
+    permissions: null | any[];
+  };
+}
+
+export const login = async (phone: string, password: string): Promise<LoginResponse> => {
+  console.log(baseURL)
+  try {
+    const response = await axios.post(`${baseURL}v1/auth/login`, {
+      phone,
+      password,
+    });
+
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message || "Login failed.");
+    } else {
+      throw new Error("An unexpected error occurred.");
+    }
   }
 };

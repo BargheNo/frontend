@@ -1,23 +1,27 @@
 "use client";
-import { useState } from "react";
-import { MoveLeft, Lock, Smartphone } from "lucide-react";
-import "./login.css";
+import { useState} from "react";
+import { MoveLeft, Lock, Unlock, Smartphone
+ } from "lucide-react";
+import Link from "next/link";
+import styles from "./login.module.css";
+import { login } from "../../../src/services/apiHub";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    number: "98",
+    number: "",
     password: "",
   });
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     if (name === "phone") {
-      
       if (value === "") {
-        setFormData({ ...formData, number: "98" }); 
-      } else if (!value.startsWith("98")) {
-        setFormData({ ...formData, number: `98${value}` });
+        setFormData({ ...formData, number: "" });
+      } else if (!value.startsWith("")) {
+        setFormData({ ...formData, number: `${value}` });
       } else {
         setFormData({ ...formData, number: value });
       }
@@ -26,52 +30,75 @@ const Login = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Logging in...", formData);
+    try {
+      const response = await login(formData.number, formData.password);
+      console.log("Login successful:", response);
+      localStorage.setItem("accessToken", response.data.accessToken);
+      localStorage.setItem("refreshToken", response.data.refreshToken);
+      alert(response.message);
+    } catch (err) {
+      console.error("Login error:", err);
+    }
   };
 
-  
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
-    <div
-      dir="rtl"
-      className="mainbg flex items-center justify-center min-h-screen bg-[#E8EBF2]"
-    >
+    <div dir="rtl" className={styles.mainbg}>
       <div className="w-full max-w-md p-6 space-y-4 shadow-2xl rounded-2xl bg-[#f1f4fc]">
         <h2 className="text-3xl text-black text-center">{"ورود"}</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-
           <div className="relative">
             <Smartphone
-              className="absolute left-3 top-3 text-orange-400"
+              className="absolute left-3 top-2 text-orange-400"
               size={20}
             />
+            
+
 
             <input
               type="tel"
               name="phone"
-              value={formData.number === "98" ? "" : formData.number} 
+              value={formData.number === "" ? "" : formData.number}
               onChange={handleChange}
               placeholder="شماره همراه"
-              className="text-black w-full px-3 py-2 rounded-lg focus:outline-none focus:ring focus:ring-blue-300 shadow-[inset_-4px_-4px_10px_rgba(255,255,255,0.5),inset_1px_1px_3px_rgba(0,0,0,0.2)]"
+              className="text-black w-4/5 px-3 py-2 rounded-lg focus:outline-none focus:ring focus:ring-blue-300 shadow-[inset_-4px_-4px_10px_rgba(255,255,255,0.5),inset_1px_1px_3px_rgba(0,0,0,0.2)]"
               required
               dir="rtl"
+            />
+            <input
+              type="tel"
+              name="phone"
+              placeholder="+98"
+              className="text-black align-middle w-1/5 pl-9 py-2 rounded-lg focus:outline-none focus:ring focus:ring-blue-300 shadow-[inset_-4px_-4px_10px_rgba(255,255,255,0.5),inset_1px_1px_3px_rgba(0,0,0,0.2)]"
+              dir="ltr"
+              readOnly
             />
           </div>
 
           <div className="relative">
-            <Lock className="absolute left-3 top-3 text-orange-400" size={20} />
+          <button
+              type="button"
+              onClick={togglePasswordVisibility}
+              className="absolute left-3 top-3 text-orange-400 cursor-pointer"
+            >
+              {showPassword ? <Unlock size={20} /> : <Lock size={20} />}
+            </button>
 
             <input
-              type="password"
+              type={showPassword ? "text" : "password"} 
               name="password"
               value={formData.password}
               onChange={handleChange}
               placeholder="رمز عبور"
               className="text-black w-full px-3 py-2 rounded-lg focus:outline-none focus:ring focus:ring-blue-300 shadow-[inset_-4px_-4px_10px_rgba(255,255,255,0.5),inset_1px_1px_3px_rgba(0,0,0,0.2)]"
               required
+              dir="rtl"
             />
           </div>
 
@@ -88,7 +115,7 @@ const Login = () => {
 
         <p className="flex gap-5 justify-center text-center text-sm text-blue-600">
           <a href="">فراموشی رمز عبور</a>
-          <a href="">ثبت نام نکرده ام</a>
+          <Link href="/signup">ثبت نام نکرده ام</Link>
         </p>
       </div>
     </div>
