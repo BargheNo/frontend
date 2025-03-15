@@ -58,7 +58,7 @@ function login() {
                 
             </div>
             <div className={style.loginText}>
-                <a className={style.link}>ورود به حساب</a>
+                <a href="./login" className={style.link}>ورود به حساب</a>
                 <p>!قبلا حساب ساخته ام</p>
             </div>
 
