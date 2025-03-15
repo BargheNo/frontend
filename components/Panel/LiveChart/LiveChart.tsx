@@ -42,6 +42,7 @@ export default function LiveChart(): JSX.Element {
 				zoom: {
 					enabled: false,
 				},
+				background: "#f9f9f9", // Light background for the chart
 			},
 			stroke: {
 				curve: "smooth",
@@ -54,9 +55,10 @@ export default function LiveChart(): JSX.Element {
 				offsetY: 10,
 				align: "right",
 				style: {
-					fontSize: "20px",
+					fontSize: "24px",
 					color: "#333",
 					fontFamily: "vazir",
+					fontWeight: "bold",
 				},
 			},
 			xaxis: {
@@ -68,7 +70,13 @@ export default function LiveChart(): JSX.Element {
 					style: {
 						color: "#333",
 						fontFamily: "vazir",
-						fontSize: "14px",
+						fontSize: "16px",
+					},
+				},
+				labels: {
+					style: {
+						fontSize: "12px", // Smaller x-axis labels
+						color: "#666", // Lighter color for labels
 					},
 				},
 			},
@@ -79,7 +87,13 @@ export default function LiveChart(): JSX.Element {
 					style: {
 						color: "#333",
 						fontFamily: "vazir",
-						fontSize: "14px",
+						fontSize: "16px",
+					},
+				},
+				labels: {
+					style: {
+						fontSize: "12px", // Smaller y-axis labels
+						color: "#666", // Lighter color for labels
 					},
 				},
 			},
@@ -89,8 +103,9 @@ export default function LiveChart(): JSX.Element {
 			tooltip: {
 				enabled: true,
 				style: {
-					fontSize: "12px",
-					// colors: '#333',
+					fontSize: "14px",
+					background: "#fff", // White background for tooltips
+					border: "1px solid #ccc", // Border for tooltips
 				},
 				x: {
 					format: "dd MMM HH:mm",
@@ -98,13 +113,13 @@ export default function LiveChart(): JSX.Element {
 			},
 			grid: {
 				borderColor: "#e0e0e0",
-				// borderColor: "#000"
+				strokeDashArray: 5,
 			},
 		},
 	});
 
 	React.useEffect(() => {
-		if (typeof window !== "undefined") { // Check if window is defined
+		if (typeof window !== "undefined") {
 			const interval = window.setInterval(() => {
 				const newPoint = getNewSeries(lastDate, {
 					min: 10,
@@ -116,26 +131,25 @@ export default function LiveChart(): JSX.Element {
 					...prevState,
 					series: [
 						{
-							data: [...prevState.series[0].data, newPoint], // Add new data point
+							data: [...prevState.series[0].data, newPoint],
 						},
 					],
 				}));
 			}, 1000);
 
-			// Cleanup interval on component unmount
 			return () => clearInterval(interval);
 		}
 	}, []);
 
 	return (
-		<div>
+		<div className="p-5 bg-[#f9f9f9] shadow-lg rounded-lg">
 			<div id="chart">
 				<ReactApexChart
 					options={state.options}
 					series={state.series}
 					type="line"
 					height={350}
-					className="w-full border-solid border-2 border-black"
+					className="w-full"
 				/>
 			</div>
 			<div id="html-dist"></div>
