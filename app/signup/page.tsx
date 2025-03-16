@@ -7,13 +7,25 @@ import style from "./signup.module.css";
 import Background from '../../public/signup.jpg';
 import Image from "next/image";
 import { MoveLeft, Smartphone, Lock, User, Unlock, Check } from 'lucide-react';
+import * as Yup from "yup";
+import { Form, Formik } from "formik";
 
 function login() {
-    const[name,setName]=useState("");
-    const[Lname,setLName]=useState("");
-    const[phonenumber,setphonenumber]=useState("");
-    const[password,setPassword]=useState("");
-    const[confpassword,setConfpassword]=useState("");
+    const validationSchema=Yup.object({
+        firstname:Yup.string().required(".نام الزامی است"),
+        lastname:Yup.string().required(".نام خانوادگی الزامی است"),
+        phonenumber:Yup.string().matches(/^(9\d{9})$/,".شماره تلفن وارد شده اشتباه است").required(".شماره تلفن الزامی است"),
+        password: Yup.string().min(8, "رمز عبور باید حداقل 8 کاراکتر باشد.")
+            .matches(/[A-Za-z]/, ".رمز عبور باید شامل حداقل یک حرف باشد")
+            .matches(/\d/, ".رمز عبور باید شامل حداقل یک عدد باشد")
+            .matches(/[\W_]/, ".رمز عبور باید شامل حداقل یک نماد باشد")
+            .required(".رمز عبور الزامی است"),
+        confirmpassword: Yup.string()
+            .oneOf([Yup.ref("password")], ".تأیید رمز عبور باید با رمز عبور مطابقت داشته باشد")
+            .required(".تأیید رمز عبور الزامی است"),  
+    })
+
+
     const[check,Setcheck]=useState(false);
     const[hidepass,Sethidepass]=useState(true);
     const[hideconfpass,Sethideconfpass]=useState(true);
@@ -24,18 +36,24 @@ function login() {
     <div className={style.wholePage}>
         <div className={style.card}>
            <h1 className={style.topic}>ثبت نام</h1>
+           <Formik  initialValues={{firstname:"",lastname:"",phonenumber:"",password:"",confirmpassword:""}} 
+            validationSchema={validationSchema}
+            onSubmit={(values)=>console.log(values)}>
+                <Form className={style.form}>
+
+            
                 <div className="flex flex-row gap-3 justify-center w-9/10 ">
-                <CustomInput  icon={User}  type="text" value={Lname} onChange={setLName}>نام خانوادگی</CustomInput>
-                <CustomInput icon={User}  type="text" value={name} onChange={setName}>نام </CustomInput>
+                <CustomInput name="lastname" icon={User}  type="text"  placeholder="نام خانوادگی"> </CustomInput>
+                <CustomInput placeholder="نام" name="firstname" icon={User}  type="text" > </CustomInput>
                 </div>
                 <div className="flex flex-row justify-center w-9/10 ">
                     <div className={style.code}>
-                    <CustomInput readonly={true} value="" icon={Smartphone} type="number" > +98 </CustomInput>
+                    <CustomInput name="countrycode" readOnly={true} placeholder="+98" icon={Smartphone} type="number" > </CustomInput>
                     </div>
-                    <CustomInput  type="number" value={phonenumber} onChange={setphonenumber}>شماره تلفن همراه</CustomInput>
+                    <CustomInput name="phonenumber" placeholder="شماره تلفن همراه"  type="number" > </CustomInput>
                 </div>
-                <CustomInput onIconClick={()=>Sethidepass(prev=>!prev)} icon={hidepass?Lock:Unlock} type={hidepass?"password":"text"} value={password} onChange={setPassword}>رمز عبور</CustomInput>
-                <CustomInput onIconClick={()=>Sethideconfpass(prev=>!prev)} icon={hideconfpass?Lock:Unlock} type={hideconfpass?"password":"text"} value={confpassword} onChange={setConfpassword}>تایید رمز عبور</CustomInput>
+                <CustomInput name="password" placeholder="رمز عبور" onIconClick={()=>Sethidepass(prev=>!prev)} icon={hidepass?Lock:Unlock} type={hidepass?"password":"text"} > </CustomInput>
+                <CustomInput name="confirmpassword" onIconClick={()=>Sethideconfpass(prev=>!prev)} icon={hideconfpass?Lock:Unlock} type={hideconfpass?"password":"text"}  placeholder="تایید رمز عبور">  </CustomInput>
             <div className={style.ruleText}>
             
             <label htmlFor="link-checkbox" className="flex gap-1">
@@ -49,7 +67,7 @@ function login() {
                 
             </div>
             <div style={{width:"90%"}}>
-                <SignupButton  Disable={!check}>
+                <SignupButton type="submit"  Disable={!check}>
                     <div className={style.leftIconButton}>
                         <MoveLeft></MoveLeft>
                         <p>ثبت نام</p> 
@@ -61,7 +79,8 @@ function login() {
                 <a href="./login" className={style.link}>ورود به حساب</a>
                 <p>!قبلا حساب ساخته ام</p>
             </div>
-
+            </Form>
+            </Formik>
         </div>
     </div>
     </div>

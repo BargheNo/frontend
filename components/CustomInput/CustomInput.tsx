@@ -1,34 +1,37 @@
+"use client";
 import style from "./CustomInput.module.css";
-import { LucideIcon } from 'lucide-react';
+import { LucideIcon } from "lucide-react";
+import { useField } from "formik";
 
-
-interface Props {
-  value?: string;
-  onChange?: (value: string) => void;
-  children: React.ReactNode; 
-  type:string;
-  style?: React.CSSProperties;
-  icon?:LucideIcon;
-  onIconClick?:()=>void;
-  readonly?:boolean;
+interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
+  name: string;
+  children: React.ReactNode;
+  icon?: LucideIcon;
+  onIconClick?: () => void;
 }
 
-export default function CustomInput({ value, onChange, children,type,icon:Icon,onIconClick,readonly }: Props) {
+export default function CustomInput({
+  name,
+  children,
+  icon: Icon,
+  onIconClick,
+  ...props
+}: Props) {
+  const [field, meta] = useField({ name, ...props });
+  const hasError = meta.touched && meta.error;
+
   return (
     <div className={style.Conter}>
-        {Icon&&<Icon onClick={onIconClick} className={style.icon}></Icon>}
-      {value === "" && <label
-        className={style.text}
-      >
-        {children}
-      </label>}
+      <div className={style.inputWrapper}> 
+      {Icon && <Icon onClick={onIconClick} className={style.icon} />}
+      {field.value === "" && <label className={style.text}>{children}</label>}
       <input
-        type={type}
-        value={value}
-        readOnly={readonly}
-        onChange={(e) => onChange && onChange(e.target.value)}
+        {...field}
+        {...props}
         className={`${style.CustomInput} ${style.numberInput}`}
       />
+      {hasError && <div className={style.errorMessage}>{meta.error}</div>}
+      </div>
     </div>
   );
 }

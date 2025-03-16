@@ -10,7 +10,7 @@
 }
 
 .loginText{
-    @apply flex flex-row justify-end;
+    @apply flex flex-row justify-center;
     margin-top: 20px;
     gap:4px;
     font-size:16px;
@@ -18,7 +18,7 @@
 
 .ruleText{
     @apply flex flex-row justify-end;
-    margin-top:15px;
+    margin-top:22px;
     gap:4px;
     font-size:16px;
     margin-left:auto;
@@ -67,6 +67,12 @@
     width: 27%;
 
 }
+
+.form{
+    @apply flex flex-col w-full items-center;
+    gap: 1.15rem;
+}
+
 
 @media(max-width:1320px){
     .code{

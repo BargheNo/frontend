@@ -4,8 +4,9 @@ interface Props {
     Disable?:boolean;
     Style?: React.CSSProperties;
     children:React.ReactNode;
+    type?:"submit"|"button"
   }
 
-export default function SignupButton({Disable,Style,children}:Props) {
-  return <button   style={Style} disabled={Disable} className={style.button}>{children}</button>;
+export default function SignupButton({Disable,Style,children,type}:Props) {
+  return <button  type={type} style={Style} disabled={Disable} className={style.button}>{children}</button>;
 }
