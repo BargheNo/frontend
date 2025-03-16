@@ -70,7 +70,7 @@
 
 .form{
     @apply flex flex-col w-full items-center;
-    gap: 1.15rem;
+    gap: 0.19rem;
 }
 
 
