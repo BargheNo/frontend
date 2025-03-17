@@ -18,7 +18,7 @@
 
 .ruleText{
     @apply flex flex-row justify-end;
-    margin-top:22px;
+    margin-top:15px;
     gap:4px;
     font-size:16px;
     margin-left:auto;
