@@ -7,11 +7,11 @@ import {
 	LandPlot,
 } from "lucide-react";
 
-interface PanelProps {
-	params: {
-		panelId: string;
-	};
-}
+// interface PanelProps {
+// 	params: {
+// 		panelId: string;
+// 	};
+// }
 
 const Item = ({
 	icon: Icon,
@@ -33,8 +33,9 @@ const Item = ({
 	);
 };
 const gapSize = 8;
-const PanelId = ({ params }: PanelProps) => {
-	const { panelId } = params; // Access the panelId from params
+const PanelId = () => {
+// const PanelId = ({ params }: PanelProps) => {
+	// const { panelId } = params; // Access the panelId from params
 	return (
 		<div className={`w-full px-12 my-7 flex flex-col gap-${gapSize}`}>
 			<div className={`grid grid-cols-2 gap-${gapSize}`}>

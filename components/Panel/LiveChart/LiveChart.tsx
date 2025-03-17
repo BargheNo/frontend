@@ -3,7 +3,6 @@
 import React, { JSX } from "react";
 import ReactApexChart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
-import useClientCheck from "@/src/hooks/useClientCheck";
 
 const XAXISRANGE: number = 60000;
 const lastDate: Date = new Date();
@@ -76,7 +75,7 @@ export default function LiveChart(): JSX.Element {
 				labels: {
 					style: {
 						fontSize: "12px", // Smaller x-axis labels
-						color: "#666", // Lighter color for labels
+						colors: ["#666"], // Lighter color for labels
 					},
 				},
 			},
@@ -93,7 +92,7 @@ export default function LiveChart(): JSX.Element {
 				labels: {
 					style: {
 						fontSize: "12px", // Smaller y-axis labels
-						color: "#666", // Lighter color for labels
+						colors: ["#666"], // Lighter color for labels
 					},
 				},
 			},
@@ -104,8 +103,6 @@ export default function LiveChart(): JSX.Element {
 				enabled: true,
 				style: {
 					fontSize: "14px",
-					background: "#fff", // White background for tooltips
-					border: "1px solid #ccc", // Border for tooltips
 				},
 				x: {
 					format: "dd MMM HH:mm",
