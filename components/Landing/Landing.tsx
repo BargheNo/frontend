@@ -4,10 +4,11 @@ import panel from "@/public/images/Landing/panel.png";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./Landing.module.css";
+import Announcement from "./Announcement/Announcement";
 export default function Landing() {
 	return (
 		<div
-			className={`text-center items-center bg-[#F4F7F9] ${vazir.className}`}
+			className={`items-center bg-[#F4F7F9] ${vazir.className}`}
 			dir="rtl"
 		>
 			{/*
@@ -20,7 +21,7 @@ export default function Landing() {
 					>
 						برق نو
 					</h1>
-					<span className={`${vazir.className} font-bold text-xl`}>
+					<span className={`${vazir.className} font-bold text-xl text-center`}>
 						سامانه جامع مدیریت برق خورشیدی
 					</span>
 					<Link href="/login" className="w-full">
@@ -56,24 +57,39 @@ export default function Landing() {
 			{/*
 			 * اطلاعیه ها
 			 */}
-			<div className="w-[90vw] h-screen flex flex-col place-self-center items-center">
+			<div className="w-[70vw] h-screen flex flex-col place-self-center items-center">
 				<div>
 					<div
 						className={`w-1/12 ${styles.announcements_top} flex place-content-center mr-0`}
 					>
 						<div
-							className={`${styles.announcements_header} text-white place-content-center text-3xl font-bold mx-auto my-auto`}
+							className={`${styles.announcements_header} text-center text-white place-content-center text-3xl font-bold mx-auto my-auto`}
 						>
 							اطلاعیه‌ها
 						</div>
 					</div>
 					<div
-						className={`w-1/2 ${styles.announcements_bottom} p-2 flex mx-auto my-auto`}
+						className={`w-1/3 ${styles.announcements_bottom} p-2 flex mx-auto flex-col overflow-auto`}
 					>
-                        <div className={`${styles.announcements_box}`}>
-                            
-                        </div>
-                    </div>
+						<div className={`${styles.announcements_box} flex flex-col p-8 items-start gap-8`}>
+							<Announcement
+								header="اطلاعیه جدید"
+								text="لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد..."
+							/>
+							<Announcement
+								header="اطلاعیه جدید"
+								text="لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد..."
+							/>
+							<Announcement
+								header="اطلاعیه جدید"
+								text="لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد..."
+							/>
+							<Announcement
+								header="اطلاعیه جدید"
+								text="لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد..."
+							/>
+						</div>
+					</div>
 				</div>
 			</div>
 
