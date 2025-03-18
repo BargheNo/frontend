@@ -1,5 +1,5 @@
 import IconWithBackground from "@/components/IconWithBackground/IconWithBackground";
-import { RequestCardProps } from "@/src/types/RequestCardTypes";
+import { BidCardProps } from "@/src/types/BidCardTypes";
 import {
 	ArrowLeft,
 	Battery,
@@ -94,11 +94,18 @@ const Item = ({
 	);
 };
 
-export default function RequestCard({
+export default function BidCard({
 	className,
-	// sentRequestsCount = 0,
 	panelDetails,
-}: RequestCardProps) {
+	status,
+}: BidCardProps) {
+	const getStatusColor = () => {
+		if (status === "confirmed")
+			return "bg-gradient-to-br from-green-400 to-green-500 border-1 border-gray-100/50 shadow-sm shadow-green-500";
+		if (status === "pending")
+			return "bg-gradient-to-br from-yellow-400 to-yellow-500 shadow-yellow-500";
+		return "bg-gradient-to-br from-red-400 to-red-500 shadow-red-500";
+	};
 	return (
 		<div
 			className={`${className} w-full min-h-64 border-t-1 border-gray-300 first:border-t-0`}
@@ -131,20 +138,34 @@ export default function RequestCard({
 						/>
 						<Item
 							icon={DollarSign}
-							fieldName="قیمت مد نظر"
+							fieldName="قیمت پیشنهادی شما"
 							fieldValue={panelDetails.price}
 							prefix="تومان"
 						/>
 					</div>
 					<div className="flex flex-col justify-evenly w-1/5 items-center text-center">
+						<div className="flex flex-col items-center justify-center gap-2 p-3 rounded-2xl bg-[#F0F0F3] shadow-[inset_-4px_-4px_10px_rgba(255,255,255,0.8),inset_4px_4px_10px_rgba(0,0,0,0.1)] w-24">
+							<div
+								className={`h-4 w-4 rounded-full ${getStatusColor()} shadow-md`}
+							></div>
+							<span className="text-sm font-medium text-gray-600">
+								{status === "confirmed"
+									? "تایید شده"
+									: "در انتظار تایید مشتری"}
+							</span>
+						</div>
 						{/* <div className="flex flex-col shadow-[-6px_-6px_16px_rgba(255,255,255,0.8),6px_6px_16px_rgba(0,0,0,0.2)] rounded-md px-4 mx-4 my-4 py-2">
-							<span>پیشنهادهای ارسال شده</span>
+							<div
+								className={`h-4 w-4 rounded-full ${getStatusColor()} shadow-md`}
+							></div>
 							<span className="text-3xl font-bold" dir="rtl">
-								{sentRequestsCount}/5
+								{status === "confirmed"
+									? "تایید شده"
+									: "در انتظار تایید مشتری"}
 							</span>
 						</div> */}
 						<div className="flex flex-col items-center gap-2">
-							<Link href={"requests/meow"}>
+							<Link href={"bids/meow"}>
 								<div className="bg-gradient-to-b from-[#EE4334] to-[#D73628] rounded-full w-16 h-16 flex items-center place-content-center text-white cursor-pointer shadow-md hover:shadow-lg transition duration-300 hover:scale-105">
 									<ArrowLeft />
 								</div>
