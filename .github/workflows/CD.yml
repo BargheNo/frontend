@@ -49,7 +49,7 @@ jobs:
         docker compose build | grep -A 1000 "#10" | tee /tmp/output.txt
         # BUILD_EXIT_CODE=$?
         # cat /tmp/output.txt
-        export OUTPUT="$(cat /tmp/output.txt)")
+        export OUTPUT="$(cat /tmp/output.txt)"
         #echo "$ERROR_OUTPUT"
         
         # Store the error output for later use
