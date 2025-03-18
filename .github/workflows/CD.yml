@@ -45,7 +45,8 @@ jobs:
         # Capture the build output in a variable
         touch /tmp/output.txt
         # ERROR_OUTPUT=$(docker compose build 2>&1 | tee /tmp/output.txt)
-        docker compose build | tee /tmp/output.txt
+        # docker compose build | tee /tmp/output.txt
+        docker compose build | grep -A 1000 "#10" | tee /tmp/output.txt
         # BUILD_EXIT_CODE=$?
         # cat /tmp/output.txt
         export OUTPUT="$(cat /tmp/output.txt)")
