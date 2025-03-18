@@ -3,7 +3,7 @@ name: CD
 on:
   # push:
   #   branches:
-  #     - ops/PR-validation
+  #     - ops/PR-validation 
   pull_request:
     branches:
       - develop
@@ -41,22 +41,27 @@ jobs:
       id: docker_build
       continue-on-error: true
       run: |
-        #docker compose build
+        # docker compose build
         # Capture the build output in a variable
-        ERROR_OUTPUT=$(docker compose build 2>&1)
-        BUILD_EXIT_CODE=$?
-
-        echo "$ERROR_OUTPUT"
+        touch /tmp/output.txt
+        # ERROR_OUTPUT=$(docker compose build 2>&1 | tee /tmp/output.txt)
+        # docker compose build | tee /tmp/output.txt
+        docker compose build | grep -A 1000 "#10" | tee /tmp/output.txt
+        # BUILD_EXIT_CODE=$?
+        # cat /tmp/output.txt
+        export OUTPUT="$(cat /tmp/output.txt)"
+        #echo "$ERROR_OUTPUT"
         
         # Store the error output for later use
-        echo "error_output<<EOF" >> $GITHUB_ENV
-        echo "$ERROR_OUTPUT" >> $GITHUB_ENV
-        echo "EOF" >> $GITHUB_ENV
+        # echo "error_output<<EOF" >> $GITHUB_ENV
+        # echo "$ERROR_OUTPUT" >> $GITHUB_ENV
+        # echo "$OUTPUT" >> $GITHUB_ENV
+        # echo "EOF" >> $GITHUB_ENV
         
         # Store the build status
-        echo "build_exit_code=$BUILD_EXIT_CODE" >> $GITHUB_ENV
+        # echo "build_exit_code=$BUILD_EXIT_CODE" >> $GITHUB_ENV
         # Exit with the original build exit code
-        exit $BUILD_EXIT_CODE
+        # exit $BUILD_EXIT_CODE
 
     - name: Push Docker image
       if: success() && steps.docker_build.outcome == 'success'
@@ -67,13 +72,11 @@ jobs:
       uses: actions/github-script@v6
       with:
         script: |
+          const fs = require('fs');
           const { owner, repo, number } = context.issue;
           
-          const errorLog = process.env.error_output || 'Docker build or push failed';
-          
-          let errorMessage = '❌ Build failed!\n\n';
-          
-          errorMessage += `Error details:\n\`\`\`\n${errorLog}\n\`\`\``;
+          // const errorLog = process.env.OUTPUT || 'Docker build or push failed';
+          let errorMessage = `❌ Build failed!\n\nError details:\n\`\`\`\n${fs.readFileSync('/tmp/output.txt', 'utf8')}\n\`\`\``;
           
           // Add comment to PR
           await github.rest.issues.createComment({

@@ -22,7 +22,7 @@ export default function Layout({ children }: Readonly<{ children: React.ReactNod
 
 
   return (
-    <PanelAside navItems={navItems as NavItem[]} corp={false}>
+    <PanelAside navItems={navItems as NavItem[]}>
       {children}
     </PanelAside>
   );

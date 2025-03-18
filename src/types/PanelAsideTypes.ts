@@ -9,7 +9,7 @@ interface NavItem {
 interface PanelAsideProps {
 	children: ReactNode;
 	navItems: NavItem[];
-	corp: boolean | null;
+	corp?: boolean;
 }
 
 export type { NavItem };

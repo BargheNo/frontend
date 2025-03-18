@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { getParams, postParams } from "../types/apiHubType";
 
 // export const baseURL = "https://bombfundingbackend.liara.run";
 // export const baseURL = "http://104.168.46.4:8000";
@@ -93,16 +94,16 @@ export function useDeleteData(options = {}) {
 }
 
 // Add TypeScript interfaces
-interface getParams {
-  endPoint: string;
-  headers?: any;
-}
+// interface getParams {
+//   endPoint: string;
+//   headers?: any;
+// }
 
-interface postParams {
-  endPoint: string;
-  data: any;
-  headers?: any;
-}
+// interface postParams {
+//   endPoint: string;
+//   data: any;
+//   headers?: any;
+// }
 
 // Keep existing API functions as they are
 export const getData = async ({ endPoint, headers }: getParams) => {

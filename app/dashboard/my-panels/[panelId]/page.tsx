@@ -16,7 +16,7 @@ const Item = ({
 }: {
 	icon: React.ElementType;
 	fieldName: string;
-	fieldValue: string;
+	fieldValue: string | number;
 }) => {
 	return (
 		<div className="flex items-start gap-2">
@@ -41,7 +41,7 @@ const PanelId = () => {
 					<LiveChart />
 				</div>
 			</div>
-			<div className="w-full text-gray-800 rounded-2xl  shadow-[-6px_-6px_16px_rgba(255,255,255,0.8),6px_6px_16px_rgba(0,0,0,0.2)]">
+			<div className="w-full text-gray-800 rounded-2xl shadow-[-6px_-6px_16px_rgba(255,255,255,0.8),6px_6px_16px_rgba(0,0,0,0.2)]">
 				<div className="border-t-1 border-gray-300 first:border-t-0 px-7 py-3">
 					<Item
 						icon={SquareMenu}
