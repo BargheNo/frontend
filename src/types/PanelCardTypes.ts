@@ -8,5 +8,5 @@ export interface PanelCardProps {
 	panelName: string;
 	technicalDetails: TechnicalDetails;
 	address: string;
-	className?: string | null;
+	className?: string;
 }

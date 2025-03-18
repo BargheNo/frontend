@@ -2,7 +2,7 @@ import React from "react";
 import { MoveLeft, Sun, Battery, TrendingUp, MapPin } from "lucide-react";
 import { PanelCardProps } from "@/src/types/PanelCardTypes";
 import Link from "next/link";
-
+import IconWithBackground from "@/components/IconWithBackground/IconWithBackground";
 const PanelCard = async ({
 	panelName,
 	technicalDetails,
@@ -25,22 +25,22 @@ const PanelCard = async ({
 	};
 
 	// Function to wrap icons with a rounded background
-	const IconWithBackground = ({
-		icon: Icon,
-		color,
-	}: {
-		icon: React.ElementType;
-		color: string;
-	}) => (
-		<div
-			className={`p-2 rounded-xl bg-[#eff0f1] shadow-[-4px_-4px_10px_rgba(255,255,255,1),2px_2px_5px_rgba(0,0,0,0.3)]`}
-		>
-			<Icon
-				className="w-4 h-4 transition-transform duration-200 hover:scale-125"
-				style={{ color }}
-			/>
-		</div>
-	);
+	// const IconWithBackground = ({
+	// 	icon: Icon,
+	// 	color,
+	// }: {
+	// 	icon: React.ElementType;
+	// 	color: string;
+	// }) => (
+	// 	<div
+	// 		className={`p-2 rounded-xl bg-[#eff0f1] shadow-[-4px_-4px_10px_rgba(255,255,255,1),2px_2px_5px_rgba(0,0,0,0.3)]`}
+	// 	>
+	// 		<Icon
+	// 			className="w-4 h-4 transition-transform duration-200 hover:scale-125"
+	// 			style={{ color }}
+	// 		/>
+	// 	</div>
+	// );
 
 	return (
 		<div
