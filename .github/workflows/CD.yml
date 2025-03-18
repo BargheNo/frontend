@@ -47,11 +47,13 @@ jobs:
         ERROR_OUTPUT=$(docker compose build 2>&1 | tee /tmp/output.txt)
         BUILD_EXIT_CODE=$?
         cat /tmp/output.txt
+        export OUTPUT="$(cat /tmp/output.txt)")
         #echo "$ERROR_OUTPUT"
         
         # Store the error output for later use
         echo "error_output<<EOF" >> $GITHUB_ENV
         echo "$ERROR_OUTPUT" >> $GITHUB_ENV
+        echo "$OUTPUT" >> $GITHUB_ENV
         echo "EOF" >> $GITHUB_ENV
         
         # Store the build status
@@ -70,7 +72,7 @@ jobs:
         script: |
           const { owner, repo, number } = context.issue;
           
-          const errorLog = process.env.error_output || 'Docker build or push failed';
+          const errorLog = process.env.OUTPUT || 'Docker build or push failed';
           
           let errorMessage = '❌ Build failed!\n\n';
           
