@@ -3,7 +3,7 @@ name: CD
 on:
   # push:
   #   branches:
-  #     - ops/PR-validation
+  #     - ops/PR-validation 
   pull_request:
     branches:
       - develop
@@ -43,10 +43,11 @@ jobs:
       run: |
         #docker compose build
         # Capture the build output in a variable
-        ERROR_OUTPUT=$(docker compose build 2>&1 | tee /dev/tty)
+        touch /tmp/output.txt
+        ERROR_OUTPUT=$(docker compose build 2>&1 | tee /tmp/output.txt)
         BUILD_EXIT_CODE=$?
-
-        echo "$ERROR_OUTPUT"
+        cat /tmp/output.txt
+        #echo "$ERROR_OUTPUT"
         
         # Store the error output for later use
         echo "error_output<<EOF" >> $GITHUB_ENV
