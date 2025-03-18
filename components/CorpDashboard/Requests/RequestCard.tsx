@@ -95,7 +95,7 @@ const Item = ({
 };
 
 export default function RequestCard({
-	className,
+	// className,
 	// sentRequestsCount = 0,
 	panelDetails,
 }: RequestCardProps) {
