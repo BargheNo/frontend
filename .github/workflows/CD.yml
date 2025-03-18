@@ -72,11 +72,13 @@ jobs:
         script: |
           const { owner, repo, number } = context.issue;
           
-          const errorLog = process.env.OUTPUT || 'Docker build or push failed';
-          
+          #const errorLog = process.env.OUTPUT || 'Docker build or push failed';
+          const fs = require('fs');
+          const path = '/tmp/output.txt';
+          const fileContent = fs.readFileSync(path, 'utf8');
           let errorMessage = '❌ Build failed!\n\n';
           
-          errorMessage += `Error details:\n\`\`\`\n${errorLog}\n\`\`\``;
+          errorMessage += `Error details:\n\`\`\`\n${fileContent}\n\`\`\``;
           
           // Add comment to PR
           await github.rest.issues.createComment({

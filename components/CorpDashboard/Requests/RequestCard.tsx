@@ -28,26 +28,25 @@ function wordExpression(value: number | string, english: boolean) {
 			if (Math.round(value / 1e9) % 1000 !== 0) {
 				if (found) res += " و ";
 				res += `${Math.round(value / 1e9) % 1000} میلیارد`;
-                found = true;
+				found = true;
 			}
-            console.log("m:", Math.round(value / 1e9) % 1000)
+			console.log("m:", Math.round(value / 1e9) % 1000);
 			if (Math.round(value / 1e6) % 1000 !== 0) {
 				if (found) res += " و ";
 				res += `${Math.round(value / 1e6) % 1000} میلیون`;
-                found = true;
+				found = true;
 			}
 			if (Math.round(value / 1e3) % 1000 !== 0) {
 				if (found) res += " و ";
 				res += `${Math.round(value / 1e3) % 1000} هزار`;
-                found = true;
+				found = true;
 			}
-            if (Math.round(value) % 1000 !== 0) {
+			if (Math.round(value) % 1000 !== 0) {
 				if (found) res += " و ";
 				res += `${Math.round(value) % 1000}`;
 			}
 
-
-			return {value: res, changed: true};
+			return { value: res, changed: true };
 		}
 	}
 	return { value: value, changed: false };

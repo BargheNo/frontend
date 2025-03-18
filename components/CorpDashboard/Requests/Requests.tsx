@@ -14,7 +14,6 @@ export default function Requests() {
 				}}
 			/>
 			<RequestCard
-				sentRequestsCount={0}
 				panelDetails={{
 					panelName: "پنل باغ شهری",
 					customerName: "رضا موسوی نارنجی",
