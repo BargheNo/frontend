@@ -1,7 +1,7 @@
 "use client";
 
 import Requests from "@/components/CorpDashboard/Requests/Requests";
-import FilterSection from "@/components/CorpDashboard/Requests/FilterSection";
+import FilterSection from "@/components/CorpDashboard/FilterSection";
 import React from "react";
 
 export default function Page() {
