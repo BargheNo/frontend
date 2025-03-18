@@ -1,5 +1,5 @@
 import React from "react";
-import RequestCard from "./RequestCard";
+import RequestCard from "./RequestCard/RequestCard";
 
 export default function Requests() {
 	return (
@@ -17,7 +17,7 @@ export default function Requests() {
 				panelDetails={{
 					panelName: "پنل باغ شهری",
 					customerName: "رضا موسوی نارنجی",
-					address: "ایران، استان کبیر اردبیل، نرسیده ترکیه، 200 کیلومتری ارومیه، کنار دریای خزر، خیابان باقلوا، کوچه خوشمزه، پلاک 104، درب انتهای کوچه سبز",
+					address: " ایران، استان کبیر اردبیل، نرسیده ترکیه، 200 کیلومتری ارومیه، کنار دریای خزر، خیابان باقلوا، کوچه خوشمزه، پلاک 104، درب انتهای کوچه سبز خراسان رضوی شمالی نبش میدان بنفش",
 					capacity: 200,
 					price: 120050780123406,
 				}}
