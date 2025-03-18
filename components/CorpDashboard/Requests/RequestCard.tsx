@@ -10,10 +10,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-function naiveRound(num, decimalPlaces = 0) {
-	const p = Math.pow(10, decimalPlaces);
-	return Math.round(num * p) / p;
-}
 
 function wordExpression(value: number | string, english: boolean) {
 	if (typeof value === "number") {
