@@ -11,9 +11,9 @@ WORKDIR /app
 COPY package.json package-lock.json ./ 
 
 # Install dependencies
-RUN npm uninstall tailwindcss
+RUN npm uninstall tailwindcss --legacy-peer-deps
 RUN rm -rf node_modules package-lock.json
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 # Copy the rest of the project files
 COPY . .
