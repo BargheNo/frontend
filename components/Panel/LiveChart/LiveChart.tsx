@@ -117,7 +117,7 @@ export default function LiveChart(): JSX.Element {
 
 	React.useEffect(() => {
 		if (typeof window !== "undefined") {
-			const interval = window.setInterval(() => {
+			const interval = window?.setInterval(() => {
 				const newPoint = getNewSeries(lastDate, {
 					min: 10,
 					max: 90,

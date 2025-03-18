@@ -1,9 +1,9 @@
 import React from "react";
-import { MoveLeft, Sun, Battery, Gauge, MapPin } from "lucide-react";
+import { MoveLeft, Sun, Battery, TrendingUp, MapPin } from "lucide-react";
 import { PanelCardProps } from "@/src/types/PanelCardTypes";
 import Link from "next/link";
-const i = Gauge;
-const PanelCard = ({
+
+const PanelCard = async ({
 	panelName,
 	technicalDetails,
 	address,
@@ -97,7 +97,7 @@ const PanelCard = ({
 							<div className="flex text-sm text-gray-700 justify-between w-[28%] items-center">
 								<div className="flex items-center w-1/2">
 									<IconWithBackground
-										icon={i}
+										icon={TrendingUp}
 										color="#3B82F6"
 									/>
 									<span className="font-medium mr-2">
@@ -138,7 +138,7 @@ const PanelCard = ({
 							</span>
 						</div>
 					</div>
-					<Link href={`/panel/my-panels/123`}>
+					<Link href={`my-panels/123`}>
 						{/* Replace 123 with panelId later */}
 						<button className="flex items-center justify-between bg-gradient-to-r from-[#EE4334] to-[#D73628] px-4 py-2 text-white cursor-pointer shadow-md rounded-full hover:shadow-lg transition duration-300 hover:scale-105">
 							<span className="font-medium">مدیریت پنل</span>

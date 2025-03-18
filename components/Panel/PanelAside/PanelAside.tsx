@@ -10,7 +10,7 @@ import { PanelAsideProps, NavItem } from "@/src/types/PanelAsideTypes";
 // const myFont = localFont({ src: '../public/fonts/vazir/Vazir.ttf' })
 const myFont = localFont({ src: '../../../public/fonts/vazir/Vazir.ttf' })
 
-const PanelAside = ({ children, navItems }: PanelAsideProps) => {
+const PanelAside = ({ children, navItems, corp }: PanelAsideProps) => {
   const pathname = usePathname();
   
   return (    
@@ -25,7 +25,7 @@ const PanelAside = ({ children, navItems }: PanelAsideProps) => {
             <Link key={item.path} href={item.path}>
                 <span
                 className={`flex gap-2 text-[#003a8b] p-2 mt-0.5 rounded-lg cursor-pointer ${
-                    pathname === item.path ? "shadow-[inset_-4px_-4px_10px_rgba(255,255,255,0.3),inset_1px_1px_3px_rgba(0,0,0,0.3)] bg-gradient-to-r from-[#2979FF] to-[#1b6cf5] text-white" : "hover:shadow-[inset_-4px_-4px_10px_rgba(255,255,255,0.5),inset_1px_1px_3px_rgba(0,0,0,0.2)] duration-200"
+                    pathname === item.path ? `shadow-[inset_-4px_-4px_10px_rgba(255,255,255,0.3),inset_1px_1px_3px_rgba(0,0,0,0.3)] bg-gradient-to-r ${corp ? "from-[#A55FDA] to-[#F37240]" : "from-[#2979FF] to-[#1b6cf5]"} text-white` : "hover:shadow-[inset_-4px_-4px_10px_rgba(255,255,255,0.5),inset_1px_1px_3px_rgba(0,0,0,0.2)] duration-200"
                 }`}
                 >
                 {item.icon}
