@@ -9,5 +9,5 @@ interface PanelDetailsProps {
 export interface RequestCardProps {
 	panelDetails: PanelDetailsProps;
 	className?: string;
-    sentRequestsCount?: number;
+    // sentRequestsCount?: number;
 }

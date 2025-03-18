@@ -43,7 +43,7 @@ jobs:
       run: |
         #docker compose build
         # Capture the build output in a variable
-        ERROR_OUTPUT=$(docker compose build 2>&1)
+        ERROR_OUTPUT=$(docker compose build 2>&1 | tee /dev/tty)
         BUILD_EXIT_CODE=$?
 
         echo "$ERROR_OUTPUT"
