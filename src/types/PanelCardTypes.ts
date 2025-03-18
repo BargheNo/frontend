@@ -5,7 +5,6 @@ interface TechnicalDetails {
 }
 
 export interface PanelCardProps {
-	params: { slug: string[] };
 	panelName: string;
 	technicalDetails: TechnicalDetails;
 	address: string;
