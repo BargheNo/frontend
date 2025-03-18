@@ -75,7 +75,7 @@ jobs:
           const { owner, repo, number } = context.issue;
           
           // const errorLog = process.env.OUTPUT || 'Docker build or push failed';
-          let errorMessage = '❌ Build failed!\n\nError details:\n\`\`\`\n${fs.readFileSync('/tmp/output.txt', 'utf8')}\n\`\`\`';
+          let errorMessage = `❌ Build failed!\n\nError details:\n\`\`\`\n${fs.readFileSync('/tmp/output.txt', 'utf8')}\n\`\`\``;
           
           // Add comment to PR
           await github.rest.issues.createComment({
