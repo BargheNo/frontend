@@ -26,8 +26,8 @@ export default function verificationModal({disable}:Props) {
   
   return (
     <div className={vazir.className}>   
-    <Dialog  >
-      <DialogTrigger asChild style={{width:"90%"}}>
+    <Dialog>
+      <DialogTrigger asChild>
       <div>
           <SignupButton type="submit"  disabled={disable}>
             <div className={style.leftIconButton}>
@@ -39,24 +39,23 @@ export default function verificationModal({disable}:Props) {
       </div>
       </DialogTrigger>
       <DialogContent className={`${style.card} ${vazir.className}`}>
-        <DialogHeader className="mt-20">
-          <DialogTitle className="font-normal">.کد تأیید ارسال‌ شده را در کادر زیر وارد کنید</DialogTitle>
+        <DialogHeader className="mt-7">
+          <DialogTitle className="font-normal">کد تأیید ارسال‌ شده را در کادر زیر وارد کنید</DialogTitle>
         </DialogHeader>
         <div className="flex items-center space-x-2 ">
-          <div className="grid flex-1 gap-2">
+          <div className="grid flex-1 gap-2 mt-4">
               <InputOTP  maxLength={6} pattern={REGEXP_ONLY_DIGITS}>
-              <InputOTPGroup className="gap-4" >
+              <InputOTPGroup className="gap-3" >
               {[...Array(6)].map((_, index) => (
-                <InputOTPSlot style={{marginTop:"2rem"}} className={style.CustomInput} key={index} index={index} />
+                <InputOTPSlot  className={style.CustomInput} key={index} index={index} />
                 ))}
               </InputOTPGroup>
             </InputOTP>
-            <div style={{fontSize:"14px",marginBottom:"60px"}} className='flex flex-row justify-end ml-auto w-2/9 h-auto font-bold '>
-                <SignupButton>ارسال مجدد </SignupButton>
+            <div style={{fontSize:"16px"}} className={`${'grid flex-1 justify-end ml-auto w-3/9 font-bold '} ${style.button}`}>
+                <SignupButton >ارسال مجدد </SignupButton>
             </div>
           </div>
         </div>
-
       </DialogContent>
     </Dialog>
 
