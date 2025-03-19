@@ -70,7 +70,9 @@
 
 		"tailwindcss-animate": "^1.0.7",
 
-		"yup": "^1.6.1"
+		"yup": "^1.6.1",
+    
+    "react-responsive": "^10.0.1",
 
 	},
 
@@ -101,6 +103,7 @@
 		"typescript": "^5"
 
 	}
+
 
 }
 
