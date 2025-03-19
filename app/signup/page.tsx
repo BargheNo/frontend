@@ -12,6 +12,7 @@ import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import registerService from '@/src/services/registerService';
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 function login() {
 
@@ -48,14 +49,14 @@ function login() {
 
     const handelRegister=(name:string,Lname:string,phone:string,password:string,confirmPassword:string,isAcceptTerms:boolean)=>{
         registerService.createUser({firstName:name,lastName:Lname,phone:phone,password:password,confirmPassword:confirmPassword,isAcceptTerms:isAcceptTerms})
-        .then((res)=>{console.log(res);setOpen(true)})
-        .catch((err)=>{console.error(err.message)})
+        .then(()=>{setOpen(true)})
+        .catch((err)=>{toast(err.response.data.messages.phone["alreadyRegistered"]);})
     }
 
     const handelVerification=(phone:string,otp:string)=>{
         registerService.phonenumberVerification({phone:phone,otp:otp})
         .then(()=>{rout.push('/login')})
-        .catch((err)=>console.error(err.message))
+        .catch((err)=>toast(err.response.data.messages.otp['invalidOTP']))
     }
 
     useEffect(() => {
