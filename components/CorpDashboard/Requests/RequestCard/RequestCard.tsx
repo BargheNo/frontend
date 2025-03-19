@@ -235,18 +235,21 @@ export default function RequestCard({
 										<CustomInput
 											icon={DollarSign}
 											type="string"
+											name="price"
 										>
 											قیمت پیشنهادی شما
 										</CustomInput>
 										<CustomInput
 											icon={Calendar}
 											type="string"
+											name="time"
 										>
 											زمان تخمینی نصب
 										</CustomInput>
 										<CustomInput
 											icon={DollarSign}
 											type="string"
+											name="file"
 										>
 											آپلود فایل قرارداد
 										</CustomInput>
@@ -254,6 +257,7 @@ export default function RequestCard({
 									<CustomInput
 										icon={DollarSign}
 										type="string"
+										name="file"
 									>
 										آپلود فایل قرارداد
 									</CustomInput>
