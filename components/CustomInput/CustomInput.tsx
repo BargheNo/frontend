@@ -18,7 +18,7 @@ export default function CustomInput({
   onIconClick,
   ...props
 }: Props) {
-  const [field, meta] = useField({ name, ...props });
+  const [field, meta] = useField(name);
   const hasError = meta.touched && meta.error;
 
   return (
