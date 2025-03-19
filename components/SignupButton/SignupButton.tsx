@@ -1,11 +1,9 @@
 import style from './SignupButton.module.css';
 
-interface Props {
-    Disable?:boolean;
-    Style?: React.CSSProperties;
+interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
     children:React.ReactNode;
   }
 
-export default function SignupButton({Disable,Style,children}:Props) {
-  return <button   style={Style} disabled={Disable} className={style.button}>{children}</button>;
+export default function SignupButton({children}:Props) {
+  return <button  className={style.button}>{children}</button>;
 }
