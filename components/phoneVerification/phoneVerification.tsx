@@ -14,53 +14,54 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
 
-interface Props extends React.InputHTMLAttributes<HTMLInputElement>{
+interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   open: boolean;
   onclick: () => void;
   onOtpChange: (otp: string) => void;
+  onlinkClick?: () => void;
 }
 
-export default function PhoneVerification({ open, onclick, onOtpChange }: Props) {
+export default function PhoneVerification({ open, onclick, onOtpChange, onlinkClick }: Props) {
   const [otp, setOtp] = useState<string>("");
 
   return (
     <div className={vazir.className}>
 
       <Dialog open={open}>
-        <DialogTrigger onClick={onclick}>
-          <DialogContent className={`${style.card} ${vazir.className}`}>
-            <DialogHeader className="mt-7">
-              <DialogTitle className="font-normal">
-                کد تأیید ارسال‌ شده را در کادر زیر وارد کنید
-              </DialogTitle>
-            </DialogHeader>
-            <div className="flex items-center space-x-2">
-              <div className="grid flex-1 gap-2 mt-4">
-                <InputOTP  maxLength={6} pattern={REGEXP_ONLY_DIGITS} value={otp}
-                  onChange={(value) => {
-                    setOtp(value);
-                    onOtpChange(value);  
-                  }}
-                >
-                  <InputOTPGroup className="gap-3" >
-                    {[...Array(6)].map((_, index) => (
-                      <InputOTPSlot  className={style.CustomInput} key={index} index={index} />
-                    ))}
-                  </InputOTPGroup>
-                </InputOTP>
-                <div style={{fontSize:"16px"}} className={`${'grid flex-1 justify-end ml-auto w-3/9 font-bold '} ${style.button}`}>
-                    <SignupButton >ارسال مجدد </SignupButton>
-                </div>
+        <DialogContent hidden={true} className={`${style.card} ${vazir.className}`}>
+          <DialogHeader className="mt-4">
+            <DialogTitle className="font-normal">
+              کد تأیید ارسال‌ شده را در کادر زیر وارد کنید
+            </DialogTitle>
+          </DialogHeader>
+          <div className="flex items-center space-x-2">
+            <div className="grid flex-1 mt-4">
+              <InputOTP  maxLength={6} pattern={REGEXP_ONLY_DIGITS} value={otp}
+                onChange={(value) => {
+                  setOtp(value);
+                  onOtpChange(value);
+                }}
+              >
+                <InputOTPGroup className="gap-3" >
+                  {[...Array(6)].map((_, index) => (
+                    <InputOTPSlot  className={style.CustomInput} key={index} index={index} />
+                  ))}
+                </InputOTPGroup>
+              </InputOTP>
+              <div>
+                <a className={style.link} onClick={onlinkClick}>
+                  تغییر شماره تلفن همراه
+                </a>
+              </div>
+              <div style={{ fontSize: "16px" }} className={`${'grid flex-1 justify-end ml-auto w-3/9 font-bold'} ${style.button}`}>
+                <SignupButton>ارسال مجدد</SignupButton>
               </div>
             </div>
-          </DialogContent>
-        </DialogTrigger>
+          </div>
+        </DialogContent>
       </Dialog>
-
-
     </div>
-  )
+  );
 }

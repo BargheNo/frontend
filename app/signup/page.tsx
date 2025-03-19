@@ -49,13 +49,13 @@ function login() {
 
     const handelRegister=(name:string,Lname:string,phone:string,password:string,confirmPassword:string,isAcceptTerms:boolean)=>{
         registerService.createUser({firstName:name,lastName:Lname,phone:phone,password:password,confirmPassword:confirmPassword,isAcceptTerms:isAcceptTerms})
-        .then(()=>{setOpen(true)})
+        .then((res)=>{setOpen(true);toast(res.data.message)})
         .catch((err)=>{toast(err.response.data.messages.phone["alreadyRegistered"]);})
     }
 
     const handelVerification=(phone:string,otp:string)=>{
         registerService.phonenumberVerification({phone:phone,otp:otp})
-        .then(()=>{rout.push('/login')})
+        .then((res)=>{rout.push('/login');toast(res.data.message)})
         .catch((err)=>toast(err.response.data.messages.otp['invalidOTP']))
     }
 
@@ -123,7 +123,7 @@ function login() {
             </div>
             
 
-            <PhoneVerification onOtpChange={handleOtpChange}  onclick={()=>setOpen(false)} open={open}></PhoneVerification>
+            <PhoneVerification onlinkClick={()=>setOpen(false)} onOtpChange={handleOtpChange}  onclick={()=>setOpen(false)} open={open}></PhoneVerification>
             <div className={style.loginText}>
                 <a href="./login" className={style.link}>ورود به حساب</a>
                 <p>!قبلا حساب ساخته ام</p>
