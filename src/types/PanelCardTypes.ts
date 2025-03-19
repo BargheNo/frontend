@@ -1,11 +1,12 @@
 interface TechnicalDetails {
-  efficiency: number;
-  capacity: number;
-  todayProduction: number;
+	efficiency: number;
+	capacity: number;
+	todayProduction: number;
 }
 
 export interface PanelCardProps {
-  panelName: string;
-  technicalDetails: TechnicalDetails;
-  address: string;
-} 
+	panelName: string;
+	technicalDetails: TechnicalDetails;
+	address: string;
+	className?: string;
+}

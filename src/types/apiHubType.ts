@@ -1,9 +1,9 @@
-interface getParams {
+export interface getParams {
   endPoint: string;
   headers?: any;
 }
 
-interface postParams {
+export interface postParams {
   endPoint: string;
   data: any;
   headers?: any;

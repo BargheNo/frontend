@@ -1,4 +1,6 @@
 import axios from "axios";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getParams, postParams } from "../types/apiHubType";
 
 // export const baseURL = "https://bombfundingbackend.liara.run";
 // export const baseURL = "http://104.168.46.4:8000";
@@ -54,6 +56,56 @@ apiClient.interceptors.response.use(
   }
 );
 
+// Custom hooks for React Query
+export function useGetData(endPoint: string, headers?: any, options = {}) {
+  return useQuery({
+    queryKey: [endPoint],
+    queryFn: () => getData({ endPoint, headers }),
+    ...options,
+  });
+}
+
+export function usePostData(options = {}) {
+  return useMutation({
+    mutationFn: (params: postParams) => postData(params),
+    ...options,
+  });
+}
+
+export function usePatchData(options = {}) {
+  return useMutation({
+    mutationFn: (params: postParams) => patchData(params),
+    ...options,
+  });
+}
+
+export function usePutData(options = {}) {
+  return useMutation({
+    mutationFn: (params: postParams) => putData(params),
+    ...options,
+  });
+}
+
+export function useDeleteData(options = {}) {
+  return useMutation({
+    mutationFn: (params: getParams) => deleteData(params),
+    ...options,
+  });
+}
+
+// Add TypeScript interfaces
+// interface getParams {
+//   endPoint: string;
+//   headers?: any;
+// }
+
+// interface postParams {
+//   endPoint: string;
+//   data: any;
+//   headers?: any;
+// }
+
+// Keep existing API functions as they are
 export const getData = async ({ endPoint, headers }: getParams) => {
   try {
     const response = await apiClient.get(endPoint, headers);
@@ -98,7 +150,7 @@ export const patchData = async ({ endPoint, data, headers }: postParams) => {
 export const putData = async ({ endPoint, data, headers }: postParams) => {
   //   await RefreshToken();
   try {
-    const response = await apiClient.put(endPoint, data);
+    const response = await apiClient.put(endPoint, data, headers);
     return response.data;
   } catch (error) {
     throw error;
