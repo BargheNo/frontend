@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState } from "react"
 import CustomInput from "@/components/CustomInput/CustomInput";
 import { vazir } from "@/lib/fonts";
@@ -7,12 +7,13 @@ import PhoneVerification from "@/components/phoneVerification/phoneVerification"
 import style from "./signup.module.css";
 import Background from '../../public/signup.jpg';
 import Image from "next/image";
-import { MoveLeft, Smartphone, Lock, User, Unlock, Check } from 'lucide-react';
+import { MoveLeft, Smartphone, Lock, User, Unlock, Check, SkipBack } from 'lucide-react';
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import registerService from '@/src/services/registerService';
 
 function login() {
+
     const validationSchema = Yup.object({
         firstname: Yup.string().required(".نام الزامی است"),
         lastname: Yup.string().required(".نام خانوادگی الزامی است"),
@@ -37,11 +38,23 @@ function login() {
     const[hidepass,Sethidepass]=useState(true);
     const[open,setOpen]=useState(false);
     const[hideconfpass,Sethideconfpass]=useState(true);
+    const [otpCode, setOtpCode] = useState<string>("");
+    const [phone, setPhone] = useState<string>("");
+    const handleOtpChange = (otp: string) => {
+        console.log("Received OTP:", otp);
+        setOtpCode(otp);
+      };
 
     const handelRegister=(name:string,Lname:string,phone:string,password:string,confirmPassword:string,isAcceptTerms:boolean)=>{
         registerService.createUser({firstName:name,lastName:Lname,phone:phone,password:password,confirmPassword:confirmPassword,isAcceptTerms:isAcceptTerms})
         .then((res)=>{console.log(res);setOpen(true)})
         .catch((err)=>{console.error(err.message)})
+    }
+
+    const handelVerification=(phone:string,otp:string)=>{
+        registerService.phonenumberVerification({phone:phone,otp:otp})
+        .then((res)=>{console.log("Success")})
+        .catch((err)=>console.error(err.message))
     }
   return (
     <>
@@ -62,6 +75,7 @@ function login() {
                     values.confirmpassword,
                     check 
                 );
+                setPhone(("+98"+values.phonenumber));
             }}>
                 <Form className={style.form}>
 
@@ -99,7 +113,9 @@ function login() {
                 </SignupButton>
                 
             </div>
-            <PhoneVerification onclick={()=>setOpen(false)} open={open}></PhoneVerification>
+            
+
+            <PhoneVerification {...otpCode.length==6?handelVerification(phone,otpCode):SkipBack} onOtpChange={handleOtpChange}  onclick={()=>setOpen(false)} open={open}></PhoneVerification>
             <div className={style.loginText}>
                 <a href="./login" className={style.link}>ورود به حساب</a>
                 <p>!قبلا حساب ساخته ام</p>
