@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import CustomInput from "@/components/CustomInput/CustomInput";
 import { vazir } from "@/lib/fonts";
 import SignupButton from "@/components/SignupButton/SignupButton";
@@ -11,6 +11,7 @@ import { MoveLeft, Smartphone, Lock, User, Unlock, Check, SkipBack } from 'lucid
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import registerService from '@/src/services/registerService';
+import { useRouter } from "next/navigation";
 
 function login() {
 
@@ -40,8 +41,8 @@ function login() {
     const[hideconfpass,Sethideconfpass]=useState(true);
     const [otpCode, setOtpCode] = useState<string>("");
     const [phone, setPhone] = useState<string>("");
+    const rout=useRouter();
     const handleOtpChange = (otp: string) => {
-        console.log("Received OTP:", otp);
         setOtpCode(otp);
       };
 
@@ -53,9 +54,15 @@ function login() {
 
     const handelVerification=(phone:string,otp:string)=>{
         registerService.phonenumberVerification({phone:phone,otp:otp})
-        .then((res)=>{console.log("Success")})
+        .then(()=>{rout.push('/login')})
         .catch((err)=>console.error(err.message))
     }
+
+    useEffect(() => {
+        if (otpCode.length === 6) {
+            handelVerification(phone, otpCode);
+        }
+    }, [otpCode]);
   return (
     <>
         
@@ -115,7 +122,7 @@ function login() {
             </div>
             
 
-            <PhoneVerification {...otpCode.length==6?handelVerification(phone,otpCode):SkipBack} onOtpChange={handleOtpChange}  onclick={()=>setOpen(false)} open={open}></PhoneVerification>
+            <PhoneVerification onOtpChange={handleOtpChange}  onclick={()=>setOpen(false)} open={open}></PhoneVerification>
             <div className={style.loginText}>
                 <a href="./login" className={style.link}>ورود به حساب</a>
                 <p>!قبلا حساب ساخته ام</p>
