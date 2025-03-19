@@ -1,5 +1,7 @@
 const loadUserState = () => {
   try {
+    if (typeof window === 'undefined') return undefined; // Prevent SSR access to localStorage
+
     const serializedState = localStorage.getItem('user');
     return serializedState ? JSON.parse(serializedState) : undefined;
   } catch (error) {

@@ -3,10 +3,12 @@ import React from "react";
 import MobileNavbar from "./MobileNavbar/MobileNavbar";
 import { useSelector, useDispatch } from "react-redux";
 import { MOBILE_NAVBAR_SELECT } from "@/src/types/navbarTypes";
+
 import { changeSelect } from "@/src/store/slices/mobileNavbarSlice";
 import DesktopNavbar from "./DesktopNavbar/DesktopNavbar";
 import { useMediaQuery } from "react-responsive";
 import useClientCheck from "@/src/hooks/useClientCheck";
+
 
 export default function Navbar() {
   const selected = useSelector((state: any) => state.mobileNavbar.selected);
@@ -21,4 +23,5 @@ export default function Navbar() {
   if (isMobile)
     return <MobileNavbar selected={selected} changeSelect={changeSelectFunc} />;
   else return <DesktopNavbar />;
+
 }
