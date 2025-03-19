@@ -1,6 +1,7 @@
 "use client";
 import style from "./CustomInput.module.css";
 import { LucideIcon } from "lucide-react";
+
 import { useField } from "formik";
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -34,4 +35,5 @@ export default function CustomInput({
       </div>
     </div>
   );
+
 }
