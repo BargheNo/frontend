@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/input-otp"
 import style from './phoneVerification.module.css'
 import SignupButton from "@/components/SignupButton/SignupButton";
-import {  MoveLeft } from "lucide-react"
 
 import {
   Dialog,
@@ -18,26 +17,18 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 
-interface Props{
-  disable:boolean;
+interface Props extends React.InputHTMLAttributes<HTMLInputElement>{
+  open:boolean;
+  onclick:()=>void;
 }
 
-export default function verificationModal({disable}:Props) {
+export default function PhoneVerification({open,onclick}:Props) {
   
   return (
-    <div className={vazir.className}>   
-    <Dialog>
-      <DialogTrigger asChild>
-      <div>
-          <SignupButton type="submit"  disabled={disable}>
-            <div className={style.leftIconButton}>
-                <MoveLeft></MoveLeft>
-                <p>ثبت نام</p> 
-            </div>
-          </SignupButton>
-                
-      </div>
-      </DialogTrigger>
+    <div className={vazir.className}>
+      
+    <Dialog open={open}>
+      <DialogTrigger onClick={onclick}>
       <DialogContent className={`${style.card} ${vazir.className}`}>
         <DialogHeader className="mt-7">
           <DialogTitle className="font-normal">کد تأیید ارسال‌ شده را در کادر زیر وارد کنید</DialogTitle>
@@ -57,6 +48,7 @@ export default function verificationModal({disable}:Props) {
           </div>
         </div>
       </DialogContent>
+      </DialogTrigger>
     </Dialog>
 
 

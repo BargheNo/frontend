@@ -16,7 +16,7 @@ interface phonenumberVerification{
 
 class registerService {
     createUser(user:signupInfo) {
-        return axios.post('http://185.110.189.68:3001/v1/auth/register/basic',user)
+        return axios.post('https://d99f-185-227-137-37.ngrok-free.app/v1/auth/register/basic',user)
     }
 
     phonenumberVerification(phone:phonenumberVerification){

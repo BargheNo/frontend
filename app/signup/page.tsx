@@ -3,6 +3,7 @@ import { useState } from "react"
 import CustomInput from "@/components/CustomInput/CustomInput";
 import { vazir } from "@/lib/fonts";
 import SignupButton from "@/components/SignupButton/SignupButton";
+import PhoneVerification from "@/components/phoneVerification/phoneVerification";
 import style from "./signup.module.css";
 import Background from '../../public/signup.jpg';
 import Image from "next/image";
@@ -34,15 +35,17 @@ function login() {
 
     const[check,Setcheck]=useState(false);
     const[hidepass,Sethidepass]=useState(true);
+    const[open,setOpen]=useState(false);
     const[hideconfpass,Sethideconfpass]=useState(true);
 
     const handelRegister=(name:string,Lname:string,phone:string,password:string,confirmPassword:string,isAcceptTerms:boolean)=>{
         registerService.createUser({firstName:name,lastName:Lname,phone:phone,password:password,confirmPassword:confirmPassword,isAcceptTerms:isAcceptTerms})
-        .then((res)=>{console.log(res)})
+        .then((res)=>{console.log(res);setOpen(true)})
         .catch((err)=>{console.error(err.message)})
     }
   return (
     <>
+        
         <Image className="-z-10" src={Background} alt="Background" layout="fill" objectFit="cover" />
     <div className={vazir.className}>
     <div className={style.wholePage}>
@@ -54,7 +57,7 @@ function login() {
                 handelRegister(
                     values.firstname,
                     values.lastname,
-                    values.phonenumber,
+                    ("+98"+values.phonenumber),
                     values.password,
                     values.confirmpassword,
                     check 
@@ -87,7 +90,7 @@ function login() {
             </div>
                 
             </div>
-            <div style={{width:"90%"}}>
+            <div style={{width:"90%",fontSize:"1.25rem",fontWeight:"600"}}>
                 <SignupButton  type="submit"  disabled={!check}>
                     <div className={style.leftIconButton}>
                         <MoveLeft></MoveLeft>
@@ -96,6 +99,7 @@ function login() {
                 </SignupButton>
                 
             </div>
+            <PhoneVerification onclick={()=>setOpen(false)} open={open}></PhoneVerification>
             <div className={style.loginText}>
                 <a href="./login" className={style.link}>ورود به حساب</a>
                 <p>!قبلا حساب ساخته ام</p>
