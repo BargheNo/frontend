@@ -12,6 +12,7 @@ export default function Requests() {
 					capacity: 5000,
 					price: 200000,
 				}}
+				requestId={1}
 			/>
 			<RequestCard
 				panelDetails={{
@@ -21,6 +22,7 @@ export default function Requests() {
 					capacity: 200,
 					price: 120050780123406,
 				}}
+				requestId={2}
 			/>
 		</div>
 	);
