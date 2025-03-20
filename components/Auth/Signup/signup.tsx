@@ -25,8 +25,28 @@ import { toast } from "sonner";
 // import useClientCheck from "@/src/hooks/useClientCheck";
 
 function Signup() {
-	// if (useClientCheck()) document.body.style.overflow = "hidden";
 	const validationSchema = Yup.object({
+		firstname: Yup.string().required("نام الزامی است."),
+		lastname: Yup.string().required("نام خانوادگی الزامی است."),
+		phonenumber: Yup.string()
+			.matches(/^(9\d{9})$/, ".شماره تلفن وارد شده اشتباه است")
+			.required(".شماره تلفن الزامی است"),
+		password: Yup.string()
+			.min(8, "رمز عبور باید حداقل 8 کاراکتر باشد.")
+			.matches(/[a-z]/, ".رمز عبور باید شامل حداقل یک حرف کوچک باشد")
+			.matches(/[A-Z]/, ".رمز عبور باید شامل حداقل یک حرف بزرگ باشد")
+			.matches(/\d/, ".رمز عبور باید شامل حداقل یک عدد باشد")
+			.matches(/[\W_]/, ".رمز عبور باید شامل حداقل یک نماد باشد")
+			.required(".رمز عبور الزامی است"),
+		confirmpassword: Yup.string()
+			.oneOf(
+				[Yup.ref("password")],
+				".تأیید رمز عبور باید با رمز عبور مطابقت داشته باشد"
+			)
+			.required(".تأیید رمز عبور الزامی است"),
+	});
+
+	const validationCorpSchema = Yup.object({
 		corpname: Yup.string().required(".نام شرکت الزامی است"),
 		cin: Yup.string()
 			.matches(/^(\d{11})$/, ".شناسه ملی وارد شده اشتباه است")
@@ -53,7 +73,7 @@ function Signup() {
 	const [otpCode, setOtpCode] = useState<string>("");
 	const [phone, setPhone] = useState<string>("");
 	const [customer, setCustomer] = useState<boolean>(true);
-	const rout = useRouter();
+	const route = useRouter();
 	const handleOtpChange = (otp: string) => {
 		setOtpCode(otp);
 	};
@@ -72,7 +92,6 @@ function Signup() {
 				lastName: Lname,
 				phone: phone,
 				password: password,
-				confirmPassword: confirmPassword,
 				isAcceptTerms: isAcceptTerms,
 			})
 			.then((res) => {
@@ -87,15 +106,32 @@ function Signup() {
 		corpname: string,
 		cin: string,
 		password: string,
-		confirmPassword: string,
 		isAcceptTerms: boolean
-	) => {};
+	) => {
+        console.log(`Form: ${corpname}, ${cin}, ${password}, ${isAcceptTerms}`)
+		registerService
+			.createCorp({
+				name: corpname,
+				cin: String(cin),
+				password: password,
+				acceptedTerms: isAcceptTerms
+			})
+			.then((res) => {
+				console.log(res);
+				toast(res?.message);
+				route.push("/");
+			})
+			.catch((err) => {
+				console.log(err?.response?.data?.message);
+				toast(`${err.messages?.name ?? ""}\n${err.messages?.cin?.alreadyRegistered ?? ""}\n${err.messages?.password ?? ""}\n${err.messages?.acceptedTerms ?? ""}`);
+			});
+	};
 
 	const handleVerification = (phone: string, otp: string) => {
 		registerService
 			.phonenumberVerification({ phone: phone, otp: otp })
 			.then((res) => {
-				rout.push("/login");
+				route.push("/login");
 				toast(res.data.message);
 			})
 			.catch((err) =>
@@ -176,7 +212,19 @@ function Signup() {
 									}}
 								>
 									<Form className={styles.form}>
-										<div className="flex flex-row gap-3 justify-center w-9/10 ">
+										<div
+											className="flex flex-row gap-3 justify-center w-9/10"
+											dir="rtl"
+										>
+											<CustomInput
+												placeholder="نام"
+												name="firstname"
+												icon={User}
+												type="text"
+												autoFocus={true}
+											>
+												{" "}
+											</CustomInput>
 											<CustomInput
 												name="lastname"
 												icon={User}
@@ -185,16 +233,8 @@ function Signup() {
 											>
 												{" "}
 											</CustomInput>
-											<CustomInput
-												placeholder="نام"
-												name="firstname"
-												icon={User}
-												type="text"
-											>
-												{" "}
-											</CustomInput>
 										</div>
-										<div className="flex flex-row justify-center w-9/10 ">
+										<div className="flex flex-row justify-center w-9/10">
 											<div className={styles.code}>
 												<CustomInput
 													name="countrycode"
@@ -321,13 +361,12 @@ function Signup() {
 										password: "",
 										confirmpassword: "",
 									}}
-									validationSchema={validationSchema}
+									validationSchema={validationCorpSchema}
 									onSubmit={(values) => {
 										handleCorpRegister(
 											values.corpname,
 											values.cin,
 											values.password,
-											values.confirmpassword,
 											check
 										);
 									}}
@@ -446,168 +485,6 @@ function Signup() {
 								</Formik>
 							</div>
 						)}
-					</div>
-				</div>
-			</div>
-			{/* Corp */}
-			<div className={`${vazir.className} overflow-hidden ${styles.dis}`}>
-				<div
-					className={`${styles.wholePage} overflow-hidden ${styles.dis}`}
-				>
-					{/* <div
-						className={`absolute transition duration-700 overflow-hidden ${styles.dis} ${
-							page === "Customer"
-								? "-translate-x-[0vw]"
-								: "-translate-x-[25.5vw]"
-						} hover:cursor-pointer w-48 h-48 justify-center flex flex-col gap-2 text-center items-center bg-gradient-to-r from-[#EB4132] to-[#DD392B] rounded-full p-6`}
-						onClick={() => setPage("Corp")}
-					>
-						<ArrowLeft className="w-12 h-12 -translate-x-8" />
-						<span className="text-md -translate-x-10 w-20">
-							ثبت نام مشتری
-						</span>
-					</div> */}
-					<div className={`${styles.card} ${styles.dis}`}>
-						<h1 className={`${styles.topic} ${styles.dis}`}>
-							ثبت نام شرکت
-						</h1>
-						<Formik
-							initialValues={{
-								firstname: "",
-								lastname: "",
-								phonenumber: "",
-								password: "",
-								confirmpassword: "",
-							}}
-							validationSchema={validationSchema}
-							onSubmit={(values) => {
-								handelRegister(
-									values.firstname,
-									values.lastname,
-									"+98" + values.phonenumber,
-									values.password,
-									values.confirmpassword,
-									check
-								);
-								setPhone("+98" + values.phonenumber);
-							}}
-						>
-							<Form className={styles.form}>
-								<div className="flex flex-row gap-3 justify-center w-9/10 ">
-									<CustomInput
-										name="lastname"
-										icon={User}
-										type="text"
-										placeholder="نام خانوادگی"
-									>
-										{" "}
-									</CustomInput>
-									<CustomInput
-										placeholder="نام"
-										name="firstname"
-										icon={User}
-										type="text"
-									>
-										{" "}
-									</CustomInput>
-								</div>
-								<div className="flex flex-row justify-center w-9/10 ">
-									<div className={styles.code}>
-										<CustomInput
-											name="countrycode"
-											readOnly={true}
-											placeholder="+98"
-											icon={Smartphone}
-											type="number"
-										>
-											{" "}
-										</CustomInput>
-									</div>
-									<CustomInput
-										name="phonenumber"
-										placeholder="شماره تلفن همراه"
-										type="number"
-									>
-										{" "}
-									</CustomInput>
-								</div>
-								<CustomInput
-									name="password"
-									placeholder="رمز عبور"
-									onIconClick={() =>
-										Sethidepass((prev) => !prev)
-									}
-									icon={hidepass ? Lock : Unlock}
-									type={hidepass ? "password" : "text"}
-								>
-									{" "}
-								</CustomInput>
-								<CustomInput
-									name="confirmpassword"
-									onIconClick={() =>
-										Sethideconfpass((prev) => !prev)
-									}
-									icon={hideconfpass ? Lock : Unlock}
-									type={hideconfpass ? "password" : "text"}
-									placeholder="تایید رمز عبور"
-								>
-									{" "}
-								</CustomInput>
-								<div className={styles.ruleText}>
-									<label
-										htmlFor="link-checkbox"
-										className="flex gap-1"
-									>
-										.را می پذیرم
-										<a href="#" className={styles.link}>
-											قوانین و مقررات
-										</a>
-									</label>
-									<div className="relative">
-										<input
-											id="link-checkbox"
-											onClick={() =>
-												Setcheck((prev) => !prev)
-											}
-											type="checkbox"
-											value=""
-											className="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-[#2979FF] checked:border-blue-500 mt-0.5"
-										/>
-										<Check className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-2/3 text-white opacity-0 pointer-events-none peer-checked:opacity-100 w-4.5 h-4.5 " />
-									</div>
-								</div>
-								<div
-									style={{
-										width: "90%",
-										fontSize: "1.25rem",
-										fontWeight: "600",
-									}}
-								>
-									<SignupButton
-										type="submit"
-										disabled={!check}
-									>
-										<div className={styles.leftIconButton}>
-											<MoveLeft></MoveLeft>
-											<p>ثبت نام</p>
-										</div>
-									</SignupButton>
-								</div>
-
-								<PhoneVerification
-									onlinkClick={() => setOpen(false)}
-									onOtpChange={handleOtpChange}
-									onclick={() => setOpen(false)}
-									open={open}
-								></PhoneVerification>
-								<div className={styles.loginText}>
-									<a href="./login" className={styles.link}>
-										ورود به حساب
-									</a>
-									<p>!قبلا حساب ساخته ام</p>
-								</div>
-							</Form>
-						</Formik>
 					</div>
 				</div>
 			</div>

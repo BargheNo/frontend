@@ -10,8 +10,9 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
 	children: React.ReactNode;
 	icon?: LucideIcon;
 	onIconClick?: () => void;
-	value?: string;
-	onChange?: ChangeEventHandler<HTMLInputElement>;
+	// value?: string;
+  autoFocus?: boolean;
+	// onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
 const isRTL = (text: string | undefined): boolean => {
@@ -27,18 +28,17 @@ export default function CustomInput({
 	children,
 	icon: Icon,
 	onIconClick,
-	onChange,
-  value,
+  autoFocus = false,
 	...props
 }: Props) {
-	const [isTextRTL, setTextRTL] = useState(true);
+	// const [isTextRTL, setTextRTL] = useState(true);
 	const [field, meta] = useField(name);
 	const hasError = meta.touched && meta.error;
 
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		onChange?.(e);
-		setTextRTL(isRTL(e.target.value));
-	};
+	// const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	// 	onChange?.(e);
+	// 	setTextRTL(isRTL(e.target.value));
+	// };
 
 	return (
 		<div className={style.Conter}>
@@ -48,16 +48,17 @@ export default function CustomInput({
 					<label className={style.text}>{children}</label>
 				)}
 				<input
-					dir={isTextRTL ? "rtl" : "ltr"}
+					dir={isRTL(field.value) ? "rtl" : "ltr"}
 					{...field}
 					{...props}
-					onChange={handleChange}
-          value={value}
+					// onChange={handleChange}
+          autoFocus={autoFocus}
+					// value={value}
 					className={`${style.CustomInput} ${style.numberInput} ${
-						isTextRTL ? "text-right" : "text-left"
-            }`}
-			style={{ paddingLeft: '40px' }}
-            />
+						isRTL(field.value) ? "text-right" : "text-left"
+					}`}
+					style={{ paddingLeft: Icon ? "42px" : "12px"}}
+				/>
 				{hasError && (
 					<div className={style.errorMessage}>{meta.error}</div>
 				)}
