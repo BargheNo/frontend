@@ -5,6 +5,7 @@ import { vazir } from "@/lib/fonts";
 import SignupButton from "@/components/SignupButton/SignupButton";
 import PhoneVerification from "@/components/phoneVerification/phoneVerification";
 import styles from "./signup.module.css";
+import { Building2, IdCard } from "lucide-react";
 
 import {
 	MoveLeft,
@@ -26,11 +27,10 @@ import { toast } from "sonner";
 function Signup() {
 	// if (useClientCheck()) document.body.style.overflow = "hidden";
 	const validationSchema = Yup.object({
-		firstname: Yup.string().required(".نام الزامی است"),
-		lastname: Yup.string().required(".نام خانوادگی الزامی است"),
-		phonenumber: Yup.string()
-			.matches(/^(9\d{9})$/, ".شماره تلفن وارد شده اشتباه است")
-			.required(".شماره تلفن الزامی است"),
+		corpname: Yup.string().required(".نام شرکت الزامی است"),
+		cin: Yup.string()
+			.matches(/^(\d{11})$/, ".شناسه ملی وارد شده اشتباه است")
+			.required(".شناسه ملی الزامی است"),
 		password: Yup.string()
 			.min(8, "رمز عبور باید حداقل 8 کاراکتر باشد.")
 			.matches(/[a-z]/, ".رمز عبور باید شامل حداقل یک حرف کوچک باشد")
@@ -83,8 +83,15 @@ function Signup() {
 				toast(err.response.data.messages.phone["alreadyRegistered"]);
 			});
 	};
+	const handleCorpRegister = (
+		corpname: string,
+		cin: string,
+		password: string,
+		confirmPassword: string,
+		isAcceptTerms: boolean
+	) => {};
 
-	const handelVerification = (phone: string, otp: string) => {
+	const handleVerification = (phone: string, otp: string) => {
 		registerService
 			.phonenumberVerification({ phone: phone, otp: otp })
 			.then((res) => {
@@ -98,7 +105,7 @@ function Signup() {
 
 	useEffect(() => {
 		if (otpCode.length === 6) {
-			handelVerification(phone, otpCode);
+			handleVerification(phone, otpCode);
 		}
 	}, [otpCode]);
 	return (
@@ -309,64 +316,39 @@ function Signup() {
 								<h1 className={styles.topic}>ثبت نام شرکت</h1>
 								<Formik
 									initialValues={{
-										firstname: "",
-										lastname: "",
-										phonenumber: "",
+										corpname: "",
+										cin: "",
 										password: "",
 										confirmpassword: "",
 									}}
 									validationSchema={validationSchema}
 									onSubmit={(values) => {
-										handelRegister(
-											values.firstname,
-											values.lastname,
-											"+98" + values.phonenumber,
+										handleCorpRegister(
+											values.corpname,
+											values.cin,
 											values.password,
 											values.confirmpassword,
 											check
 										);
-										setPhone("+98" + values.phonenumber);
 									}}
 								>
 									<Form className={styles.form}>
-										<div className="flex flex-row gap-3 justify-center w-9/10 ">
-											<CustomInput
-												name="lastname"
-												icon={User}
-												type="text"
-												placeholder="نام خانوادگی"
-											>
-												{" "}
-											</CustomInput>
-											<CustomInput
-												placeholder="نام"
-												name="firstname"
-												icon={User}
-												type="text"
-											>
-												{" "}
-											</CustomInput>
-										</div>
-										<div className="flex flex-row justify-center w-9/10 ">
-											<div className={styles.code}>
-												<CustomInput
-													name="countrycode"
-													readOnly={true}
-													placeholder="+98"
-													icon={Smartphone}
-													type="number"
-												>
-													{" "}
-												</CustomInput>
-											</div>
-											<CustomInput
-												name="phonenumber"
-												placeholder="شماره تلفن همراه"
-												type="number"
-											>
-												{" "}
-											</CustomInput>
-										</div>
+										<CustomInput
+											placeholder="نام شرکت"
+											name="corpname"
+											icon={Building2}
+											type="text"
+										>
+											{" "}
+										</CustomInput>
+										<CustomInput
+											name="cin"
+											placeholder="شناسه ملی"
+											icon={IdCard}
+											type="number"
+										>
+											{" "}
+										</CustomInput>
 										<CustomInput
 											name="password"
 											placeholder="رمز عبور"
