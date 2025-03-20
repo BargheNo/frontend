@@ -4,7 +4,7 @@ import { getParams, postParams } from "../types/apiHubType";
 
 // export const baseURL = "https://bombfundingbackend.liara.run";
 // export const baseURL = "http://104.168.46.4:8000";
-export const baseURL = "http://185.110.189.68:8080/";
+export const baseURL = "http://185.110.189.68:8080";
 
 const apiClient = axios.create({
   baseURL: baseURL,
@@ -42,16 +42,17 @@ apiClient.interceptors.response.use(
   },
   (error) => {
     // Handle response errors globally
-    if (error.response) {
+    if (error?.response) {
       // Server responded with a status other than 2xx
-      console.error("API Error:", error.response.status, error.response.data);
+      console.log("API Error:", error?.response?.status, error?.response?.data);
     } else if (error.request) {
       // No response was received
-      console.error("No response received:", error.request);
+      console.log("No response received:", error.request);
     } else {
       // Something happened in setting up the request
-      console.error("Error setting up request:", error.message);
+      console.log("Error setting up request:", error.message);
     }
+    console.log(error);
     return Promise.reject(error);
   }
 );
@@ -132,8 +133,14 @@ export const postData = async ({ endPoint, data, headers }: postParams) => {
   try {
     const response = await apiClient.post(endPoint, data, headers);
     return response.data;
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    // Log the error details for better debugging
+    console.log("Error in postData:", {
+      endPoint,
+      data,
+      headers,
+      error: error.response ? error.response.data : error.message,
+    });
     throw error;
   }
 };
