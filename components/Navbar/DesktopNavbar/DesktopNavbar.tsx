@@ -7,7 +7,7 @@ import { vazirBold } from "@/lib/fonts";
 export default function DesktopNavbar() {
   return (
     <>
-      <div className="h-[70px] fix top-0 w-full flex flex-col justify-center items-center">
+      <div className="h-[70px] fixed top-0 w-full flex flex-col justify-center items-center z-20">
         <div className="flex justify-between items-center h-[70%] w-[94%] rounded-full mx-auto bg-gray-100 py-3 px-5 border-2 border-gray-300">
           <div>
             <Sun size={28} />
@@ -29,7 +29,7 @@ export default function DesktopNavbar() {
           </div>
         </div>
       </div>
-      <div className="h-[70px]"></div>
+      {/* <div className="h-[70px]"></div> */}
     </>
   );
 }
