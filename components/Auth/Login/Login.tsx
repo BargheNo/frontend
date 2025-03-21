@@ -26,8 +26,24 @@ const initialValues = {
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleFormSubmit = async (values: { phoneNumber: string; password: string }) => {
+    const { phoneNumber, password } = values;
+    const response = await handleLogin(phoneNumber, password);
+
+    if (response.success) {
+      console.log("Login successful", response.data);
+      localStorage.setItem("accessToken", response.data?.accessToken);
+      localStorage.setItem("refreshToken", response.data?.accessToken);
+      window.location.href = "/";
+    } else {
+      setErrorMessage(response.message || "Login failed");
+    }
   };
 
   return (
@@ -39,13 +55,7 @@ const Login = () => {
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit ={(values) => {
-              try {
-              handleLogin(values);
-              } catch (err) {
-                
-              }
-            }}
+            onSubmit={handleFormSubmit}
           >
             <Form className="w-full flex flex-col items-center gap-3 text-black">
               <div className="flex flex-row justify-center w-9/10 gap-3">
@@ -76,6 +86,7 @@ const Login = () => {
                   رمز عبور
                 </CustomInput>
               </div>
+              {errorMessage && <p className="text-red-600 text-sm">{errorMessage}</p>}
               <LoginButton>
                 {"ورود"}
                 <MoveLeft />

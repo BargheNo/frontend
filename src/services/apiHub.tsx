@@ -120,35 +120,41 @@ export const deleteData = async ({ endPoint, headers }: getParams) => {
 
 
 
-// function to handle login's request
-export const login = async (phone: string, password: string): Promise<LoginResponse> => {
-  console.log(baseURL)
+
+export const handleLogin = async (phoneNumber: string, password: string) => {
   try {
     const response = await axios.post(`${baseURL}v1/auth/login`, {
-      phone,
-      password,
+      phone: phoneNumber,
+      password: password,
+    }, {
+      headers: {
+        "Content-Type": "application/json",
+      }
     });
 
-    return response.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(error.response?.data?.message || "Login failed.");
-    } else {
-      throw new Error("An unexpected error occurred.");
+    if (response.status === 200) {
+      return {
+        success: true,
+        data: response.data,
+      };
     }
+
+    return {
+      success: false,
+      message: response.data?.message || "An unknown error occurred",
+    };
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      return {
+        success: false,
+        message: error.response?.data?.message || "Network error",
+      };
+    }
+
+    return {
+      success: false,
+      message: "An unexpected error occurred",
+    };
   }
 };
 
-export const handleLogin = async (values: LoginFormValues) => {
-  
-  try {
-    const response = await login(values.phoneNumber, values.password);
-    console.log("Login successful:", response);
-    localStorage.setItem("accessToken", response.data.accessToken);
-    localStorage.setItem("refreshToken", response.data.refreshToken);
-    alert(response.message);
-  } catch (err) {
-    console.error("Login error:", err);
-    throw new Error("ورود ناموفق بود. لطفاً اطلاعات خود را بررسی کنید.");
-  }
-};
