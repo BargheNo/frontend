@@ -1,122 +1,93 @@
 "use client";
-import { useState} from "react";
-import { MoveLeft, Lock, Unlock, Smartphone
- } from "lucide-react";
+import { useState } from "react";
+import { MoveLeft, Lock, Unlock, Smartphone } from "lucide-react";
 import Link from "next/link";
 import styles from "./login.module.css";
-import { login } from "../../../src/services/apiHub";
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import CustomInput from "../../CustomInput/CustomInput";
+import { vazir } from "@/lib/fonts";
+import LoginButton from "./LoginButton";
+import { handleLogin } from "../../../src/services/apiHub";
+
+const validationSchema = Yup.object({
+  phoneNumber: Yup.string()
+    .matches(/^[0-9]{10}$/, "شماره تلفن باید ۱۰ رقم باشد")
+    .required("شماره تلفن الزامی است"),
+  password: Yup.string()
+    .min(8, "رمز عبور باید حداقل ۸ کاراکتر باشد")
+    .required("رمز عبور الزامی است"),
+});
+
+const initialValues = {
+  phoneNumber: "",
+  password: "",
+};
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    number: "",
-    password: "",
-  });
-
   const [showPassword, setShowPassword] = useState(false);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    if (name === "phone") {
-      if (value === "") {
-        setFormData({ ...formData, number: "" });
-      } else if (!value.startsWith("")) {
-        setFormData({ ...formData, number: `${value}` });
-      } else {
-        setFormData({ ...formData, number: value });
-      }
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      const response = await login(formData.number, formData.password);
-      console.log("Login successful:", response);
-      localStorage.setItem("accessToken", response.data.accessToken);
-      localStorage.setItem("refreshToken", response.data.refreshToken);
-      alert(response.message);
-    } catch (err) {
-      console.error("Login error:", err);
-    }
-  };
-
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
   return (
-    <div dir="rtl" className={styles.mainbg}>
-      <div className="w-full max-w-md p-6 space-y-4 shadow-2xl rounded-2xl bg-[#f1f4fc]">
-        <h2 className="text-3xl text-black text-center">{"ورود"}</h2>
+    <div className={vazir.className}>
+      <div dir="rtl" className={styles.mainbg}>
+        <div className="w-full max-w-md p-6 space-y-4 shadow-2xl rounded-2xl bg-[#f1f4fc]">
+          <h2 className="text-3xl text-black text-center">{"ورود"}</h2>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="relative">
-            <Smartphone
-              className="absolute left-3 top-2 text-orange-400"
-              size={20}
-            />
-            
-
-
-            <input
-              type="tel"
-              name="phone"
-              value={formData.number === "" ? "" : formData.number}
-              onChange={handleChange}
-              placeholder="شماره همراه"
-              className="text-black w-4/5 px-3 py-2 rounded-lg focus:outline-none focus:ring focus:ring-blue-300 shadow-[inset_-4px_-4px_10px_rgba(255,255,255,0.5),inset_1px_1px_3px_rgba(0,0,0,0.2)]"
-              required
-              dir="rtl"
-            />
-            <input
-              type="tel"
-              name="phone"
-              placeholder="+98"
-              className="text-black align-middle w-1/5 pl-9 py-2 rounded-lg focus:outline-none focus:ring focus:ring-blue-300 shadow-[inset_-4px_-4px_10px_rgba(255,255,255,0.5),inset_1px_1px_3px_rgba(0,0,0,0.2)]"
-              dir="ltr"
-              readOnly
-            />
-          </div>
-
-          <div className="relative">
-          <button
-              type="button"
-              onClick={togglePasswordVisibility}
-              className="absolute left-3 top-3 text-orange-400 cursor-pointer"
-            >
-              {showPassword ? <Unlock size={20} /> : <Lock size={20} />}
-            </button>
-
-            <input
-              type={showPassword ? "text" : "password"} 
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="رمز عبور"
-              className="text-black w-full px-3 py-2 rounded-lg focus:outline-none focus:ring focus:ring-blue-300 shadow-[inset_-4px_-4px_10px_rgba(255,255,255,0.5),inset_1px_1px_3px_rgba(0,0,0,0.2)]"
-              required
-              dir="rtl"
-            />
-          </div>
-
-          <button
-            type="submit"
-            className={`flex justify-center mt-8 items-center text-orange-500 text-xl font-semibold gap-2 p-3 w-full justify-self-center rounded-full cursor-pointer shadow-[-4px_-4px_10px_rgba(255,255,255,1),2px_2px_5px_rgba(0,0,0,0.3)]
-              duration-300 hover:shadow-[-8px_-8px_20px_rgba(255,255,255,1),4px_4px_10px_rgba(0,0,0,0.3)]
-              active:shadow-[inset_-4px_-4px_10px_rgba(255,255,255,0.5),inset_1px_1px_3px_rgba(0,0,0,0.2)]`}
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit ={(values) => {
+              try {
+              handleLogin(values);
+              } catch (err) {
+                
+              }
+            }}
           >
-            {"ورود"}
-            <MoveLeft />
-          </button>
-        </form>
+            <Form className="w-full flex flex-col items-center gap-3 text-black">
+              <div className="flex flex-row justify-center w-9/10 gap-3">
+                <div className="w-4/5">
+                  <CustomInput name="phoneNumber" type="tel">
+                    شماره تلفن همراه
+                  </CustomInput>
+                </div>
+                <div className="w-1/5">
+                  <CustomInput
+                    name="countryCode"
+                    readOnly={true}
+                    icon={Smartphone}
+                    type="text"
+                    value="+98"
+                  >
+                    +98
+                  </CustomInput>
+                </div>
+              </div>
+              <div className="w-9/10">
+                <CustomInput
+                  name="password"
+                  icon={showPassword ? Unlock : Lock}
+                  type={showPassword ? "text" : "password"}
+                  onIconClick={() => togglePasswordVisibility()}
+                >
+                  رمز عبور
+                </CustomInput>
+              </div>
+              <LoginButton>
+                {"ورود"}
+                <MoveLeft />
+              </LoginButton>
+            </Form>
+          </Formik>
 
-        <p className="flex gap-5 justify-center text-center text-sm text-blue-600">
-          <a href="">فراموشی رمز عبور</a>
-          <Link href="/signup">ثبت نام نکرده ام</Link>
-        </p>
+          <p className="flex gap-5 justify-center text-center text-sm text-blue-600">
+            <a href="">فراموشی رمز عبور</a>
+            <Link href="/signup">ثبت نام نکرده ام</Link>
+          </p>
+        </div>
       </div>
     </div>
   );

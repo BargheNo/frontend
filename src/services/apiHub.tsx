@@ -1,8 +1,10 @@
 import axios from "axios";
 
+
+
 // export const baseURL = "https://bombfundingbackend.liara.run";
 // export const baseURL = "http://104.168.46.4:8000";
-export const baseURL = "http://185.110.189.68:3001/";
+export const baseURL = "http://185.110.189.68:8080/";
 
 const apiClient = axios.create({
   baseURL: baseURL,
@@ -116,19 +118,9 @@ export const deleteData = async ({ endPoint, headers }: getParams) => {
 
 
 
-// function to handle login's request
-interface LoginResponse {
-  statusCode: number;
-  message: string;
-  data: {
-    accessToken: string;
-    refreshToken: string;
-    firstName: string;
-    lastName: string;
-    permissions: null | any[];
-  };
-}
 
+
+// function to handle login's request
 export const login = async (phone: string, password: string): Promise<LoginResponse> => {
   console.log(baseURL)
   try {
@@ -144,5 +136,19 @@ export const login = async (phone: string, password: string): Promise<LoginRespo
     } else {
       throw new Error("An unexpected error occurred.");
     }
+  }
+};
+
+export const handleLogin = async (values: LoginFormValues) => {
+  
+  try {
+    const response = await login(values.phoneNumber, values.password);
+    console.log("Login successful:", response);
+    localStorage.setItem("accessToken", response.data.accessToken);
+    localStorage.setItem("refreshToken", response.data.refreshToken);
+    alert(response.message);
+  } catch (err) {
+    console.error("Login error:", err);
+    throw new Error("ورود ناموفق بود. لطفاً اطلاعات خود را بررسی کنید.");
   }
 };
