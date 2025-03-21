@@ -32,7 +32,7 @@ export default function MobileNavbar({
   ...props
 }: mobileNavbarSelect | any) {
   return (
-    <div className="fixed bottom-3 w-full flex justify-center items-center">
+    <div className="fixed bottom-3 w-full flex justify-center items-center z-30">
       <div className="h-[56px] flex justify-evenly items-center bg-gray-200 p-2 w-[90%] rounded-full mx-auto neo-oval">
         {Object.values(MOBILE_NAVBAR_SELECT)
           .filter((val) => typeof val === "number")
