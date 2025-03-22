@@ -4,7 +4,7 @@ import axios from "axios";
 
 // export const baseURL = "https://bombfundingbackend.liara.run";
 // export const baseURL = "http://104.168.46.4:8000";
-export const baseURL = "http://185.110.189.68:8080/";
+export const baseURL = "http://185.110.189.68:8080";
 
 const apiClient = axios.create({
   baseURL: baseURL,
@@ -123,7 +123,7 @@ export const deleteData = async ({ endPoint, headers }: getParams) => {
 
 export const handleLogin = async (phoneNumber: string, password: string) => {
   try {
-    const response = await axios.post(`${baseURL}v1/auth/login`, {
+    const response = await axios.post(`${baseURL}/v1/auth/login`, {
       phone: phoneNumber,
       password: password,
     }, {
