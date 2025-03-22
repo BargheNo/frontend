@@ -1,5 +1,6 @@
 .Conter {
     @apply flex flex-col;
+    width: 90%;
     position: relative; 
     text-align: right;
     margin-top: 25px;
@@ -49,7 +50,7 @@
     top: 50%;
     transform: translateY(-50%);
     font-size: 16px;
-    color: #FA682D;
+    color: #FFA500;
     cursor: pointer;    
 }
 

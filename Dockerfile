@@ -1,6 +1,9 @@
 # Use official Node.js image
 FROM node:23-alpine
 
+# Install required dependencies for TailwindCSS
+RUN apk update && apk add --no-cache build-base python3
+
 # Set working directory
 WORKDIR /app
 
@@ -8,7 +11,9 @@ WORKDIR /app
 COPY package.json package-lock.json ./ 
 
 # Install dependencies
-RUN npm install
+RUN npm uninstall tailwindcss --legacy-peer-deps && \
+    rm -rf node_modules package-lock.json && \
+    npm install --legacy-peer-deps
 
 # Copy the rest of the project files
 COPY . .

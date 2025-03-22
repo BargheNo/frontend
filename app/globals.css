@@ -93,7 +93,7 @@
   --color-fire-orange: #f24f09;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
@@ -104,7 +104,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
-}
+} */
 
 .dark {
   --background: oklch(0.145 0 0);
@@ -148,9 +148,30 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+  .rtl {
+    direction: rtl;
+  }
+  .vazir-bold {
+    font-family: "vazirBold";
+    font-weight: 700;
+  }
+  .vazir-medium {
+    font-family: "vazirMedium";
+    font-weight: 500;
+  }
+  .vazir {
+    font-family: "vazir";
+    font-weight: 400;
+  }
+  .vazir-light {
+    font-family: "vazirLight";
+    font-weight: 300;
+  }
+  .vazir-thin {
+    font-family: "vazirThin";
+    font-weight: 100;
+  }
 }
-
-
 
 @layer utilities {
 }
