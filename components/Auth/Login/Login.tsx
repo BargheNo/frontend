@@ -38,8 +38,8 @@ const Login = () => {
 
     if (response.success) {
       console.log("Login successful", response.data);
-      localStorage.setItem("accessToken", response.data?.accessToken);
-      localStorage.setItem("refreshToken", response.data?.accessToken);
+      localStorage.setItem("accessToken", response.data.data.accessToken);
+      localStorage.setItem("refreshToken", response.data.data.accessToken);
       window.location.href = "/";
     } else {
       setErrorMessage(response.message || "Login failed");
