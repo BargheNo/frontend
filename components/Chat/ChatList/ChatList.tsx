@@ -1,15 +1,31 @@
-"use client"
+"use client";
 import React from "react";
 import { cn } from "@/lib/utils";
-export default function ChatList({className}:{className?:string}) {
+import ChatItem from "../ChatItem/ChatItem";
+import { Separator } from "@/components/ui/separator";
+
+export default function ChatList({
+  className,
+  conditionWidth,
+}: {
+  className?: string;
+  conditionWidth?: number;
+}) {
   return (
-    <>
-      <div className={cn("neo-card bg-[#F0EDEF] flex flex-col items-center gap-3 rounded-md py-5 w-[650px]",className)}>
-        <span>A1</span>
-        <span>A2</span>
-        <span>A3</span>
-        <span>A4</span>
-      </div>
-    </>
+    <div
+      className={cn(
+        "neo-card bg-[#F0EDEF] flex flex-col items-center rounded-md py-2 w-full px-1",
+        className
+      )}
+    >
+      <ChatItem containerWidth={conditionWidth} />
+      <Separator className="bg-gray-800" />
+      <ChatItem selected containerWidth={conditionWidth} />
+      <Separator className="bg-gray-800" />
+      <ChatItem containerWidth={conditionWidth} />
+      <Separator className="bg-gray-800" />
+      <ChatItem containerWidth={conditionWidth} />
+      <Separator className="bg-gray-800" />
+    </div>
   );
 }
