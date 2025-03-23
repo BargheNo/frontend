@@ -32,7 +32,7 @@ export default function Page() {
         maxSize={50}
         style={{ flexGrow: panelWidth, flexShrink: 1, flexBasis: "0%" }}
         onResize={(size) => {
-          if (size < 25) {
+          if (size < 30) {
             setPanelWidth(10);
             return;
           }
