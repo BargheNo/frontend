@@ -1,5 +1,3 @@
-import React, { useEffect, useState } from 'react'
-import style from './style.module.css'
 import { vazir } from '@/lib/fonts';
 
 import Neworder from '@/components/New-Order/new-order';

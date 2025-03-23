@@ -232,7 +232,7 @@ export default function RequestCard({
 										/>
 									</div>
 									<div className="flex flex-row justify-evenly">
-										<CustomInput
+										{/* <CustomInput
 											icon={DollarSign}
 											type="string"
 										>
@@ -249,14 +249,14 @@ export default function RequestCard({
 											type="string"
 										>
 											آپلود فایل قرارداد
-										</CustomInput>
+										</CustomInput> */}
 									</div>
-									<CustomInput
+									{/* <CustomInput
 										icon={DollarSign}
 										type="string"
 									>
 										آپلود فایل قرارداد
-									</CustomInput>
+									</CustomInput> */}
 
 									<DialogFooter>
 										<button
