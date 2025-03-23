@@ -2,7 +2,7 @@
 FROM node:23-alpine
 
 # Install required dependencies for TailwindCSS
-RUN apt-get update && apt-get install -y build-essential python3
+RUN apk update && apk add --no-cache build-base python3
 
 # Set working directory
 WORKDIR /app

@@ -54,7 +54,7 @@
 }
 
 .wholePage{
-    @apply flex justify-center items-center h-screen;
+    @apply flex justify-center items-center h-screen w-[100vw];
 }
 
 .leftIconButton{
@@ -65,7 +65,6 @@
 
 .code{
     width: 27%;
-
 }
 
 .form{
