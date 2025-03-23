@@ -1,26 +1,19 @@
-import { vazir } from '@/lib/fonts';
+import React from 'react'
+import IconWithBackground from '../IconWithBackground/IconWithBackground'
+import { CalendarFold, FileWarning, MapPin, MoveLeft } from 'lucide-react'
+import Link from 'next/link'
+import SignupButton from '../SignupButton/SignupButton'
+import { Orderhistory } from '@/src/types/OrderhistoryType'
 
-import Neworder from '@/components/New-Order/new-order';
-import SignupButton from '@/components/SignupButton/SignupButton';
-import { CalendarFold, FileWarning, MapPin, MoveLeft } from 'lucide-react';
-import Link from 'next/link';
-import IconWithBackground from '@/components/IconWithBackground/IconWithBackground';
-
-export default function Page() {
-    
-
-    return (
-        <>
-        <div className={`${"flex justify-center items-center mt-15"} ${vazir.className}`}>
-            <div>
-               <Neworder></Neworder>
-
-                <div className='mr-2 mt-4 text-navy-blue'>
-                    <p>ثبت سفارش جدید</p>
-                </div>
-            </div>
-        </div>
-        <div
+const OrderHistory= async ({
+    name,
+    status,
+    address,
+    createdTime,
+}: Orderhistory) => {
+  return (
+    <>
+    <div
 			className={` w-95/100 m-auto ${
 				0 ? "h-64" : ""
 			} border-gray-300 border-b-3`}
@@ -29,7 +22,7 @@ export default function Page() {
 				<div className="flex flex-col justify-between w-full z-10">
 					<div className="space-y-3 w-full">
 						<h2 className="text-2xl font-bold text-gray-800">
-                            پنل خانه تهرانپارس
+                            {name}
 						</h2>
 						<div className=" w-full">
 							<div className="flex text-gray-700 justify-between items-center">
@@ -42,7 +35,7 @@ export default function Page() {
 										وضعیت:
 									</span>
                                     <span className='mr-2'>
-                                        وضعیت وضعیت وضعیت
+                                        {status}
                                     </span>
 								</div>
 							</div>
@@ -57,7 +50,7 @@ export default function Page() {
 										تاریخ ثبت درخواست:
 									</span>
                                     <span className='mr-2'> 
-                                        تاریخ تاریخ تاریخ
+                                        {createdTime}
                                     </span>
 								</div>
 								
@@ -67,7 +60,7 @@ export default function Page() {
 					<div className="flex items-start  text-gray-700 mt-6 ">
 						<div className="flex flex-row items-center text-black">
 							<IconWithBackground icon={MapPin} color="#6B7280" />
-							<div className="font-medium mx-2"> فلکه اول تهرانپارس</div>
+							<div className="font-medium mx-2">{address}</div>
 						</div>
 					</div>
 				</div>
@@ -83,9 +76,7 @@ export default function Page() {
 				</div>
 			</div>
 		</div>
+    </>
+  )}
 
-        
-        
-        </>
-    )
-}
+export default OrderHistory;
