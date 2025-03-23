@@ -1,11 +1,16 @@
 "use client";
-import { ChevronLeft } from "lucide-react";
-import React from "react";
+import { ChevronLeft, Send } from "lucide-react";
+import React, { useState } from "react";
 import ChatMessage from "../ChatMessage/ChatMessage";
 import { cn } from "@/lib/utils";
+import { mockMessages } from "@/mocks/messagesMock";
+import { Message } from "@/types/chat";
 
 export default function ChatBox({ className }: { className?: string }) {
   const [boxWidth, setBoxWidth] = React.useState(0);
+  const [messages, setMessages] = useState<Message[]>(mockMessages);
+  const [replyingTo, setReplyingTo] = useState<string | null>(null);
+  const [newMessage, setNewMessage] = useState("");
   const boxRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
@@ -28,6 +33,36 @@ export default function ChatBox({ className }: { className?: string }) {
     };
   }, []);
 
+  const handleReply = (messageId: string) => {
+    setReplyingTo(messageId);
+    // You can also scroll to your input field or show a reply UI indicator
+  };
+
+  const handleEdit = (messageId: string, newContent: string) => {
+    setMessages(
+      messages.map((msg) =>
+        msg.id === messageId ? { ...msg, content: newContent } : msg
+      )
+    );
+  };
+
+  const handleSendMessage = (
+    e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    if (e.key === "Enter" && newMessage.trim()) {
+      const message: Message = {
+        id: Date.now().toString(),
+        content: newMessage.trim(),
+        type: "self",
+        timestamp: new Date(),
+        replyTo: replyingTo || undefined,
+      };
+      setMessages((prev) => [...prev, message]);
+      setNewMessage("");
+      setReplyingTo(null);
+    }
+  };
+
   return (
     <div
       ref={boxRef}
@@ -37,16 +72,53 @@ export default function ChatBox({ className }: { className?: string }) {
         <ChevronLeft size={32} />
       </div>
       <div className="flex flex-col gap-4 absolute p-3 top-20 right-0 left-0 bottom-18 rounded-lg overflow-y-scroll no-scrollbar neo-card-rev-lg m-3">
-        <ChatMessage containerWidth={boxWidth} />
-        <ChatMessage type="other" containerWidth={boxWidth} />
-        <ChatMessage containerWidth={boxWidth} />
-        <ChatMessage type="other" containerWidth={boxWidth} />
-        <ChatMessage containerWidth={boxWidth} />
-        <ChatMessage containerWidth={boxWidth} />
-        <ChatMessage type="other" containerWidth={boxWidth} />
+        {messages.map((message) => (
+          <ChatMessage
+            key={message.id}
+            message={message.content}
+            type={message.type}
+            containerWidth={boxWidth}
+            messageId={message.id}
+            onReply={handleReply}
+            onEdit={handleEdit}
+            replyTo={message.replyTo}
+          />
+        ))}
       </div>
-      <div className="absolute neo-card-rev bottom-3 bg-white opacity-90 h-14 right-3 left-3 rtl mx-auto flex items-center rounded-lg px-3">
-        پیام خود را بنویسید...
+      <div className="absolute neo-card-rev bottom-3 bg-white min-h-[48px] max-h-[200px] right-3 left-3 rtl mx-auto flex items-center rounded-lg px-3">
+        <textarea
+          className="w-full bg-transparent outline-none resize-none py-3 max-h-[200px] overflow-y-auto no-scrollbar"
+          placeholder={
+            replyingTo
+              ? "در حال پاسخ به پیام..."
+              : "پیام خود را اینجا بنویسید..."
+          }
+          value={newMessage}
+          onChange={(e) => {
+            setNewMessage(e.target.value);
+            // Auto-adjust height based on content
+            e.target.style.height = "auto";
+            e.target.style.height = `${Math.min(e.target.scrollHeight, 200)}px`;
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              handleSendMessage(e);
+            }
+          }}
+          style={{ minHeight: "48px" }}
+          rows={1}
+        />
+        <button
+          onClick={() =>
+            handleSendMessage({
+              key: "Enter",
+            } as React.KeyboardEvent<HTMLInputElement>)
+          }
+          className="p-2 hover:bg-gray-100 rounded-full transition-colors self-end"
+        >
+          <Send className="text-gray-600 mb-0.5" size={24} />
+        </button>
       </div>
     </div>
   );
