@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import { Plus, ShieldAlert,Mailbox, SquareMenu, Building2, Map, MapPinHouse, LandPlot, Building, CircleDollarSign, Gauge,BellRing,House } from 'lucide-react';
+import { Plus, ShieldAlert,Mailbox, SquareMenu, Building2, Map, MapPinHouse, LandPlot, Building, CircleDollarSign, Gauge,BellRing,House, MoveLeft, MapPin, TrendingUp, Battery,CalendarFold,FileWarning } from 'lucide-react';
 import style from './style.module.css'
 import SignupButton from '@/components/SignupButton/SignupButton';
 import { vazir } from '@/lib/fonts';
@@ -26,15 +26,41 @@ import {
     SelectTrigger,
     SelectValue,
   } from "@/components/ui/select"
+import {City,Province} from "@/src/types/provinceType"
+import provinceService from '@/src/services/provinceService';
 
 export default function Page() {
     const[disable,Setdisable]=useState(true);
     const[province,Setprovince]=useState("");
-    const[cities,Setcities]=useState<string[]>([]);
-    // useEffect(()=>{
-    //     console.log(province)
-    // },[province])
+    const[provinceid,Setprovinceid]=useState<number>();
+    const[provinces,Setprovinces]=useState<Province[]>([]);
+    const[cities,Setcities]=useState<City[]>([]);
+    const[city,Setcity]=useState("");
+    const[cityid,Setcityid]=useState<number>();
+    const Getprovinces=()=>{provinceService.GetProvinces().then((res)=>{Setprovinces(res.data.data);}).catch((err)=>{console.log(err.message)})};
+    useEffect(()=>{
+        Getprovinces();
+    },[])
+    
+    const UpdateCityList=(provinceId:number)=>{
+        provinceService.GetCities(provinceId).then((res)=>Setcities(res.data.data)).catch((err)=>console.log(err.message));
+    }
+    const Findprovinceid = (provinces: Province[], name: string) => {
+        const province = provinces.find(p => p.name === name);
+        return province?.ID ?? null; 
+    };
+
+    const FindCityid = (cities: City[], name: string) => {
+        const city = cities.find(p => p.name === name);
+        return city?.ID ?? null; 
+    };
+    
+    useEffect(()=>{
+        UpdateCityList(provinceid??1)
+    },[provinceid])
+    // console.log("city is",cityid," ",provinceid)
     return (
+        <>
         <div className={`${"flex justify-center items-center mt-15"} ${vazir.className}`}>
             <div>
                 <Dialog>
@@ -53,11 +79,11 @@ export default function Page() {
                                 city: Yup.string().required("این فیلد الزامی است"),
                                 province: Yup.string().required("این فیلد الزامی است"),
                                 address: Yup.string().required("این فیلد الزامی است"),
-                                area: Yup.string().required("این فیلد الزامی است"),
-                                electricity: Yup.string().required("این فیلد الزامی است"),
-                                cost: Yup.string().required("این فیلد الزامی است"),
+                                area: Yup.number().required("این فیلد الزامی است"),
+                                electricity: Yup.number().required("این فیلد الزامی است"),
+                                cost: Yup.number().required("این فیلد الزامی است"),
                                 building: Yup.string().required("این فیلد الزامی است"),
-                                number: Yup.number().required("این فیلد الزامی است"),
+                                number: Yup.string().required("این فیلد الزامی است"),
                                 code: Yup.string().required("این فیلد الزامی است").length(10,"کد پستی وارد شده اشتباه است"),
                                 unit: Yup.number().required("این فیلد الزامی است"),
                             })}
@@ -73,32 +99,44 @@ export default function Page() {
                                 </div>
 
                                 <div className='flex justify-end mt-2' style={{gap:"1vw"}}>
-                                <Select name='city' disabled={disable}>
+                                <Select name='city' disabled={disable} onValueChange={(value)=>{Setcity(value);const iD=FindCityid(cities,value);Setcityid(iD??1);}}>
                                     <SelectTrigger disabled={disable} className={style.CustomInput} style={{width:"25vw"}}>
                                         <SelectValue  placeholder="شهر" />
                                     </SelectTrigger >
                                     <SelectContent>
                                         <SelectGroup>
                                         <SelectLabel>شهر</SelectLabel>
-                                        {cities.map((city,index) => (
-                                            <SelectItem key={index} value={city}>
-                                                {Object.values(city)}
-                                            </SelectItem>))}
+                                        {cities?.length>0?(cities.map((city,index) => (
+                                            <SelectItem key={index} value={city.name}>
+                                                {Object.values(city.name)}
+                                            </SelectItem>),)):(<p>هیچ شهری یافت نشد</p>)}
                                         </SelectGroup>
                                     </SelectContent>
                                 </Select>
-                                <Select name='province' onValueChange={(value)=>{Setdisable(false);Setprovince(value);}}>
+                                <Select name='province' 
+                                    onValueChange={(value) => {Setdisable(false);
+                                        Setprovince(value);
+                                        const id = Findprovinceid(provinces, value);
+                                        Setprovinceid(id??1);
+                                        if (id) UpdateCityList(id); 
+                                    }}>
+
                                     <SelectTrigger className={style.CustomInput} style={{width:"25vw"}}>
                                         <SelectValue placeholder="استان" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectGroup>
                                         <SelectLabel>استان</SelectLabel>
-                                        <SelectItem value="apple">Apple</SelectItem>
-                                        <SelectItem value="banana">Banana</SelectItem>
-                                        <SelectItem value="blueberry">Blueberry</SelectItem>
-                                        <SelectItem value="grapes">Grapes</SelectItem>
-                                        <SelectItem value="pineapple">Pineapple</SelectItem>
+                                        {provinces?.length > 0 ? (
+                                            provinces.map((provincearr, index) => (
+                                                <SelectItem key={index} value={provincearr.name}>
+                                                    {provincearr.name} 
+                                                </SelectItem>
+                                            ), 
+                                            )
+                                        ) : (
+                                            <p>هیچ استانی یافت نشد</p>
+                                        )}
                                         </SelectGroup>
                                     </SelectContent>
                                 </Select>
@@ -154,7 +192,7 @@ export default function Page() {
                                     </div>
                                 </div>
                                 <div className='flex flex-row justify-center items-center self-center'>
-                                <SignupButton  style={{marginTop:"-15px",width:"25vw"}}> ثبت سفارش</SignupButton>
+                                <SignupButton   style={{marginTop:"-15px",width:"25vw"}}> ثبت سفارش</SignupButton>
                                 </div>
                                 <DialogFooter>
                                     <DialogClose />
@@ -169,5 +207,7 @@ export default function Page() {
                 </div>
             </div>
         </div>
+    
+        </>
     )
 }
