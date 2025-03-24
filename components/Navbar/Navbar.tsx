@@ -1,15 +1,16 @@
 "use client";
 import React from "react";
 import MobileNavbar from "./MobileNavbar/MobileNavbar";
-import DesktopNavbar from "./DesktopNavbar/DesktopNavbar";
-import { useMediaQuery } from "react-responsive";
-import useClientCheck from "@/src/hooks/useClientCheck";
+import { useSelector, useDispatch } from "react-redux";
+import { MOBILE_NAVBAR_SELECT } from "@/src/types/navbarTypes";
+// import { MOBILE_NAVBAR_SELECT } from "@/src/types/navbarTypes";
+import { changeSelect } from "@/src/store/slices/mobileNavbarSlice";
 
 export default function Navbar() {
-  const isMobile = useMediaQuery({ maxWidth: 767 });
-
-  if (!useClientCheck()) return <>Loading...</>;
-  if (isMobile)
-    return <MobileNavbar/>;
-  else return <DesktopNavbar />;
+  const selected = useSelector((state: any) => state.mobileNavbar.selected);
+  const dispatch = useDispatch();
+  const changeSelectFunc = (selected: MOBILE_NAVBAR_SELECT) => {
+    dispatch(changeSelect(selected));
+  };
+  return <MobileNavbar selected={selected} changeSelect={changeSelectFunc} />;
 }
