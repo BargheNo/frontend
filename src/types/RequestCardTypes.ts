@@ -12,3 +12,7 @@ export interface RequestCardProps {
     requestId: number;
     // sentRequestsCount?: number;
 }
+export interface BidFormProps {
+	panelDetails: PanelDetailsProps;
+    requestId: number;
+}
