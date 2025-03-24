@@ -1,64 +1,80 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MoveLeft, Lock, Unlock, Smartphone } from "lucide-react";
 import Link from "next/link";
-import styles from "./login.module.css";
+import styles from "./ForgotPassword.module.css";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import CustomInput from "../../CustomInput/CustomInput";
 import { vazir } from "@/lib/fonts";
-import LoginButton from "./LoginButton";
-import { handleLogin } from "../../../src/services/apiHub";
+import LoginButton from "../Login/LoginButton";
+import { handleForgetPassword } from "../../../src/services/apiHub";
+import PhoneVerification from "@/components/phoneVerification/phoneVerification";
+import { phonenumberVerification } from "@/src/services/apiHub";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const validationSchema = Yup.object({
   phoneNumber: Yup.string()
     .matches(/^[0-9]{10}$/, "شماره تلفن باید ۱۰ رقم باشد")
     .required("شماره تلفن الزامی است"),
-  password: Yup.string()
-    .min(8, "رمز عبور باید حداقل 8 کاراکتر باشد.")
-    .matches(/[a-z]/, ".رمز عبور باید شامل حداقل یک حرف کوچک باشد")
-    .matches(/[A-Z]/, ".رمز عبور باید شامل حداقل یک حرف بزرگ باشد")
-    .matches(/\d/, ".رمز عبور باید شامل حداقل یک عدد باشد")
-    .matches(/[\W_]/, ".رمز عبور باید شامل حداقل یک نماد باشد")
-    .required("رمز عبور الزامی است"),
 });
 
 const initialValues = {
   phoneNumber: "",
-  password: "",
 };
 
 const Login = () => {
-  const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
+  const [otpCode, setOtpCode] = useState<string>("");
+  const route = useRouter();
+  const handleOtpChange = (otp: string) => {
+      setOtpCode(otp);
+    };
+  const [phone, setPhone] = useState<string>("");
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const handleFormSubmit = async (values: {
-    phoneNumber: string;
-    password: string;
-  }) => {
-    const { phoneNumber, password } = values;
-    const response = await handleLogin(phoneNumber, password);
+  const handleFormSubmit = async (values: { phoneNumber: string }) => {
+    const { phoneNumber } = values;
+    const response = await handleForgetPassword(phoneNumber);
+    setPhone(values.phoneNumber);
 
     if (response.success) {
-      toast.success(response.data.message);
-      localStorage.setItem("accessToken", response.data.data.accessToken);
-      localStorage.setItem("refreshToken", response.data.data.accessToken);
-      window.location.href = "/dashboard";
+      toast.success(response.data.message)
+      setOpen(true);
     } else {
-      toast.error(response.message || "Login failed");
+      toast.error(response.message || "بازیابی ناموفق بود دوباره تلاش کنید");
     }
   };
+
+  const handleVerification = async (phone: string, otp: string) => {
+    try {
+      const response = await phonenumberVerification(phone, otp);
+      
+      if (response.success) {
+        route.push("/reset-password");
+        toast.success(response.data.message);
+      } else {
+        toast.error(response.message || "Verification failed");
+      }
+    } catch (error) {
+      toast.error("An error occurred during verification");
+    }
+  };
+
+	useEffect(() => {
+		if (otpCode.length === 6) {
+			handleVerification(phone, otpCode);
+		}
+	}, [otpCode]);
 
   return (
     <div className={vazir.className}>
       <div dir="rtl" className={styles.mainbg}>
         <div className="w-full max-w-md p-6 space-y-4 shadow-2xl rounded-2xl bg-[#f1f4fc]">
-          <h2 className="text-3xl text-black text-center">{"ورود"}</h2>
+          <h2 className="text-3xl text-black text-center">
+            {"فراموشی رمز عبور"}
+          </h2>
 
           <Formik
             initialValues={initialValues}
@@ -84,28 +100,23 @@ const Login = () => {
                   </CustomInput>
                 </div>
               </div>
-              <div className="w-full">
-                <CustomInput
-                  name="password"
-                  icon={showPassword ? Unlock : Lock}
-                  type={showPassword ? "text" : "password"}
-                  onIconClick={() => togglePasswordVisibility()}
-                >
-                  رمز عبور
-                </CustomInput>
-              </div>
               {errorMessage && (
                 <p className="text-red-600 text-sm">{errorMessage}</p>
               )}
               <LoginButton>
-                {"ورود"}
+                {"بازیابی رمز عبور"}
                 <MoveLeft />
               </LoginButton>
+              <PhoneVerification
+                onlinkClick={() => setOpen(false)}
+                onOtpChange={handleOtpChange}
+                onclick={() => setOpen(false)}
+                open={open}
+              ></PhoneVerification>
             </Form>
           </Formik>
 
           <p className="flex gap-5 justify-center text-center text-sm text-blue-600">
-            <a href="/forgot-password">فراموشی رمز عبور</a>
             <Link href="/signup">ثبت نام نکرده ام</Link>
           </p>
         </div>

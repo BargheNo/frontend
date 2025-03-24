@@ -2,11 +2,12 @@ import axios from "axios";
 import { baseURL, postData, usePostData } from "./apiHub";
 
 interface signupInfo {
-	firstName: string;
-	lastName: string;
-	phone: string;
-	password: string;
-	isAcceptTerms: boolean;
+	FirstName: string;
+	LastName: string;
+	Phone: string;
+	Password: string;
+	ConfirmPassword: string;
+	acceptedTerms: boolean;
 }
 
 interface corpInfo {
@@ -24,11 +25,17 @@ interface phonenumberVerification {
 class registerService {
 
     createUser(user:signupInfo) {
-        return axios.post('http://185.110.189.68:8080/v1/auth/register/basic',user)
+        return axios.post('https://260d-141-11-250-179.ngrok-free.app/v1/auth/register/basic',user, {
+            headers: {
+                "ngrok-skip-browser-warning":"69420"
+            }})
     }
 
     phonenumberVerification(phone:phonenumberVerification){
-        return axios.post('http://185.110.189.68:8080/v1/auth/verify/phone',phone)
+        return axios.post('https://260d-141-11-250-179.ngrok-free.app/v1/auth/verify/phone',phone, {
+            headers: {
+                "ngrok-skip-browser-warning":"69420"
+            }})
     }
 
 	
