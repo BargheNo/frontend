@@ -235,8 +235,8 @@ function Signup() {
 												{" "}
 											</CustomInput>
 										</div>
-										<div className="flex flex-row justify-center w-9/10">
-											<div className={styles.code}>
+										<div className="flex flex-row justify-center w-9/10 gap-2">
+											<div className="w-1/4">
 												<CustomInput
 													name="countrycode"
 													readOnly={true}
@@ -247,6 +247,7 @@ function Signup() {
 													{" "}
 												</CustomInput>
 											</div>
+											<div className="w-3/4">
 											<CustomInput
 												name="phonenumber"
 												placeholder="شماره تلفن همراه"
@@ -254,7 +255,9 @@ function Signup() {
 											>
 												{" "}
 											</CustomInput>
+											</div>
 										</div>
+										<div className="w-9/10">
 										<CustomInput
 											name="password"
 											placeholder="رمز عبور"
@@ -283,6 +286,7 @@ function Signup() {
 										>
 											{" "}
 										</CustomInput>
+										</div>
 										<div className={styles.ruleText}>
 											<label
 												htmlFor="link-checkbox"
@@ -373,6 +377,7 @@ function Signup() {
 									}}
 								>
 									<Form className={styles.form}>
+										<div className="w-9/10">
 										<CustomInput
 											placeholder="نام شرکت"
 											name="corpname"
@@ -417,6 +422,7 @@ function Signup() {
 										>
 											{" "}
 										</CustomInput>
+										</div>
 										<div className={styles.ruleText}>
 											<label
 												htmlFor="link-checkbox"
