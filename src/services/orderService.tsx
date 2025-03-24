@@ -1,3 +1,4 @@
+import OrderHistory from "@/components/OrderHistory/OrderHistory";
 import axios from "axios"
 
 interface Orderinfo{
@@ -15,6 +16,10 @@ interface Orderinfo{
     houseNumber: string,
     unit: number
 }
+interface Orderhistory{
+  page:number,
+  pageSize:number,
+}
 
 class order{
     orderRequest(Orderinfo:Orderinfo,token:string){
@@ -24,6 +29,15 @@ class order{
             }
           })
     }
+
+    orderHistory(pageinfo: Orderhistory, token: string) {
+      return axios.get("http://185.110.189.68:8080/v1/installation/request", {
+          headers: {
+              Authorization: `Bearer ${token}`,
+          },
+          params: pageinfo, 
+      });
+  }
 }
 
 export default new order();
