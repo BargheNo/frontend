@@ -29,7 +29,6 @@ export default function DesktopNavbar() {
           </div>
         </div>
       </div>
-      {/* <div className="h-[70px]"></div> */}
     </>
   );
 }

@@ -1,5 +1,5 @@
 const noNavbarPath = (): string[] => {
-  return ["/dashboard"];
+  return [];
 };
 
 export default noNavbarPath;

@@ -15,13 +15,13 @@ const PanelAside = ({ children, navItems, corp = false }: PanelAsideProps) => {
 
 	return (
 		<div
-			className={`flex fixed h-full w-full bg-[#E8EBF2] bg-[#e7e4e6] ${myFont.className}`}
+			className={`flex fixed h-full w-full bg-[#F0EDEF] under-navbar-content ${myFont.className}`}
 			dir="rtl"
 		>
 			{/* Sidebar */}
+			{/* shadow-[-4px_-4px_5px_rgba(255,255,255,1),2px_2px_5px_rgba(0,0,0,0.3)] */}
 			<aside
-				className="w-64 bg-[#E8EBF2] bg-[#F0EDEF] text-white p-2 z-10
-        shadow-[-4px_-4px_10px_rgba(255,255,255,1),2px_2px_5px_rgba(0,0,0,0.3)]
+				className="w-64 bg-[#F0EDEF] text-white p-2 z-10
         "
 			>
 				<nav className="space-y-2">
@@ -47,7 +47,7 @@ const PanelAside = ({ children, navItems, corp = false }: PanelAsideProps) => {
 			</aside>
 
 			{/* Main Content */}
-			<main className="flex-1 overflow-y-auto">{children}</main>
+			<main className="no-scrollbar rounded-xl ml-3 flex-1 overflow-y-auto shadow-[inset_-4px_-4px_5px_rgba(255,255,255,1),inset_4px_4px_5px_rgba(0,0,0,0.3)]">{children}</main>
 		</div>
 	);
 };

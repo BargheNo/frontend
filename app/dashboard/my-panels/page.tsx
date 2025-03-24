@@ -4,7 +4,7 @@ import PanelCard from "@/components/Panel/PanelCard/PanelCard";
 
 const Settings = () => {
 	return (
-		<div className="min-h-full flex flex-col text-white py-8 px-14 bg-gray-100">
+		<div className="min-h-full flex flex-col text-white py-8 px-14 bg-transparent">
 			<h1 className="text-[#003a8b] text-3xl mb-6 font-black">
 				پنل‌های من
 			</h1>
