@@ -2,6 +2,8 @@ import axios from "axios";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getParams, postParams } from "../types/apiHubType";
 
+
+
 // export const baseURL = "https://bombfundingbackend.liara.run";
 // export const baseURL = "http://104.168.46.4:8000";
 export const baseURL = "http://185.110.189.68:8080";
@@ -172,3 +174,46 @@ export const deleteData = async ({ endPoint, headers }: getParams) => {
     throw error;
   }
 };
+
+
+
+
+
+
+export const handleLogin = async (phoneNumber: string, password: string) => {
+  try {
+    const response = await axios.post(`${baseURL}/v1/auth/login`, {
+      phone: phoneNumber,
+      password: password,
+    }, {
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+
+    if (response.status === 200) {
+      return {
+        success: true,
+        data: response.data,
+      };
+    }
+
+    return {
+      success: false,
+      message: response.data?.message || "An unknown error occurred",
+    };
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      return {
+        success: false,
+        message: error.response?.data?.message || "Network error",
+      };
+    }
+
+    return {
+      success: false,
+      message: "An unexpected error occurred",
+    };
+  }
+};
+

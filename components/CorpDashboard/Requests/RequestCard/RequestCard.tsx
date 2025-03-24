@@ -232,6 +232,7 @@ export default function RequestCard({
 										/>
 									</div>
 									<div className="flex flex-row justify-evenly">
+
 										
 										{/* <CustomInput placeholder="قیمت پیشنهادی شما" name="price" icon={DollarSign}  type="text" > </CustomInput> */}
 										{/* <CustomInput placeholder="زمان تخمینی نصب" name="time" icon={Calendar}  type="text" > </CustomInput> */}
@@ -239,6 +240,7 @@ export default function RequestCard({
 										
 									</div>
 									{/* <CustomInput placeholder="آپلود فایل قرارداد" name="file" icon={DollarSign}  type="text" > </CustomInput> */}
+
 
 									<DialogFooter>
 										<button
