@@ -57,7 +57,7 @@ export default function PlaceBidForm({
 		message: string
 	) => {
 		postData({
-			endPoint: `${baseURL}/v1/corp/bid/set`,
+			endPoint: `${baseURL}/v1/bids/set`,
 			data: {
 				installationRequestId: requestId,
 				minCost: price,

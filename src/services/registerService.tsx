@@ -22,13 +22,22 @@ interface phonenumberVerification {
 }
 
 class registerService {
-	createUser(user: signupInfo) {
-		return axios.post(
-			"https://16c3-185-227-137-37.ngrok-free.app/v1/auth/register/basic",
-			user
-		);
-	}
 
+    createUser(user:signupInfo) {
+        return axios.post('https://260d-141-11-250-179.ngrok-free.app/v1/auth/register/basic',user, {
+            headers: {
+                "ngrok-skip-browser-warning":"69420"
+            }})
+    }
+
+    phonenumberVerification(phone:phonenumberVerification){
+        return axios.post('https://260d-141-11-250-179.ngrok-free.app/v1/auth/verify/phone',phone, {
+            headers: {
+                "ngrok-skip-browser-warning":"69420"
+            }})
+    }
+
+	
 	async createCorp(corp: corpInfo) {
         return await postData({endPoint: `${baseURL}/v1/auth/corporation/register/`, data: corp});
 		// return axios.post(
@@ -37,12 +46,6 @@ class registerService {
 		// );
 	}
 
-	phonenumberVerification(phone: phonenumberVerification) {
-		return axios.post(
-			"https://16c3-185-227-137-37.ngrok-free.app/v1/auth/verify/phone",
-			phone
-		);
-	}
 }
 
 export default new registerService();

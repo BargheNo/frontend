@@ -1,9 +1,9 @@
 import style from './SignupButton.module.css';
 
-interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     children:React.ReactNode;
   }
 
-export default function SignupButton({children}:Props) {
-  return <button  className={style.button}>{children}</button>;
+export default function SignupButton({children,...props}:Props) {
+  return <button {...props}  className={style.button}>{children}</button>;
 }
