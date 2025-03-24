@@ -31,8 +31,7 @@ const selectToIcon = (selected: MOBILE_NAVBAR_SELECT, color?: string) => {
 export default function MobileNavbar({
   selected,
   changeSelect,
-  ...props
-}: mobileNavbarSelect | any) {
+}: mobileNavbarSelect ) {
   return (
     <>
       <MobileNavbarSlider navItems={navItems} />

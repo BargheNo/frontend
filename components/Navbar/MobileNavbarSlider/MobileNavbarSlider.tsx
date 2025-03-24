@@ -7,7 +7,6 @@ import { usePathname } from "next/navigation";
 import React from "react";
 
 export default function MobileNavbarSlider({
-  children,
   navItems,
   corp,
 }: PanelAsideProps) {
