@@ -2,9 +2,11 @@ import axios from "axios";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getParams, postParams } from "../types/apiHubType";
 
+
+
 // export const baseURL = "https://bombfundingbackend.liara.run";
 // export const baseURL = "http://104.168.46.4:8000";
-export const baseURL = "http://185.110.189.68:8080";
+export const baseURL = "https://260d-141-11-250-179.ngrok-free.app";
 
 const apiClient = axios.create({
   baseURL: baseURL,
@@ -170,5 +172,94 @@ export const deleteData = async ({ endPoint, headers }: getParams) => {
     return response.data;
   } catch (error) {
     throw error;
+  }
+};
+
+
+
+
+
+
+export const handleLogin = async (phoneNumber: string, password: string) => {
+  try {
+    const response = await axios.post(`${baseURL}/v1/auth/login`, {
+      phone: "+98" + phoneNumber,
+      password: password,
+    }, {
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+
+    if (response.status === 200) {
+      return {
+        success: true,
+        data: response.data,
+      };
+    }
+
+    return {
+      success: false,
+      message: response.data?.message || "An unknown error occurred",
+    };
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      return {
+        success: false,
+        message: error.response?.data?.message || "Network error",
+      };
+    }
+
+    return {
+      success: false,
+      message: "An unexpected error occurred",
+    };
+  }
+};
+
+export const handleResetPassword = async (confirmPassword: string, password: string) => {
+  try {
+    const accessToken = localStorage.getItem('accessToken');
+
+    if (!accessToken) {
+      return {
+        success: false,
+        message: "No access token found. Please log in again.",
+      };
+    }
+
+    const response = await axios.post(`${baseURL}/v1/auth/reset-password`, {
+      confirmPassword: confirmPassword,
+      password: password,
+    }, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${accessToken}`,
+      }
+    });
+
+    if (response.status === 200) {
+      return {
+        success: true,
+        data: response.data,
+      };
+    }
+
+    return {
+      success: false,
+      message: response.data?.message || "An unknown error occurred",
+    };
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      return {
+        success: false,
+        message: error.response?.data?.message || "Network error",
+      };
+    }
+
+    return {
+      success: false,
+      message: "An unexpected error occurred",
+    };
   }
 };
