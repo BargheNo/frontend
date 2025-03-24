@@ -185,7 +185,7 @@ export const handleLogin = async (phoneNumber: string, password: string) => {
     const response = await axios.post(
       `${baseURL}/v1/auth/login`,
       {
-        phone: phoneNumber,
+        phone: "+98" + phoneNumber,
         password: password,
       },
       {
@@ -331,7 +331,7 @@ export const handleResetPassword = async (confirmPassword: string, password: str
 
     return {
       success: false,
-      message: response.data?.message || "An unknown error occurred",,
+      message: response.data?.message || "An unknown error occurred",
       };
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {

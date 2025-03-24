@@ -40,10 +40,10 @@ const Login = () => {
     setPhone(values.phoneNumber);
 
     if (response.success) {
-      console.log("Login successful", response.data);
+      toast.success(response.data.message)
       setOpen(true);
     } else {
-      setErrorMessage(response.message || "Login failed");
+      toast.error(response.message || "بازیابی ناموفق بود دوباره تلاش کنید");
     }
   };
 
@@ -73,7 +73,7 @@ const Login = () => {
       <div dir="rtl" className={styles.mainbg}>
         <div className="w-full max-w-md p-6 space-y-4 shadow-2xl rounded-2xl bg-[#f1f4fc]">
           <h2 className="text-3xl text-black text-center">
-            {"بازیابی رمز عبور"}
+            {"فراموشی رمز عبور"}
           </h2>
 
           <Formik
