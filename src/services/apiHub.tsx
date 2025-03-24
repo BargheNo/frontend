@@ -6,7 +6,7 @@ import { getParams, postParams } from "../types/apiHubType";
 
 // export const baseURL = "https://bombfundingbackend.liara.run";
 // export const baseURL = "http://104.168.46.4:8000";
-export const baseURL = "http://185.110.189.68:8080";
+export const baseURL = "https://260d-141-11-250-179.ngrok-free.app";
 
 const apiClient = axios.create({
   baseURL: baseURL,
@@ -182,14 +182,18 @@ export const deleteData = async ({ endPoint, headers }: getParams) => {
 
 export const handleLogin = async (phoneNumber: string, password: string) => {
   try {
-    const response = await axios.post(`${baseURL}/v1/auth/login`, {
-      phone: phoneNumber,
-      password: password,
-    }, {
-      headers: {
-        "Content-Type": "application/json",
+    const response = await axios.post(
+      `${baseURL}/v1/auth/login`,
+      {
+        phone: phoneNumber,
+        password: password,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
-    });
+    );
 
     if (response.status === 200) {
       return {
@@ -217,3 +221,85 @@ export const handleLogin = async (phoneNumber: string, password: string) => {
   }
 };
 
+export const handleForgetPassword = async (phoneNumber: string) => {
+  try {
+    const response = await axios.post(
+      `${baseURL}/v1/auth/forgot-password`,
+      {
+        phone: "+98" + phoneNumber,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (response.status === 200) {
+      return {
+        success: true,
+        data: response.data,
+      };
+    }
+
+    return {
+      success: false,
+      message: response.data?.message || "An unknown error occurred",
+    };
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      return {
+        success: false,
+        message: error.response?.data?.message || "Network error",
+      };
+    }
+
+    return {
+      success: false,
+      message: "An unexpected error occurred",
+    };
+  }
+};
+
+
+
+export const phonenumberVerification = async (phone: string, otp: string) => {
+  try {
+    const response = await axios.post(
+      `${baseURL}/v1/auth/confirm-otp`, 
+      {
+        phone: "+98" + phone,
+        otp: otp
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (response.status === 200) {
+      return {
+        success: true,
+        data: response.data,
+      };
+    }
+
+    return {
+      success: false,
+      message: response.data?.message || "Verification failed",
+    };
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      return {
+        success: false,
+        message: error.response?.data?.message || "Network error",
+      };
+    }
+
+    return {
+      success: false,
+      message: "An unexpected error occurred",
+    };
+  }
+};
