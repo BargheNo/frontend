@@ -24,11 +24,17 @@ interface phonenumberVerification {
 class registerService {
 
     createUser(user:signupInfo) {
-        return axios.post('https://260d-141-11-250-179.ngrok-free.app/v1/auth/register/basic',user)
+        return axios.post('https://260d-141-11-250-179.ngrok-free.app/v1/auth/register/basic',user, {
+            headers: {
+                "ngrok-skip-browser-warning":"69420"
+            }})
     }
 
     phonenumberVerification(phone:phonenumberVerification){
-        return axios.post('https://260d-141-11-250-179.ngrok-free.app/v1/auth/verify/phone',phone)
+        return axios.post('https://260d-141-11-250-179.ngrok-free.app/v1/auth/verify/phone',phone, {
+            headers: {
+                "ngrok-skip-browser-warning":"69420"
+            }})
     }
 
 	
