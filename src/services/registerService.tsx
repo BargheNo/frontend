@@ -24,11 +24,11 @@ interface phonenumberVerification {
 class registerService {
 
     createUser(user:signupInfo) {
-        return axios.post('http://185.110.189.68:8080/v1/auth/register/basic',user)
+        return axios.post('https://260d-141-11-250-179.ngrok-free.app/v1/auth/register/basic',user)
     }
 
     phonenumberVerification(phone:phonenumberVerification){
-        return axios.post('http://185.110.189.68:8080/v1/auth/verify/phone',phone)
+        return axios.post('https://260d-141-11-250-179.ngrok-free.app/v1/auth/verify/phone',phone)
     }
 
 	

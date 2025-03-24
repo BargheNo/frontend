@@ -1,26 +1,27 @@
 import { vazir } from '@/lib/fonts';
 import Neworder from '@/components/New-Order/new-order';
+import OrderHistoryPagination from '@/components/OrderHistory/OrderHistoryPagination';
 
+  
 
 export default function Page() {
-    const handelHistory=()=>{
-        
-    }
-
+    
     return (
         <>
         <div className={`${"flex justify-center items-center mt-15"} ${vazir.className}`}>
             <div>
                <Neworder></Neworder>
 
-                <div className='mr-2 mt-4 text-navy-blue'>
+                <div className='mr-2 mt-3 text-navy-blue'>
                     <p>ثبت سفارش جدید</p>
                 </div>
             </div>
         </div>
-       {/* <OrderHistory name='panel tehran' address='mazandaran amol kooche dool pelak 10 vahed 1' status='in progress' createdTime='2-2-2025'></OrderHistory>
+        <div className=' flex flex-row font-bold text-navy-blue text-2xl mr-8 mt-6 mb-3 justify-start '>
+                  <p> سابقه سفارشات </p>
+        </div>
+        <OrderHistoryPagination></OrderHistoryPagination>
         
-         */}
         </>
     )
 }

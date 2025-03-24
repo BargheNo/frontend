@@ -5,7 +5,7 @@ import Link from 'next/link'
 import SignupButton from '../SignupButton/SignupButton'
 import { Orderhistory } from '@/src/types/OrderhistoryType'
 
-const OrderHistory= async ({
+const OrderHistory=  ({
     name,
     status,
     address,
@@ -60,7 +60,7 @@ const OrderHistory= async ({
 					<div className="flex items-start  text-gray-700 mt-6 ">
 						<div className="flex flex-row items-center text-black">
 							<IconWithBackground icon={MapPin} color="#6B7280" />
-							<div className="font-medium mx-2">{address}</div>
+							<div className="font-medium mx-2">{address.province}{address.city} {address.streetAddress} {address.houseNumber}</div>
 						</div>
 					</div>
 				</div>
