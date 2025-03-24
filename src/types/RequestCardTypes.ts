@@ -9,5 +9,10 @@ interface PanelDetailsProps {
 export interface RequestCardProps {
 	panelDetails: PanelDetailsProps;
 	className?: string;
+    requestId: number;
     // sentRequestsCount?: number;
+}
+export interface BidFormProps {
+	panelDetails: PanelDetailsProps;
+    requestId: number;
 }

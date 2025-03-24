@@ -221,6 +221,47 @@ export const handleLogin = async (phoneNumber: string, password: string) => {
   }
 };
 
+export const handleCorpLogin = async (cin: string, password: string) => {
+  try {
+    const response = await axios.post(
+      `${baseURL}/v1/auth/corporation/login/`,
+      {
+        cin: cin,
+        password: password,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (response.status === 200) {
+      return {
+        success: true,
+        data: response.data,
+      };
+    }
+
+    return {
+      success: false,
+      message: response.data?.message || "An unknown error occurred",
+    };
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      return {
+        success: false,
+        message: error.response?.data?.message || "Network error",
+      };
+    }
+
+    return {
+      success: false,
+      message: "An unexpected error occurred",
+    };
+  }
+};
+
 
 export const handleForgetPassword = async (phoneNumber: string) => {
   try {

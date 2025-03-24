@@ -2,16 +2,17 @@
 import style from "./CustomInput.module.css";
 import { LucideIcon } from "lucide-react";
 import { useField } from "formik";
-import { ChangeEventHandler, useState } from "react";
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
 	name: string;
 	children: React.ReactNode;
 	icon?: LucideIcon;
 	onIconClick?: () => void;
-	// value?: string;
   autoFocus?: boolean;
-	// onChange?: ChangeEventHandler<HTMLInputElement>;
+  iconClassName?: string;
+  errorClassName?: string;
+  inputClassName?: string;
+  containerClassName?: string;
 }
 
 const isRTL = (text: string | undefined): boolean => {
@@ -28,32 +29,29 @@ export default function CustomInput({
 	icon: Icon,
 	onIconClick,
   autoFocus = false,
+  iconClassName,
+  errorClassName,
+  inputClassName,
+  containerClassName,
 	...props
 }: Props) {
 	// const [isTextRTL, setTextRTL] = useState(true);
 	const [field, meta] = useField(name);
 	const hasError = meta.touched && meta.error;
 
-	// const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-	// 	onChange?.(e);
-	// 	setTextRTL(isRTL(e.target.value));
-	// };
-
 	return (
-		<div className={style.Conter}>
+		<div className={`${style.Conter} ${containerClassName}`}>
 			<div className={style.inputWrapper}>
-				{Icon && <Icon onClick={onIconClick} className={style.icon} />}
+				{Icon && <Icon onClick={onIconClick} className={`${style.icon} ${iconClassName}`} />}
 				{field.value === "" && (
-					<label className={style.text}>{children}</label>
+					<label className={`${style.text} ${errorClassName}`}>{children}</label>
 				)}
 				<input
 					dir={isRTL(field.value) ? "rtl" : "ltr"}
 					{...field}
 					{...props}
-					// onChange={handleChange}
           autoFocus={autoFocus}
-					// value={value}
-					className={`${style.CustomInput} ${style.numberInput} ${
+					className={`${style.CustomInput} ${style.numberInput} ${inputClassName} ${
 						isRTL(field.value) ? "text-right" : "text-left"
 					}`}
 					style={{ paddingLeft: Icon ? "42px" : "12px"}}

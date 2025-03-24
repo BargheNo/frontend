@@ -1,5 +1,6 @@
 .Conter {
     @apply flex flex-col;
+    /* width: 90%; */
     position: relative; 
     text-align: right;
     margin-top: 25px;
