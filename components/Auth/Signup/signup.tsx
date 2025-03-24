@@ -83,6 +83,7 @@ function Signup() {
 		Lname: string,
 		phone: string,
 		password: string,
+		confirmPassword : string,
 		isAcceptTerms: boolean
 	) => {
 		registerService
@@ -206,6 +207,7 @@ function Signup() {
 											values.lastname,
 											"+98" + values.phonenumber,
 											values.password,
+											values.confirmpassword,
 											check
 										);
 										setPhone("+98" + values.phonenumber);
