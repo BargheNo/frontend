@@ -83,24 +83,23 @@ function Signup() {
 		Lname: string,
 		phone: string,
 		password: string,
+		confirmPassword : string,
 		isAcceptTerms: boolean
 	) => {
 		registerService
 			.createUser({
-				FirstName: name,
-				LastName: Lname,
-				Phone: phone,
-				Password: password,
-				ConfirmPassword:confirmPassword,
-				acceptedTerms: isAcceptTerms,
+				firstName: name,
+				lastName: Lname,
+				phone: phone,
+				password: password,
+				isAcceptTerms: isAcceptTerms,
 			})
 			.then((res) => {
-				console.log(res)
 				setOpen(true);
 				toast(res.data.message);
 			})
 			.catch((err) => {
-				toast(err.response.data.messages.phone['alreadyRegistered']);
+				toast(err.response.data.messages.phone["alreadyRegistered"]);
 			});
 	};
 	const handleCorpRegister = (
@@ -206,10 +205,10 @@ function Signup() {
 											values.lastname,
 											"+98" + values.phonenumber,
 											values.password,
+											values.confirmpassword,
 											check
 										);
 										setPhone("+98" + values.phonenumber);
-										console.log("ININI")
 									}}
 								>
 									<Form className={styles.form}>
@@ -235,8 +234,8 @@ function Signup() {
 												{" "}
 											</CustomInput>
 										</div>
-										<div className="flex flex-row justify-center w-9/10">
-											<div className={styles.code}>
+										<div className="flex flex-row justify-center w-9/10 gap-2">
+											<div className="w-1/4">
 												<CustomInput
 													name="countrycode"
 													readOnly={true}
@@ -247,6 +246,7 @@ function Signup() {
 													{" "}
 												</CustomInput>
 											</div>
+											<div className="w-3/4">
 											<CustomInput
 												name="phonenumber"
 												placeholder="شماره تلفن همراه"
@@ -254,7 +254,9 @@ function Signup() {
 											>
 												{" "}
 											</CustomInput>
+											</div>
 										</div>
+										<div className="w-9/10">
 										<CustomInput
 											name="password"
 											placeholder="رمز عبور"
@@ -283,6 +285,7 @@ function Signup() {
 										>
 											{" "}
 										</CustomInput>
+										</div>
 										<div className={styles.ruleText}>
 											<label
 												htmlFor="link-checkbox"
@@ -373,6 +376,7 @@ function Signup() {
 									}}
 								>
 									<Form className={styles.form}>
+										<div className="w-9/10">
 										<CustomInput
 											placeholder="نام شرکت"
 											name="corpname"
@@ -417,6 +421,7 @@ function Signup() {
 										>
 											{" "}
 										</CustomInput>
+										</div>
 										<div className={styles.ruleText}>
 											<label
 												htmlFor="link-checkbox"
