@@ -171,7 +171,19 @@ body {
     font-family: "vazirThin";
     font-weight: 100;
   }
+  /* Add this CSS rule to your global styles or a relevant CSS file */
+  .under-navbar-content {
+    padding-top: 70px !important; /* Same height as the navbar */
+  }
 }
 
 @layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
 }

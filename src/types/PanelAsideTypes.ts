@@ -1,15 +1,15 @@
-import { ReactNode, JSX } from 'react';
+import { ReactNode, JSX } from "react";
 
 interface NavItem {
-	path: string;
-	name: string;
-	icon: JSX.Element;
+  path: string;
+  name: string;
+  icon: JSX.Element;
 }
 
 interface PanelAsideProps {
-	children: ReactNode;
-	navItems: NavItem[];
-	corp?: boolean;
+  children?: ReactNode;
+  navItems: NavItem[];
+  corp?: boolean;
 }
 
 export type { NavItem };
