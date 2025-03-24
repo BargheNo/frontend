@@ -331,7 +331,7 @@ export const handleResetPassword = async (confirmPassword: string, password: str
 
     return {
       success: false,
-      message: response.data?.message || "An unknown error occurred",,
+      message: response.data?.message || "An unknown error occurred",
       };
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
