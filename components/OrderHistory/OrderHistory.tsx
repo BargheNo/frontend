@@ -60,7 +60,7 @@ const OrderHistory=  ({
 					<div className="flex items-start  text-gray-700 mt-6 ">
 						<div className="flex flex-row items-center text-black">
 							<IconWithBackground icon={MapPin} color="#6B7280" />
-							<div className="font-medium mx-2">{address.province}{address.city} {address.streetAddress} {address.houseNumber}</div>
+							<div className="font-medium mx-2">استان {address.province}،شهر {address.city}،{address.streetAddress}،پلاک {address.houseNumber}، واحد {address.unit}</div>
 						</div>
 					</div>
 				</div>
