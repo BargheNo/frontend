@@ -9,13 +9,18 @@ import CustomInput from "../../CustomInput/CustomInput";
 import { vazir } from "@/lib/fonts";
 import LoginButton from "./LoginButton";
 import { handleLogin } from "../../../src/services/apiHub";
+import { toast } from "sonner";
 
 const validationSchema = Yup.object({
   phoneNumber: Yup.string()
     .matches(/^[0-9]{10}$/, "شماره تلفن باید ۱۰ رقم باشد")
     .required("شماره تلفن الزامی است"),
   password: Yup.string()
-    .min(8, "رمز عبور باید حداقل ۸ کاراکتر باشد")
+    .min(8, "رمز عبور باید حداقل 8 کاراکتر باشد.")
+    .matches(/[a-z]/, ".رمز عبور باید شامل حداقل یک حرف کوچک باشد")
+    .matches(/[A-Z]/, ".رمز عبور باید شامل حداقل یک حرف بزرگ باشد")
+    .matches(/\d/, ".رمز عبور باید شامل حداقل یک عدد باشد")
+    .matches(/[\W_]/, ".رمز عبور باید شامل حداقل یک نماد باشد")
     .required("رمز عبور الزامی است"),
 });
 
@@ -32,17 +37,20 @@ const Login = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleFormSubmit = async (values: { phoneNumber: string; password: string }) => {
+  const handleFormSubmit = async (values: {
+    phoneNumber: string;
+    password: string;
+  }) => {
     const { phoneNumber, password } = values;
     const response = await handleLogin(phoneNumber, password);
 
     if (response.success) {
-      console.log("Login successful", response.data);
+      toast.success(response.data.message);
       localStorage.setItem("accessToken", response.data.data.accessToken);
       localStorage.setItem("refreshToken", response.data.data.accessToken);
-      window.location.href = "/";
+      window.location.href = "/dashboard";
     } else {
-      setErrorMessage(response.message || "Login failed");
+      toast.error(response.message || "Login failed");
     }
   };
 
@@ -58,13 +66,13 @@ const Login = () => {
             onSubmit={handleFormSubmit}
           >
             <Form className="w-full flex flex-col items-center gap-3 text-black">
-              <div className="flex flex-row justify-center w-9/10 gap-3">
-                <div className="w-4/5">
+              <div className="flex flex-row justify-center gap-2">
+                <div className="w-3/4">
                   <CustomInput name="phoneNumber" type="tel">
                     شماره تلفن همراه
                   </CustomInput>
                 </div>
-                <div className="w-1/5">
+                <div className="w-1/4">
                   <CustomInput
                     name="countryCode"
                     readOnly={true}
@@ -76,7 +84,7 @@ const Login = () => {
                   </CustomInput>
                 </div>
               </div>
-              <div className="w-9/10">
+              <div className="w-full">
                 <CustomInput
                   name="password"
                   icon={showPassword ? Unlock : Lock}
@@ -86,7 +94,9 @@ const Login = () => {
                   رمز عبور
                 </CustomInput>
               </div>
-              {errorMessage && <p className="text-red-600 text-sm">{errorMessage}</p>}
+              {errorMessage && (
+                <p className="text-red-600 text-sm">{errorMessage}</p>
+              )}
               <LoginButton>
                 {"ورود"}
                 <MoveLeft />
@@ -95,7 +105,7 @@ const Login = () => {
           </Formik>
 
           <p className="flex gap-5 justify-center text-center text-sm text-blue-600">
-            <a href="">فراموشی رمز عبور</a>
+            <a href="/forgot-password">فراموشی رمز عبور</a>
             <Link href="/signup">ثبت نام نکرده ام</Link>
           </p>
         </div>

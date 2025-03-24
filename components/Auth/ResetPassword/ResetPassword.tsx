@@ -9,6 +9,7 @@ import CustomInput from "../../CustomInput/CustomInput";
 import { vazir } from "@/lib/fonts";
 import LoginButton from "../Login/LoginButton";
 import { handleResetPassword } from "../../../src/services/apiHub";
+import { toast } from "sonner";
 
 const validationSchema = Yup.object({
   password: Yup.string()
@@ -40,15 +41,14 @@ const ResetPassword = () => {
     password: string;
     confirmPassword: string;
   }) => {
-    console.log("TRIGGERED");
     const { confirmPassword, password } = values;
     const response = await handleResetPassword(confirmPassword, password);
 
     if (response.success) {
-      console.log("Login successful", response.data);
-      window.location.href = "/reset-password";
+      // window.location.href = "/dashboard";
+      toast.success(response.data.message)
     } else {
-      setErrorMessage(response.message || "Login failed");
+      toast.error(response.message || "تغییر رمز ناموفق بود دوباره تلاش کنید");
     }
   };
 
