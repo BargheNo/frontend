@@ -35,7 +35,7 @@ const Login = () => {
   const handleFormSubmit = async (values: { cin: string; password: string }) => {
     const { cin: cin, password } = values;
     const response = await handleCorpLogin(cin, password);
-
+    console.log("Login successful", response.data);
     if (response.success) {
       console.log("Login successful", response.data);
       localStorage.setItem("accessToken", response.data.data.accessToken);
