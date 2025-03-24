@@ -14,8 +14,12 @@ export default function Navbar() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   // const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1023 });
   // const isDesktop = useMediaQuery({ minWidth: 1024 });
+  
+  
+
   const changeSelectFunc = (selected: MOBILE_NAVBAR_SELECT) => {
     dispatch(changeSelect(selected));
+    if (selected === MOBILE_NAVBAR_SELECT.MORE) {}
   };
   if (!useClientCheck()) return <>Loading...</>;
   if (isMobile)
