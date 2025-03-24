@@ -1,7 +1,7 @@
 import React from "react";
 import { EllipsisVertical, House, Search } from "lucide-react";
 import { LayoutDashboard } from "lucide-react";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import MobileNavbarSlider from "../MobileNavbarSlider/MobileNavbarSlider";
 import { navItems } from "@/src/constants/navItems";
 import { usePathname } from "next/navigation";
@@ -35,8 +35,6 @@ export default function MobileNavbar() {
   const pathname = usePathname();
   return (
     <>
-      <SidebarProvider>
-        
       <MobileNavbarSlider navItems={navItems} />
       <div className="fixed bottom-3 w-full flex justify-center items-center z-50">
         <div className="h-[70px] flex justify-evenly items-center bg-[#F0EDEF] p-2 w-[90%] rounded-full mx-auto neo-oval">
@@ -76,7 +74,6 @@ export default function MobileNavbar() {
           })}
         </div>
       </div>
-      </SidebarProvider>
     </>
   );
 }
