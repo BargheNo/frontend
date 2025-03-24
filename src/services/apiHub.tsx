@@ -221,6 +221,7 @@ export const handleLogin = async (phoneNumber: string, password: string) => {
   }
 };
 
+
 export const handleForgetPassword = async (phoneNumber: string) => {
   try {
     const response = await axios.post(
@@ -261,72 +262,6 @@ export const handleForgetPassword = async (phoneNumber: string) => {
   }
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export const phonenumberVerification = async (phone: string, otp: string) => {
   try {
     const response = await axios.post(
@@ -341,8 +276,7 @@ export const phonenumberVerification = async (phone: string, otp: string) => {
         },
       }
     );
-
-    if (response.status === 200) {
+     if (response.status === 200) {
       return {
         success: true,
         data: response.data,
@@ -352,7 +286,7 @@ export const phonenumberVerification = async (phone: string, otp: string) => {
     return {
       success: false,
       message: response.data?.message || "Verification failed",
-    };
+      };
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
       return {
@@ -367,3 +301,58 @@ export const phonenumberVerification = async (phone: string, otp: string) => {
     };
   }
 };
+
+export const handleResetPassword = async (confirmPassword: string, password: string) => {
+  try {
+    const accessToken = localStorage.getItem('accessToken');
+
+    if (!accessToken) {
+      return {
+        success: false,
+        message: "No access token found. Please log in again.",
+      };
+    }
+
+    const response = await axios.post(`${baseURL}/v1/auth/reset-password`, {
+      confirmPassword: confirmPassword,
+      password: password,
+    }, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${accessToken}`,
+      }
+    });
+    if (response.status === 200) {
+      return {
+        success: true,
+        data: response.data,
+      };
+    }
+
+    return {
+      success: false,
+      message: response.data?.message || "An unknown error occurred",,
+      };
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      return {
+        success: false,
+        message: error.response?.data?.message || "Network error",
+      };
+    }
+
+    return {
+      success: false,
+      message: "An unexpected error occurred",
+    };
+  }
+};
+
+
+   
+
+      
+
+      
+
+    
