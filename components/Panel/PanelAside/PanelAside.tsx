@@ -68,7 +68,7 @@ const PanelAside = ({ children, navItems, corp = false }: PanelAsideProps) => {
       </aside>
 
       {/* Main Content */}
-      <main className="no-scrollbar rounded-xl ml-3 flex-1 overflow-y-auto shadow-[inset_-4px_-4px_5px_rgba(255,255,255,1),inset_4px_4px_5px_rgba(0,0,0,0.3)]">
+      <main className="no-scrollbar rounded-xl ml-3 flex-1 overflow-y-auto shadow-[inset_-4px_-4px_5px_rgba(255,255,255,1),inset_4px_4px_5px_rgba(0,0,0,0.3)] bg-white">
         {children}
       </main>
     </div>
