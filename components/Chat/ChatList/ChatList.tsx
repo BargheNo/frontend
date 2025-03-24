@@ -11,6 +11,7 @@ export default function ChatList({
   className?: string;
   conditionWidth?: number;
 }) {
+  const sepratorClassName = "bg-gray-900";
   return (
     <div
       className={cn(
@@ -19,13 +20,13 @@ export default function ChatList({
       )}
     >
       <ChatItem containerWidth={conditionWidth} />
-      <Separator className="bg-gray-800" />
+      <Separator className={sepratorClassName} />
       <ChatItem selected containerWidth={conditionWidth} />
-      <Separator className="bg-gray-800" />
+      <Separator className={sepratorClassName} />
       <ChatItem containerWidth={conditionWidth} />
-      <Separator className="bg-gray-800" />
+      <Separator className={sepratorClassName} />
       <ChatItem containerWidth={conditionWidth} />
-      <Separator className="bg-gray-800" />
+      <Separator className={sepratorClassName} />
     </div>
   );
 }
