@@ -2,11 +2,12 @@ import axios from "axios";
 import { baseURL, postData, usePostData } from "./apiHub";
 
 interface signupInfo {
-	firstName: string;
-	lastName: string;
-	phone: string;
-	password: string;
-	isAcceptTerms: boolean;
+	FirstName: string;
+	LastName: string;
+	Phone: string;
+	Password: string;
+	ConfirmPassword: string;
+	acceptedTerms: boolean;
 }
 
 interface corpInfo {

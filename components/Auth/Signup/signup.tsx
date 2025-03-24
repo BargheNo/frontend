@@ -88,18 +88,20 @@ function Signup() {
 	) => {
 		registerService
 			.createUser({
-				firstName: name,
-				lastName: Lname,
-				phone: phone,
-				password: password,
-				isAcceptTerms: isAcceptTerms,
+				FirstName: name,
+				LastName: Lname,
+				Phone: phone,
+				Password: password,
+				ConfirmPassword:confirmPassword,
+				acceptedTerms: isAcceptTerms,
 			})
 			.then((res) => {
+				console.log(res)
 				setOpen(true);
 				toast(res.data.message);
 			})
 			.catch((err) => {
-				toast(err.response.data.messages.phone["alreadyRegistered"]);
+				toast(err.response.data.messages.phone['alreadyRegistered']);
 			});
 	};
 	const handleCorpRegister = (
@@ -209,6 +211,7 @@ function Signup() {
 											check
 										);
 										setPhone("+98" + values.phonenumber);
+										console.log("ININI")
 									}}
 								>
 									<Form className={styles.form}>
