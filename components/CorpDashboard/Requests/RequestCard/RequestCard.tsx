@@ -121,68 +121,10 @@ export default function RequestCard({
 									dir="rtl"
 									className="sm:max-w-[425px] min-w-[70vw] border-0"
 								>
-<<<<<<< HEAD
 									<PlaceBidForm
 										requestId={requestId}
 										panelDetails={panelDetails}
 									/>
-=======
-									<DialogHeader>
-										<DialogTitle
-											className={`flex ${vazir.className} text-2xl`}
-										>
-											ثبت پیشنهاد
-										</DialogTitle>
-									</DialogHeader>
-									<span className="text-lg font-bold">
-										مشخصات درخواست
-									</span>
-									<div className={styles.Box}>
-										<Item
-											icon={Eclipse}
-											fieldName="نام پنل"
-											fieldValue={panelDetails.panelName}
-										/>
-										<Item
-											icon={User}
-											fieldName="مشتری"
-											fieldValue={
-												panelDetails.customerName
-											}
-										/>
-										<Item
-											icon={Battery}
-											fieldName="ظرفیت"
-											fieldValue={panelDetails.capacity}
-											english={true}
-											prefix="W"
-										/>
-										<Item
-											icon={MapPin}
-											fieldName="آدرس"
-											fieldValue={panelDetails.address}
-										/>
-									</div>
-									<div className="flex flex-row justify-evenly">
-
-										
-										{/* <CustomInput placeholder="قیمت پیشنهادی شما" name="price" icon={DollarSign}  type="text" > </CustomInput> */}
-										{/* <CustomInput placeholder="زمان تخمینی نصب" name="time" icon={Calendar}  type="text" > </CustomInput> */}
-										{/* <CustomInput placeholder="آپلود فایل قرارداد" name="file" icon={DollarSign}  type="text" > </CustomInput> */}
-										
-									</div>
-									{/* <CustomInput placeholder="آپلود فایل قرارداد" name="file" icon={DollarSign}  type="text" > </CustomInput> */}
-
-
-									<DialogFooter>
-										<button
-											type="submit"
-											className={`${vazir.className} bg-[#11B33A] hover:cursor-pointer shadow-md rounded-md px-2 py-1 text-white`}
-										>
-											ارسال پیشنهاد
-										</button>
-									</DialogFooter>
->>>>>>> 8a416082f040f795d241f77759078a15b5b911f4
 								</DialogContent>
 							</Dialog>
 						</div>
