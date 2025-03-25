@@ -55,18 +55,18 @@ export default function PlaceBidForm({
 }: BidFormProps) {
 	const accessToken = localStorage.getItem("accessToken");
 	const validateSchema = Yup.object({
-		time: Yup.string().required("زمان تحمینی خود را وارد کنید."),
+		time: Yup.string().required("زمان تخمینی خود را وارد کنید."),
 		price: Yup.string().required("قیمت پیشنهادی خود را وارد کنید."),
 		message: Yup.string().max(500, "پیام بسیار طولانی است."),
 	});
-	const handleBid = (
+	const handleBid = async (
 		requestId: number,
 		price: number,
 		time: string,
 		message: string
 	) => {
-		fetch(`${baseURL}/v1/bids/set`, {
-			method: "POST",
+		  fetch(`${baseURL}/v1/bids/set`, {
+			method: "POST", 
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${accessToken}`,

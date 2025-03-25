@@ -25,14 +25,12 @@ interface Request {
 }
 
 export default function Requests() {
-	const accessToken =
-		"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDU0MDcwMzcsImlhdCI6MTc0MjgxNTAzNywic3ViIjoxfQ.U245pmQco3hU0VATsXU8hovIl75FCpvcPGHDef0BVtRqPny5A9LBMMHRNcD4hQk9OciVS8v-kMYQvyuGsq6ido2ebNVFhIR0Vja023B48S5tW3yzSOyySEvcLEt3pWxTRQo45mK9GLBRtdpQu18qoKqreHOzr98K2mTd4E7lVE8";
-	// const accessToken = localStorage.getItem("accessToken");
+	const accessToken = localStorage.getItem("accessToken");
 	const [requestData, setRequestData] = useState<Request[] | null>(null);
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
-		console.log(accessToken);
+		console.log("accessToken", accessToken);
 		const fetchRequests = async () => {
 			try {
 				console.log("Fetching Requests...");
