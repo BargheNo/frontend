@@ -83,20 +83,18 @@ function Signup() {
 		Lname: string,
 		phone: string,
 		password: string,
-		confirmPassword: string,
+		confirmPassword : string,
 		isAcceptTerms: boolean
 	) => {
 		registerService
 			.createUser({
-				FirstName: name,
-				LastName: Lname,
-				Phone: phone,
-				Password: password,
-				ConfirmPassword: confirmPassword,
-				acceptedTerms: isAcceptTerms,
+				firstName: name,
+				lastName: Lname,
+				phone: phone,
+				password: password,
+				isAcceptTerms: isAcceptTerms,
 			})
 			.then((res) => {
-				console.log(res);
 				setOpen(true);
 				toast(res.data.message);
 			})
@@ -110,13 +108,13 @@ function Signup() {
 		password: string,
 		isAcceptTerms: boolean
 	) => {
-		console.log(`Form: ${corpname}, ${cin}, ${password}, ${isAcceptTerms}`);
+        console.log(`Form: ${corpname}, ${cin}, ${password}, ${isAcceptTerms}`)
 		registerService
 			.createCorp({
 				name: corpname,
 				cin: String(cin),
 				password: password,
-				acceptedTerms: isAcceptTerms,
+				acceptedTerms: isAcceptTerms
 			})
 			.then((res) => {
 				console.log(res);
@@ -125,13 +123,7 @@ function Signup() {
 			})
 			.catch((err) => {
 				console.log(err?.response?.data?.message);
-				toast(
-					`${err.messages?.name ?? ""}\n${
-						err.messages?.cin?.alreadyRegistered ?? ""
-					}\n${err.messages?.password ?? ""}\n${
-						err.messages?.acceptedTerms ?? ""
-					}`
-				);
+				toast(`${err.messages?.name ?? ""}\n${err.messages?.cin?.alreadyRegistered ?? ""}\n${err.messages?.password ?? ""}\n${err.messages?.acceptedTerms ?? ""}`);
 			});
 	};
 
@@ -217,7 +209,6 @@ function Signup() {
 											check
 										);
 										setPhone("+98" + values.phonenumber);
-										console.log("ININI");
 									}}
 								>
 									<Form className={styles.form}>
@@ -243,8 +234,8 @@ function Signup() {
 												{" "}
 											</CustomInput>
 										</div>
-										<div className="flex flex-row justify-center w-9/10">
-											<div className={styles.code}>
+										<div className="flex flex-row justify-center w-9/10 gap-2">
+											<div className="w-1/4">
 												<CustomInput
 													name="countrycode"
 													readOnly={true}
@@ -255,6 +246,7 @@ function Signup() {
 													{" "}
 												</CustomInput>
 											</div>
+											<div className="w-3/4">
 											<CustomInput
 												name="phonenumber"
 												placeholder="شماره تلفن همراه"
@@ -262,7 +254,9 @@ function Signup() {
 											>
 												{" "}
 											</CustomInput>
+											</div>
 										</div>
+										<div className="w-9/10">
 										<CustomInput
 											name="password"
 											placeholder="رمز عبور"
@@ -291,6 +285,7 @@ function Signup() {
 										>
 											{" "}
 										</CustomInput>
+										</div>
 										<div className={styles.ruleText}>
 											<label
 												htmlFor="link-checkbox"
@@ -381,6 +376,7 @@ function Signup() {
 									}}
 								>
 									<Form className={styles.form}>
+										<div className="w-9/10">
 										<CustomInput
 											placeholder="نام شرکت"
 											name="corpname"
@@ -425,6 +421,7 @@ function Signup() {
 										>
 											{" "}
 										</CustomInput>
+										</div>
 										<div className={styles.ruleText}>
 											<label
 												htmlFor="link-checkbox"
