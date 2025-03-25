@@ -55,6 +55,7 @@ export default function Requests() {
 						capacity: request.powerRequest,	
 						price: request.maxCost,
 					}}
+					requestId={request.id}
 				/>
 			))}
 

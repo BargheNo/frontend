@@ -5,7 +5,15 @@ import { DialogTitle } from "@radix-ui/react-dialog";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import { baseURL, postData } from "@/src/services/apiHub";
-import { Battery, Calendar, DollarSign, Eclipse, MapPin, MessageCircle, User } from "lucide-react";
+import {
+	Battery,
+	Calendar,
+	DollarSign,
+	Eclipse,
+	MapPin,
+	MessageCircle,
+	User,
+} from "lucide-react";
 import { toast } from "sonner";
 import styles from "./PlaceBidForm.module.css";
 import React from "react";
@@ -45,6 +53,7 @@ export default function PlaceBidForm({
 	requestId,
 	panelDetails,
 }: BidFormProps) {
+	const accessToken = localStorage.getItem("accessToken");
 	const validateSchema = Yup.object({
 		time: Yup.string().required("زمان تحمینی خود را وارد کنید."),
 		price: Yup.string().required("قیمت پیشنهادی خود را وارد کنید."),
@@ -56,26 +65,44 @@ export default function PlaceBidForm({
 		time: string,
 		message: string
 	) => {
-		postData({
-			endPoint: `${baseURL}/v1/bids/set`,
-			data: {
-				installationRequestId: requestId,
-				minCost: price,
-				maxCost: price,
-				minDeadline: "2025-04-01T00:00:00Z",
-				maxDeadline: "2025-04-01T00:00:00Z",
-				description: message,
-				installationTime: time,
+		fetch(`${baseURL}/v1/bids/set`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${accessToken}`,
 			},
+			body: JSON.stringify({
+				installationRequestId: requestId,
+				cost: price,
+				description: message,
+				installationDate: "2025-04-15T00:00:00Z",
+			}),
 		})
-			.then((res) => {
-				console.log(res);
-				toast(res?.data?.message);
+			.then((response) => response.json()) // Parse the JSON response
+			.then((data) => {
+				toast(data?.message);
+				console.log("Success:", data); // Handle the response data
 			})
-			.catch((err) => {
-				console.log(err);
-				toast(err?.response?.data?.message);
+			.catch((error) => {
+				console.error("Error:", error); // Handle errors
 			});
+		// postData({
+		// 	endPoint: `${baseURL}/v1/bids/set`,
+		// 	data: {
+		// 		installationRequestId: requestId,
+		// 		cost: price,
+		// 		description: message,
+		// 		installationDate: "2025-04-15T00:00:00Z",
+		// 	},
+		// })
+		// 	.then((res) => {
+		// 		console.log(res);
+		// 		toast(res?.data?.message);
+		// 	})
+		// 	.catch((err) => {
+		// 		console.log(err);
+		// 		toast(err?.response?.data?.message);
+		// 	});
 	};
 	return (
 		<Formik
