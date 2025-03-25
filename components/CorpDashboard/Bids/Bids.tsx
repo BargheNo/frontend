@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import BidCard from "./BidCard";
-import { baseURL, getData } from "@/src/services/apiHub";
+import { accessToken, baseURL, getData } from "@/src/services/apiHub";
 
 interface address {
 	province: string;
@@ -26,8 +26,8 @@ interface Bid {
 }
 
 export default function Bids() {
-	const accessToken =
-		"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDU0MDcwMzcsImlhdCI6MTc0MjgxNTAzNywic3ViIjoxfQ.U245pmQco3hU0VATsXU8hovIl75FCpvcPGHDef0BVtRqPny5A9LBMMHRNcD4hQk9OciVS8v-kMYQvyuGsq6ido2ebNVFhIR0Vja023B48S5tW3yzSOyySEvcLEt3pWxTRQo45mK9GLBRtdpQu18qoKqreHOzr98K2mTd4E7lVE8";
+	// const accessToken =
+	// 	"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDU0MDcwMzcsImlhdCI6MTc0MjgxNTAzNywic3ViIjoxfQ.U245pmQco3hU0VATsXU8hovIl75FCpvcPGHDef0BVtRqPny5A9LBMMHRNcD4hQk9OciVS8v-kMYQvyuGsq6ido2ebNVFhIR0Vja023B48S5tW3yzSOyySEvcLEt3pWxTRQo45mK9GLBRtdpQu18qoKqreHOzr98K2mTd4E7lVE8";
 	const [bidData, setBidData] = useState<Bid[] | null>(null);
 	const [error, setError] = useState<string | null>(null);
 
