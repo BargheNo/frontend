@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import BidCard from "./BidCard";
-import { getData } from "@/src/services/apiHub";
+import { baseURL, getData } from "@/src/services/apiHub";
 
 interface Bid {
 	id: number;
@@ -21,7 +21,7 @@ export default function Bids() {
 		const fetchBids = async () => {
 			try {
 				console.log('Fetching bids...');
-				const response = await fetch("https://260d-141-11-250-179.ngrok-free.app/v1/bids/list", {
+				const response = await fetch(`${baseURL}/v1/bids/list`, {
 					headers: {
 						Authorization: `Bearer ${accessToken}`,
 						"ngrok-skip-browser-warning": "69420",

@@ -6,7 +6,9 @@ import { getParams, postParams } from "../types/apiHubType";
 
 // export const baseURL = "https://bombfundingbackend.liara.run";
 // export const baseURL = "http://104.168.46.4:8000";
-export const baseURL = "https://260d-141-11-250-179.ngrok-free.app";
+// export const baseURL = "https://260d-141-11-250-179.ngrok-free.app";
+export const baseURL = "http://185.110.189.68:8080";
+
 
 const apiClient = axios.create({
   baseURL: baseURL,

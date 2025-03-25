@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect, useState} from "react";
 import RequestCard from "./RequestCard/RequestCard";
+import { baseURL } from "@/src/services/apiHub";
 
 export default function Requests() {
 	const accessToken = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDU0MDcwMzcsImlhdCI6MTc0MjgxNTAzNywic3ViIjoxfQ.U245pmQco3hU0VATsXU8hovIl75FCpvcPGHDef0BVtRqPny5A9LBMMHRNcD4hQk9OciVS8v-kMYQvyuGsq6ido2ebNVFhIR0Vja023B48S5tW3yzSOyySEvcLEt3pWxTRQo45mK9GLBRtdpQu18qoKqreHOzr98K2mTd4E7lVE8"
@@ -11,7 +12,7 @@ export default function Requests() {
 		const fetchRequests = async () => {
 			try {
 				console.log('Fetching Requests...');
-				const response = await fetch("https://260d-141-11-250-179.ngrok-free.app/v1/corp/installation", {
+				const response = await fetch(`${baseURL}/v1/corp/installation`, {
 					headers: {
 						Authorization: `Bearer ${accessToken}`,
 						"ngrok-skip-browser-warning": "69420",
