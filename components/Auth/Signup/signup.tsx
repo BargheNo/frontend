@@ -88,11 +88,12 @@ function Signup() {
 	) => {
 		registerService
 			.createUser({
-				firstName: name,
-				lastName: Lname,
-				phone: phone,
-				password: password,
-				isAcceptTerms: isAcceptTerms,
+				FirstName: name,
+				LastName: Lname,
+				Phone: phone,
+				Password: password,
+				ConfirmPassword: confirmPassword,
+				acceptedTerms: isAcceptTerms,
 			})
 			.then((res) => {
 				setOpen(true);

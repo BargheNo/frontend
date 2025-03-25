@@ -3,6 +3,27 @@ import { useEffect, useState } from "react";
 import RequestCard from "./RequestCard/RequestCard";
 import { baseURL } from "@/src/services/apiHub";
 
+interface address {
+	province: string;
+	city: string;
+	streetAddress: string;
+}
+
+interface Customer {
+	firstName: string;
+	lastName: string;
+}
+
+interface Request {
+	id: number;
+	name: string;
+	customer: Customer;
+	address: address;
+	powerRequest: number;
+	status: string;
+	maxCost: number;
+}
+
 export default function Requests() {
 	const accessToken =
 		"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDU0MDcwMzcsImlhdCI6MTc0MjgxNTAzNywic3ViIjoxfQ.U245pmQco3hU0VATsXU8hovIl75FCpvcPGHDef0BVtRqPny5A9LBMMHRNcD4hQk9OciVS8v-kMYQvyuGsq6ido2ebNVFhIR0Vja023B48S5tW3yzSOyySEvcLEt3pWxTRQo45mK9GLBRtdpQu18qoKqreHOzr98K2mTd4E7lVE8";
@@ -16,11 +37,10 @@ export default function Requests() {
 			try {
 				console.log("Fetching Requests...");
 				const response = await fetch(
-					`${baseURL}/v1/corp/installation`,
+					`${baseURL}/v1/bids/list`,
 					{
 						headers: {
-							Authorization: `Bearer ${accessToken}`,
-							"ngrok-skip-browser-warning": "69420",
+							Authorization: `Bearer ${accessToken}`
 						},
 					}
 				);
