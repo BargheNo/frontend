@@ -357,7 +357,7 @@ function Signup() {
 						)}
 						{!customer && (
 							<div className="w-full items-center text-center">
-								<h1 className={styles.topic}>ثبت نام شرکت 2</h1>
+								<h1 className={styles.topic}>ثبت نام شرکت</h1>
 								<Formik
 									initialValues={{
 										corpname: "",
