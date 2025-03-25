@@ -83,6 +83,7 @@ function Signup() {
 		Lname: string,
 		phone: string,
 		password: string,
+		confirmPassword: string,
 		isAcceptTerms: boolean
 	) => {
 		registerService
@@ -91,16 +92,16 @@ function Signup() {
 				LastName: Lname,
 				Phone: phone,
 				Password: password,
-				ConfirmPassword:confirmPassword,
+				ConfirmPassword: confirmPassword,
 				acceptedTerms: isAcceptTerms,
 			})
 			.then((res) => {
-				console.log(res)
+				console.log(res);
 				setOpen(true);
 				toast(res.data.message);
 			})
 			.catch((err) => {
-				toast(err.response.data.messages.phone['alreadyRegistered']);
+				toast(err.response.data.messages.phone["alreadyRegistered"]);
 			});
 	};
 	const handleCorpRegister = (
@@ -109,13 +110,13 @@ function Signup() {
 		password: string,
 		isAcceptTerms: boolean
 	) => {
-        console.log(`Form: ${corpname}, ${cin}, ${password}, ${isAcceptTerms}`)
+		console.log(`Form: ${corpname}, ${cin}, ${password}, ${isAcceptTerms}`);
 		registerService
 			.createCorp({
 				name: corpname,
 				cin: String(cin),
 				password: password,
-				acceptedTerms: isAcceptTerms
+				acceptedTerms: isAcceptTerms,
 			})
 			.then((res) => {
 				console.log(res);
@@ -124,7 +125,13 @@ function Signup() {
 			})
 			.catch((err) => {
 				console.log(err?.response?.data?.message);
-				toast(`${err.messages?.name ?? ""}\n${err.messages?.cin?.alreadyRegistered ?? ""}\n${err.messages?.password ?? ""}\n${err.messages?.acceptedTerms ?? ""}`);
+				toast(
+					`${err.messages?.name ?? ""}\n${
+						err.messages?.cin?.alreadyRegistered ?? ""
+					}\n${err.messages?.password ?? ""}\n${
+						err.messages?.acceptedTerms ?? ""
+					}`
+				);
 			});
 	};
 
@@ -206,10 +213,11 @@ function Signup() {
 											values.lastname,
 											"+98" + values.phonenumber,
 											values.password,
+											values.confirmpassword,
 											check
 										);
 										setPhone("+98" + values.phonenumber);
-										console.log("ININI")
+										console.log("ININI");
 									}}
 								>
 									<Form className={styles.form}>
